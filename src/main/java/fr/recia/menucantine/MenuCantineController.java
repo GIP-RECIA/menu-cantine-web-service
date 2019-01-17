@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-public class EscoMenuController {
-	private static final Logger log = LoggerFactory.getLogger(EscoMenuController.class);	
+public class MenuCantineController {
+	private static final Logger log = LoggerFactory.getLogger(MenuCantineController.class);	
 		  private static final String template = "Hello, %s!";
 		 
 		    @RequestMapping("/hello")
