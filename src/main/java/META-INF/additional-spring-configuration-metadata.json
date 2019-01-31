@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "soffit.jwt.signature-key",
+    "type": "java.lang.String",
+    "description": "la jwt signature key du portail"
+  },
+  {
+    "name": "soffit.anonymous.acces",
+    "type": "java.lang.String",
+    "description": "Url permetant des acces non identifié"
+  }
+]}

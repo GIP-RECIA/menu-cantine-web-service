@@ -39,6 +39,16 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+    		<groupId>org.jasig.portal</groupId>
+    		<artifactId>uPortal-soffit-renderer</artifactId>
+    	<version>5.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+ 
 	</dependencies>
 
 	<build>

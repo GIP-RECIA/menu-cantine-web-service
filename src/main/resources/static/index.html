@@ -1,0 +1,52 @@
+<head>
+		<meta charset="utf-8">
+</head>
+<!--  chargement de vueJs il faut sans doute le trouver aure part ->
+<script src="https://unpkg.com/vue"></script -->
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- production version, optimized for size and speed ->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script -->
+<body>
+
+<div id="menucantine">
+
+	<h2>Menu Cantine</h2>
+	
+	<h3> {{ bonjours }} </h3>
+
+</div>
+</body>
+
+<script>
+//	var data = new FormData();
+//	data.append( "json", JSON.stringify({content: 'testPost'}));
+	
+	var initPost = {  
+			headers: {
+				'Accept': 'application/json',
+	      		'Content-Type': 'application/json',
+	      		'X-COM-PERSIST': 'TRUE',
+	    	},
+	    	method: 'post', 
+	    	credentials: "same-origin",
+	 //   	mode: "cors",
+	    	body: '{"content":"Post"}',
+	    };
+	var initGet = { method: 'GET', };
+	
+	const menuCantine = new Vue({
+		el: '#menucantine',
+		data: {	bonjours: '',},
+		
+		created () {
+			 fetch('api/hello', initPost)
+				.then(response => response.json())
+				.then(json => {
+						this.bonjours = json.content
+					}
+				);
+		}
+
+	})
+</script>

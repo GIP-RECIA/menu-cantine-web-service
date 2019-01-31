@@ -1,3 +1,26 @@
 server:
+  address: localhost
+  port: 8443
+  ssl:
+    enabled: true
+    key-alias: tomcat-localhost
+    # key-password: 
+    key-store: /home/legay/SpringBoot/demoSpringBootCas/keystore.jks
+    key-store-provider: SUN
+    key-store-type: JKS
+    # key-store-password: 
   servlet:
     contextPath: /menuCantine
+    
+soffit:
+  # jwt.signatureKey: 
+  anonymous.acces: /api/hello
+  
+ 
+logging:
+  level: 
+    web: debug
+    web.servlet.DispatcherServlet: trace
+    fr:
+      recia:
+        menucantine: DEBUG
