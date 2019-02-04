@@ -59,19 +59,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 new SoffitApiPreAuthenticatedProcessingFilter(signatureKey);
         filter.setAuthenticationManager(authenticationManager());
 
-        http.csrf().disable(); // attention c'est pour le crsf().disable  est pour les tests a partir de page static (sans csrf)
         http
             .addFilter(filter)
             .authorizeRequests()
            		.antMatchers(HttpMethod.GET, forTest).anonymous()
-            	.antMatchers(HttpMethod.POST, forTest).anonymous()
+            	.antMatchers(HttpMethod.POST,"/api/hello2").anonymous()
                 .antMatchers(HttpMethod.GET,"/api/**").authenticated()
                 .antMatchers(HttpMethod.POST,"/api/**").authenticated()
                 .antMatchers(HttpMethod.DELETE,"/api/**").denyAll()
                 .antMatchers(HttpMethod.PUT,"/api/**").denyAll()
                 .anyRequest().permitAll()
-                
-                
             .and()
             /*
              * Session fixation protection is provided by uPortal.  Since portlet tech requires

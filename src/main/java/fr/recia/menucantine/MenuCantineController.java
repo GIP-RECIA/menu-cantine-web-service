@@ -1,5 +1,6 @@
 package fr.recia.menucantine;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import fr.recia.menucantine.adoria.RestAdoriaClient;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +23,9 @@ public class MenuCantineController {
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineController.class);	
 		  private static final String template = "Hello, %s!";
 		 
-		   
+		  @Autowired
+		    private RestAdoriaClient adoriaClient ;
+		  
 		  @GetMapping(path = "/hello")
 		    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
 	//	    	 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -34,8 +40,12 @@ public class MenuCantineController {
 				  @RequestBody Greeting greeting){
 			  String name = greeting.getContent();
 			  log.debug("post hello {}", name);
+			  
+			  
 			  Greeting newOne = new Greeting(String.format(template, name));
-			  return new ResponseEntity<Object>(newOne, HttpStatus.OK);
+			 
+			  return new ResponseEntity<Object>(adoriaClient.callTest(), HttpStatus.OK);
+			  //return new ResponseEntity<Object>(newOne, HttpStatus.OK);
 		  }
 		    
 		    /*

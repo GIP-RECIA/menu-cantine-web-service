@@ -23,3 +23,10 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+
+.mvn
+mvnw*
+*.log
+*.org
+
