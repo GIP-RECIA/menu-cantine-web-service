@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import fr.recia.menucantine.adoria.data.Requette;
 import reactor.core.publisher.Mono;
 
 
@@ -36,7 +37,7 @@ public class RestAdoriaWebClient {
 	
 	
 	@Cacheable("requettes")
-	public  Map<String, Object> call(RestAdoriaRequetteMenu requette) throws RestAdoriaClientException{	
+	public  Map<String, Object> call(Requette requette) throws RestAdoriaClientException{	
 				try {	
 					Mono<Map<String, Object>> reponse =  webClient.post()
 							.uri("https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt")

@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import fr.recia.menucantine.adoria.data.Requette;
+
 
 @Configuration
 @ManagedBean
@@ -136,7 +138,7 @@ public class RestAdoriaClient {
 		for (String uai : uais) {
 			try {
 				if ("0180823X".equals(uai)) {
-					res =  adoriaWebClient.call(new RestAdoriaRequetteMenu(uai,"06", "2019"));
+					res =  adoriaWebClient.call(new Requette(uai,"06", "2019"));
 					log.debug("etab ok : {}", uai);
 					logOk.info(uai); 
 				}
