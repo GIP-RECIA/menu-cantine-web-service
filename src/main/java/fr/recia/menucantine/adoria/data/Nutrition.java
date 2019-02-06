@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class Nutrition {
 	String name;
-	String value;
+	Float value;
 	String unit;
 }

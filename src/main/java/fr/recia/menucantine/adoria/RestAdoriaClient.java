@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import fr.recia.menucantine.adoria.data.Reponse;
 import fr.recia.menucantine.adoria.data.Requette;
 
 
@@ -28,7 +29,7 @@ public class RestAdoriaClient {
 	@Autowired
     private RestAdoriaWebClient adoriaWebClient ;
 	
-	public  Map<String, Object> callTest() {
+	public  Reponse callTest() {
 		Logger logOk = LoggerFactory.getLogger("FileOk");
 		Logger logKo = LoggerFactory.getLogger("FileKo");
 
@@ -134,13 +135,14 @@ public class RestAdoriaClient {
 				"0360024F",
 				"0370016S",
 				};
-		Map<String, Object> res = null;
+		Reponse res = null;
 		for (String uai : uais) {
 			try {
 				if ("0180823X".equals(uai)) {
 					res =  adoriaWebClient.call(new Requette(uai,"06", "2019"));
+					
 					log.debug("etab ok : {}", uai);
-					logOk.info(uai); 
+				//	logOk.info("reponse = {}", res); 
 				}
 			} catch (RestAdoriaClientException e){
 				logKo.info("{} {}", uai, e.getJson());
