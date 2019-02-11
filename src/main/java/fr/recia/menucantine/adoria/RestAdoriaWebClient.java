@@ -14,8 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import fr.recia.menucantine.adoria.data.Reponse;
-import fr.recia.menucantine.adoria.data.Requette;
+import fr.recia.menucantine.adoria.beans.ReponseAdoria;
+import fr.recia.menucantine.adoria.beans.RequetteAdoria;
 import reactor.core.publisher.Mono;
 
 
@@ -38,7 +38,7 @@ public class RestAdoriaWebClient {
 	
 	
 	@Cacheable("requettes")
-	public  Reponse call(Requette requette) throws RestAdoriaClientException{	
+	public  ReponseAdoria call(RequetteAdoria requette) throws RestAdoriaClientException{	
 				try {	
 				/*	Mono<Map<String, Object>> reponse =  webClient.post()
 							.uri("https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt")
@@ -54,7 +54,7 @@ public class RestAdoriaWebClient {
 					response -> response.bodyToMono(Void.class))
 			.onStatus(HttpStatus::is5xxServerError, response -> response.body(null))
 	*/	
-						Mono<Reponse> reponse =  webClient.post()
+						Mono<ReponseAdoria> reponse =  webClient.post()
 							.uri("https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt")
 							.accept(MediaType.APPLICATION_JSON)
 							.contentType(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ public class RestAdoriaWebClient {
 							.header("Guid", "46390997-f811-45cc-b86d-1291d36e753f")
 							.syncBody(requette)
 							.retrieve()
-							.bodyToMono(Reponse.class);
+							.bodyToMono(ReponseAdoria.class);
 					 
 						
 							

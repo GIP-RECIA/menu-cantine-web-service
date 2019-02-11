@@ -1,21 +1,20 @@
 package fr.recia.menucantine;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.recia.menucantine.adoria.RestAdoriaClient;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import fr.recia.menucantine.beans.Requette;
+import fr.recia.menucantine.beans.Semaine;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -26,25 +25,32 @@ public class MenuCantineController {
 		  @Autowired
 		    private RestAdoriaClient adoriaClient ;
 		  
+		  @Autowired
+		  private MenuCantineServices services;
+		  
+		  private Semaine lastCall4debug;
+		  
 		  @GetMapping(path = "/hello")
-		    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
+		    public  ResponseEntity<Object> greeting(@RequestParam(value="semaine", defaultValue="06") String semaine) {
 	//	    	 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		    	log.debug("hello {}", name);
+		    	log.debug("semaine demander {}", semaine);
 	//	    	name = auth.getName();
-		        return new Greeting(String.format(template, name));
+		    	
+		        return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
 		    }
 		  
 		  @PostMapping(path="/hello", consumes = "application/json", produces = "application/json")
 		  public ResponseEntity<Object> post(
 			//	  @RequestHeader(name = "X-COM-PERSIST", required = true) String headerPersist,
-				  @RequestBody Greeting greeting){
-			  String name = greeting.getContent();
-			  log.debug("post hello {}", name);
+				  @RequestBody Requette requette){
+			  Integer semaine = requette.getSemaine();
+			  log.debug("post requette =  {}", requette);
 			  
 			  
-			  Greeting newOne = new Greeting(String.format(template, name));
+			//  Greeting newOne = new Greeting(String.format(template, name));
 			 
-			  return new ResponseEntity<Object>(adoriaClient.callTest(), HttpStatus.OK);
+			  lastCall4debug = services.findSemaine(requette);
+			  return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
 			  //return new ResponseEntity<Object>(newOne, HttpStatus.OK);
 		  }
 		    

@@ -1,0 +1,10 @@
+.semaine {
+  display: flex;
+  flex-wrap: wrap;
+}
+.semaine .jour {
+  border: 1px solid red;
+  flex: auto;
+  min-width: 300px;
+}
+

@@ -5,19 +5,35 @@ import java.util.Map;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import fr.recia.menucantine.adoria.data.Requette;
+import fr.recia.menucantine.adoria.beans.RequetteAdoria;
 
 public class RestAdoriaClientException extends Exception {
 	static JacksonJsonParser parser = new JacksonJsonParser();
 	
+	static enum TypeError{
+		MissingParameter ("Missing parameters"),
+		NotAllowed("Not Allowed in ENT"),
+		UnknownGUID ("Unknown GUID"),
+		NoDatas ("No datas");
+		
+		private String texte;
+		private TypeError(String texte){
+			this.texte = texte;
+		}
+	}
+	
+	
 	WebClientResponseException webClientException;
-	Requette requette;
+	RequetteAdoria requette;
 	
 	public RestAdoriaClientException(){
 		super();
 	}
-	
-	public RestAdoriaClientException(WebClientResponseException webClientException, Requette requette) {
+	public RestAdoriaClientException(TypeError type){
+		super();
+		
+	}
+	public RestAdoriaClientException(WebClientResponseException webClientException, RequetteAdoria requette) {
 		super();
 		this.webClientException = webClientException;
 		this.requette = requette;

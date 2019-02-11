@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
-import fr.recia.menucantine.adoria.data.Reponse;
-import fr.recia.menucantine.adoria.data.Requette;
+import fr.recia.menucantine.adoria.beans.ReponseAdoria;
+import fr.recia.menucantine.adoria.beans.RequetteAdoria;
 
 
 @Configuration
@@ -29,7 +29,7 @@ public class RestAdoriaClient {
 	@Autowired
     private RestAdoriaWebClient adoriaWebClient ;
 	
-	public  Reponse callTest() {
+	public  ReponseAdoria callTest() {
 		Logger logOk = LoggerFactory.getLogger("FileOk");
 		Logger logKo = LoggerFactory.getLogger("FileKo");
 
@@ -135,11 +135,11 @@ public class RestAdoriaClient {
 				"0360024F",
 				"0370016S",
 				};
-		Reponse res = null;
+		ReponseAdoria res = null;
 		for (String uai : uais) {
 			try {
 				if ("0180823X".equals(uai)) {
-					res =  adoriaWebClient.call(new Requette(uai,"06", "2019"));
+					res =  adoriaWebClient.call(new RequetteAdoria(uai, 6, 2019));
 					
 					log.debug("etab ok : {}", uai);
 				//	logOk.info("reponse = {}", res); 
@@ -152,7 +152,18 @@ public class RestAdoriaClient {
 		
 	}
 	
-	
+		
+	public  ReponseAdoria call(String uai, Integer semaine, Integer annee) {
+		ReponseAdoria res = null;
+		try {
+			
+			res = adoriaWebClient.call(new RequetteAdoria(uai, semaine, annee));
+			
+		} catch (RestAdoriaClientException e){
+			log.debug(e.getMessage());
+		}
+		return res;
+	}
 	
 	 
 }

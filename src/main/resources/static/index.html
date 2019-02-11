@@ -7,13 +7,36 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- production version, optimized for size and speed ->
 <script src="https://cdn.jsdelivr.net/npm/vue"></script -->
+<link 	rel="stylesheet" 
+		type="text/css" 
+		href="css/menu-cantine.css"/>
 <body>
-
+<a href="api/hello" type="application/json" target="json">json</a>
 <div id="menucantine">
 
-	<h2>Menu Cantine</h2>
+	<h1>Menu Cantine:</h1><h2> du {{ debutPeriode }} au {{ finPeriode }}</h2>
 	
-	<h3> {{ bonjours }} </h3>
+	<section class="semaine" >
+	<article class="jour" v-for="jour in jours"> 
+			<header><h3>{{ jour.jour }}</h3> {{ jour.date }} </header>
+			<main>
+				<article class="service" v-for="service in jour.destinations">
+					<header>{{ service.name }}</header>
+					<main>						
+						<article 	v-for="partie in service.menu" 
+									v-bind:class="['partie', 'rank'+partie.rank]" >
+						<header><h1>{{ partie.choix[0].family }}</h1></header>
+						<article 	class="choix" 
+									v-for="choix in partie.choix"> {{ choix.name }}</article>
+						</article>
+					</main>
+				</article>
+				
+			</main>
+	
+	</article>
+	</section>
+	
 
 </div>
 </body>
@@ -31,22 +54,30 @@
 	    	method: 'post', 
 	    	credentials: "same-origin",
 	 //   	mode: "cors",
-	    	body: '{"content":"Post"}',
+	    	body: '{"semaine": 6, "annee": 2019, "uai": "0180823X" }',
 	    };
 	var initGet = { method: 'GET', };
 	
 	const menuCantine = new Vue({
 		el: '#menucantine',
-		data: {	bonjours: '',},
+		data: {	
+			menuSemaine: '',
+			debutPeriode: '',
+			finPeriode: '',
+			jours: ''
+		},
 		
 		created () {
 			 fetch('api/hello', initPost)
 				.then(response => response.json())
 				.then(json => {
-						this.bonjours = json
+						this.menuSemaine = json;
+						this.debutPeriode = json.debut;
+						this.finPeriode = json.fin;
+						this.jours = json.jours;
 					}
 				);
-		}
+		},
 
 	})
 </script>

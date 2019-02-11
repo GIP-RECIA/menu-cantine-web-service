@@ -1,4 +1,4 @@
-package fr.recia.menucantine.adoria.data;
+package fr.recia.menucantine.adoria.beans;
 
 import java.util.Iterator;
 import java.util.List;

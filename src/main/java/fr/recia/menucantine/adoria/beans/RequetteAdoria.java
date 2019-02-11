@@ -1,4 +1,4 @@
-package fr.recia.menucantine.adoria.data;
+package fr.recia.menucantine.adoria.beans;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -6,11 +6,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Requette {
-	
-	
+public class RequetteAdoria {
 	String siteInternalCode;
-	String weekNumber;
-	String year;
-
+	Integer weekNumber;
+	Integer year;
 }
