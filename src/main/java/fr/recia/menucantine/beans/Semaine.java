@@ -40,6 +40,7 @@ public class Semaine {
 			jours = null;
 		} else {
 			menuSemaine.clean();
+			menuSemaine.complete();
 			nbJours = menuSemaine.getNbJours();
 			jours = menuSemaine.getDates();
 			

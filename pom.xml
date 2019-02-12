@@ -69,23 +69,40 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
+    			<plugin>
 				<groupId>org.lesscss</groupId>
 			    <artifactId>lesscss-maven-plugin</artifactId>
 			    <version>1.7.0.1.1</version>
-			    <configuration>
-			        <sourceDirectory>${project.basedir}/src/main/resources/static/less</sourceDirectory>
-			        <outputDirectory>${project.basedir}/src/main/resources/static/css</outputDirectory>
-			        <compress>false</compress>
-			    </configuration>
+			       
 			    <executions>
 			        <execution>
+			        	<id>generate-resources</id>
+                        <phase>generate-resources</phase>
 			            <goals>
 			                <goal>compile</goal>
-			            </goals>
+			             </goals>
+			           <configuration>
+			        <sourceDirectory>${project.basedir}/src/main/resources/static/less</sourceDirectory>
+			        <outputDirectory>${project.basedir}/target/classes/static/css</outputDirectory>
+			        <compress>false</compress>
+			    </configuration>
+			        </execution>
+			         <execution>
+			            <goals>
+			                <goal>compile</goal>
+			             </goals>
+			           <configuration>
+			        <sourceDirectory>${project.basedir}/src/main/resources/static/less</sourceDirectory>
+			        <outputDirectory>${project.basedir}/src/main/resources/static/css</outputDirectory>
+			        <compress>true</compress>
+			    </configuration>
+			            
+			         
 			        </execution>
 			    </executions>
 			</plugin>
+
+  
 		</plugins>
 	</build>
 

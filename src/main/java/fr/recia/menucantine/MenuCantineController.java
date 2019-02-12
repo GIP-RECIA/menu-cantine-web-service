@@ -31,11 +31,9 @@ public class MenuCantineController {
 		  private Semaine lastCall4debug;
 		  
 		  @GetMapping(path = "/hello")
-		    public  ResponseEntity<Object> greeting(@RequestParam(value="semaine", defaultValue="06") String semaine) {
-	//	    	 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		    	log.debug("semaine demander {}", semaine);
-	//	    	name = auth.getName();
-		    	
+		    public  ResponseEntity<Object> get() {
+	
+		   
 		        return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
 		    }
 		  

@@ -2,7 +2,6 @@ package fr.recia.menucantine.adoria.beans;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,8 +36,13 @@ public class Journee {
 
 	List<Service> destinations;
 	
+	boolean isVide(){
+		return destinations == null;
+	}
+	
 	@JsonIgnore 
-	ServiceRankCompte sRankCompte = new ServiceRankCompte();
+	ServiceRankCompte serviceRankCompte = new ServiceRankCompte();
+	
 	
 	ServiceRankCompte clean(){
 		if (jour == null && date != null) {
@@ -51,11 +55,11 @@ public class Journee {
 					if (service.getRecipes().isEmpty()) {
 						iterator.remove();
 					} else {
-						sRankCompte.put(service.name, service.clean());
+						serviceRankCompte.put(service.name, service.clean());
 					}
 				}
 			}
 		}
-		return sRankCompte;
+		return serviceRankCompte;
 	}
 }

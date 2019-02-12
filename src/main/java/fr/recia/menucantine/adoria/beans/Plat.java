@@ -9,8 +9,8 @@ import lombok.Data;
 
 @Data
 public class Plat {
-	String name;
-	String family; // family et subFamily peut etre inutile ?
+	String name = " ";
+	String family = " "; // family et subFamily peut etre inutile ?
 	String subFamily;
 	
 	@JsonInclude(Include.NON_NULL)

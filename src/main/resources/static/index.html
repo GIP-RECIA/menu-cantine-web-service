@@ -18,7 +18,7 @@
 	
 	<section class="semaine" >
 	<article class="jour" v-for="jour in jours"> 
-			<header><h3>{{ jour.jour }}</h3> {{ jour.date }} </header>
+			<header><h3>{{ jour.jour }}</h3>{{ jour.date }}</header>
 			<main>
 				<article class="service" v-for="service in jour.destinations">
 					<header>{{ service.name }}</header>

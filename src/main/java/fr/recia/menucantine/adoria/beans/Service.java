@@ -37,6 +37,10 @@ public class Service {
 	@JsonIgnore
 	RankCompte rankCompte = new RankCompte();
 	
+	SousMenu makeSousMenu(Integer rank){
+		return new SousMenu(new ArrayList<>(), rank);
+	}
+	
 	RankCompte clean(){
 		
 	/*	recipes.forEach(Plat::clean); */
