@@ -16,7 +16,7 @@
 		border: 1px solid red;
 		flex: auto;
 		width: 10%;
-		min-width: 300px;
+		min-width: 250px;
 		
 		> header > span {
 			font-weight: bold;
@@ -56,36 +56,25 @@
 	}
 }
 
-@media (min-width: 1800px) {
-	article.jour.vide1 {
-			display : none;
-		}
-	
-}
 
-@media (min-width: 620px) {
-	article.jour {
-		
-		
-		&.vide1 {
-			display : block;
-		}
+@media (min-width: 620px) and (max-width: 921px){
+	.semaine {
 		.vide3 {
 			display : block;
 		}
 	}
 }
 
-@media (min-width: 922px) {
-	article.jour {
-	
+@media (min-width: 922px) and (max-width: 1200px){
+	.semaine  {
 		.vide2 {
 			display : block;
-		}
+		}		
 	}
 }
+
 @media (min-width: 1200px) {
-	article.jour {
+	.semaine {
 		.vide1  {
 			display : block;
 		}

@@ -29,6 +29,10 @@ public class Plat {
 		return p;
 	}
 	
+	boolean isVide(){
+		return typeVide == null;
+	}
+	
 	void clean(){
 		if (allergens != null && allergens.isEmpty()) {
 			allergens = null;
@@ -45,6 +49,20 @@ public class Plat {
 				nutritions= null;
 			}
 		}
+	}
+
+	/**
+	 * Ajoute un type vide ssi le plat est déjà vide
+	 * return true si ajout  false sinon
+	 * @param typeFormat
+	 */
+	public boolean addTypeVide(String typeFormat) {
+		if (typeVide != null) {
+			typeVide += typeFormat;
+			return true;
+		} 
+		return false;
+		
 	}
 	
 }

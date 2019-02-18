@@ -38,13 +38,7 @@ public class Journee {
 	
 	String typeVide;
 	boolean isVide(){
-		if (destinations == null) {
-			if (typeVide==null) {
-				typeVide = "vide1";
-				}
-			return true;
-		}
-		return false;
+		return typeVide  != null;
 	}
 	
 	@JsonIgnore 
