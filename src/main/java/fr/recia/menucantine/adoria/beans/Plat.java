@@ -9,9 +9,10 @@ import lombok.Data;
 
 @Data
 public class Plat {
-	String name = " ";
-	String family = " "; // family et subFamily peut etre inutile ?
+	String name = " ";
+	String family = " "; // se sont des blancs insecable
 	String subFamily;
+	String typeVide;
 	
 	@JsonInclude(Include.NON_NULL)
 	List<String> allergens;
@@ -21,6 +22,12 @@ public class Plat {
 	
 
 	Integer familyRank; // donne peut-être le rang  dans le menu la place()
+	
+	static Plat platVide(String typeVide) {
+		Plat p = new Plat();
+		p.typeVide = typeVide;
+		return p;
+	}
 	
 	void clean(){
 		if (allergens != null && allergens.isEmpty()) {

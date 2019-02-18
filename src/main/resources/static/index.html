@@ -17,19 +17,33 @@
 	<h1>Menu Cantine:</h1><h2> du {{ debutPeriode }} au {{ finPeriode }}</h2>
 	
 	<section class="semaine" >
-	<article class="jour" v-for="jour in jours"> 
-			<header><h3>{{ jour.jour }}</h3>{{ jour.date }}</header>
+	<article  v-for="jour in jours" v-bind:class="['jour', jour.typeVide]"> 
+			<header><span class="name" >{{ jour.jour }}</span>
+					
+					<div><span class="date">{{ jour.date }}</span></div>
+			</header>
 			<main>
 				<article class="service" v-for="service in jour.destinations">
-					<header>{{ service.name }}</header>
-					<main>						
+			  		<header><span>{{ service.name }}</span></header>
+			<!--		<main>						
 						<article 	v-for="partie in service.menu" 
 									v-bind:class="['partie', 'rank'+partie.rank]" >
-						<header><h1>{{ partie.choix[0].family }}</h1></header>
+						<header class='{{  partie.typeVide }}'><h1>{{ partie.choix[0].family }} {{ partie.typeVide }}</h1></header>
 						<article 	class="choix" 
-									v-for="choix in partie.choix"> {{ choix.name }}</article>
+									v-for="choix in partie.choix"> {{ choix.name }}{{ choix.typeVide }}</article>
 						</article>
 					</main>
+			-->		<ul>
+						<li v-for="partie in service.menu" 
+									v-bind:class="['partie', 'rank'+partie.rank, partie.typeVide]" >
+								<span >{{ partie.choix[0].family }}</span>
+								<ul>
+									<li v-bind:class="['choix', choix.typeVide]"   
+									v-for="choix in partie.choix"> <span>{{ choix.name }}</span></li>
+								</ul>	
+						</li> 
+					
+					</ul>
 				</article>
 				
 			</main>

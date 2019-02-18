@@ -17,10 +17,13 @@ public class Service {
 	
 	@Data
 	class SousMenu {
+		
 		@NonNull
 		List<Plat> choix;
 		@NonNull
 		Integer rank;
+		
+		String typeVide;
 	}
 	
 	String name;
@@ -35,13 +38,15 @@ public class Service {
 	String rank;
 	
 	@JsonIgnore
-	RankCompte rankCompte = new RankCompte();
+	NbPlatParSsMenu rankCompte = new NbPlatParSsMenu();
 	
-	SousMenu makeSousMenu(Integer rank){
-		return new SousMenu(new ArrayList<>(), rank);
+	SousMenu makeSousMenu(Integer rank, String typeVide){
+		SousMenu sm =  new SousMenu(new ArrayList<>(), rank);
+		sm.typeVide = typeVide;
+		return sm;
 	}
 	
-	RankCompte clean(){
+	NbPlatParSsMenu clean(){
 		
 	/*	recipes.forEach(Plat::clean); */
 	/* recipes.forEach(plat -> plat.clean());

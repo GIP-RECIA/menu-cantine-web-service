@@ -1,10 +1,1 @@
-.semaine {
-  display: flex;
-  flex-wrap: wrap;
-}
-.semaine .jour {
-  border: 1px solid red;
-  flex: auto;
-  min-width: 300px;
-}
-
+.semaine{font-size:80%;display:flex;flex-wrap:wrap}.semaine span{display:table;margin:auto}.semaine .vide1,.semaine .vide2,.semaine .vide3{display:none}.semaine article.jour{border:1px solid #f00;flex:auto;width:10%;min-width:300px}.semaine article.jour>header>span{font-weight:bold}.semaine article.jour article.service{margin-top:.5em}.semaine article.jour ul{padding:0;margin:0}.semaine article.jour li.partie{margin-top:1em;font-size:95%;list-style-type:none}.semaine article.jour li.partie>span{font-weight:bold}.semaine article.jour li.partie span{height:1em;margin-height:0;margin-top:0}.semaine article.jour li.partie li.choix{margin-top:.5em;height:1em;font-size:100%;list-style-type:none}@media (min-width:1800px){article.jour.vide1{display:none}}@media (min-width:620px){article.jour.vide1{display:block}article.jour .vide3{display:block}}@media (min-width:922px){article.jour .vide2{display:block}}@media (min-width:1200px){article.jour .vide1{display:block}}

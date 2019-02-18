@@ -36,15 +36,22 @@ public class Journee {
 
 	List<Service> destinations;
 	
+	String typeVide;
 	boolean isVide(){
-		return destinations == null;
+		if (destinations == null) {
+			if (typeVide==null) {
+				typeVide = "vide1";
+				}
+			return true;
+		}
+		return false;
 	}
 	
 	@JsonIgnore 
-	ServiceRankCompte serviceRankCompte = new ServiceRankCompte();
+	NbPlatParSsMenuParService nbPlatParSsMenuParService = new NbPlatParSsMenuParService();
 	
 	
-	ServiceRankCompte clean(){
+	NbPlatParSsMenuParService clean(){
 		if (jour == null && date != null) {
 			
 			jour = date.format(formatJour);
@@ -55,11 +62,11 @@ public class Journee {
 					if (service.getRecipes().isEmpty()) {
 						iterator.remove();
 					} else {
-						serviceRankCompte.put(service.name, service.clean());
+						nbPlatParSsMenuParService.put(service.name, service.clean());
 					}
 				}
 			}
 		}
-		return serviceRankCompte;
+		return nbPlatParSsMenuParService;
 	}
 }
