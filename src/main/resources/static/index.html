@@ -12,12 +12,34 @@
 		href="css/menu-cantine.css"/>
 <body>
 <a href="api/hello" type="application/json" target="json">json</a>
+
+<script type="text/x-template" id="modal-template">
+	<transition name="modal">
+		<div class="modal-mask">
+      		<div class="modal-wrapper">
+        		<div class="modal-container">
+					<span>{{ plat.name }}</span>
+					<ul>
+						<li v-for="elem in plat.nutritions">
+							<span>{{ elem.name }}:</span><span>{{ elem.value }}:</span><span>{{ elem.unit }}:</span>
+						</li>
+					</ul>
+              		<button class="modal-default-button" @click="$emit('close')">X</button>
+				</div>
+			</div>
+		</div>
+	</transition>
+</script>
+
 <div id="menucantine">
 
-	<h1>Menu Cantine:</h1><h2> du {{ debutPeriode }} au {{ finPeriode }}</h2>
-	
+
+	<header>Menu Cantine: <span>du {{ debutPeriode }}</span><span> au {{ finPeriode }}</span></header>
+	 <modal v-if="showModal" @close="showModal = false" v-bind:plat="plat">
+	 </modal>
+	 
 	<section class="semaine" >
-	<article  v-for="jour in jours" v-bind:class="['jour', jour.typeVide]"> 
+	<article  v-for="jour in jours" v-bind:class="['jour', jour.typeVide, jour.jour]"> 
 			<header><span class="name" >{{ jour.jour }}</span>
 					
 					<div><span class="date">{{ jour.date }}</span></div>
@@ -36,10 +58,13 @@
 			-->		<ul>
 						<li v-for="partie in service.menu" 
 									v-bind:class="['partie', 'rank'+partie.rank, partie.typeVide]" >
-								<span >{{ partie.choix[0].family }}</span>
+								<header><span >{{ partie.choix[0].family }}</span></header>
 								<ul>
 									<li v-bind:class="['choix', choix.typeVide]"   
-									v-for="choix in partie.choix"> <span>{{ choix.name }}</span></li>
+									v-for="choix in partie.choix"> 
+									<a v-if="choix.nutritions" @click="displayModal(choix)"><span>{{ choix.name }}*</span></a>
+									<span v-else>{{ choix.name }}</span>
+									</li>
 								</ul>	
 						</li> 
 					
@@ -50,9 +75,10 @@
 	
 	</article>
 	</section>
-	
-
 </div>
+
+
+
 </body>
 
 <script>
@@ -72,13 +98,30 @@
 	    };
 	var initGet = { method: 'GET', };
 	
+	var  laModal = {
+		 data: function (){ 
+				return { nutData:[{'name': 'test', 'value': 'val', 'unit':'u'}], };
+		 	},
+		  template: '#modal-template',
+		 
+		 props: [ 'plat'],
+		};
+
+	
+	
 	const menuCantine = new Vue({
 		el: '#menucantine',
 		data: {	
 			menuSemaine: '',
 			debutPeriode: '',
 			finPeriode: '',
-			jours: ''
+			jours: '',
+			plat: '',
+			showModal: false,
+		},
+		
+		components: {
+			'modal' : laModal,
 		},
 		
 		created () {
@@ -92,6 +135,14 @@
 					}
 				);
 		},
+		methods: {
+			displayModal: function (plat) {
+				//$modal.setNut(nut);
+				this.plat = plat;
+				console.log(this.plat);
+				this.showModal = true;
+			}
+		}
 
 	})
 </script>
