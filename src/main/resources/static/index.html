@@ -15,13 +15,26 @@
 
 
 <div id="menucantine">
+	<select v-model="selected" @change="loadMenu();" >
+	  <option disabled value="">Choisissez</option>
+	  <option value="0450782F">lycée VOLTAIRE</option>
+	  <option value="0370038R">lycée GRANDMONT</option>
+	  <option value="0370032J">lycée CLOUET</option>
+	  <option value="0410899E">lycée hôtelier de Blois</option>
+	  <option value="0180823X">lycée VAUVERT</option>
+	</select>
+	<input v-model="noSemaine" @change="loadMenu();"/>
+	
+	<div v-if="erreur">
+		{{ erreur }}
+	</div>
+	
 
-
-	<header>Menu Cantine: <span>du {{ debutPeriode }}</span><span> au {{ finPeriode }}</span></header>
+	<header  v-if="menuSemaine">Menu Cantine: <span>du {{ debutPeriode }}</span><span> au {{ finPeriode }}</span></header>
 	 <modal v-if="showModal" @close="showModal = false" v-bind:plat="plat">
 	 </modal>
 	 
-	<section class="semaine" >
+	<section v-if="menuSemaine" class="semaine" >
 	<article  v-for="jour in jours" v-bind:class="['jour', jour.typeVide, jour.jour]"> 
 			<header><span class="name" >{{ jour.jour }}</span>
 					
@@ -30,15 +43,7 @@
 			<main>
 				<article class="service" v-for="service in jour.destinations">
 			  		<header><span>{{ service.name }}</span></header>
-			<!--		<main>						
-						<article 	v-for="partie in service.menu" 
-									v-bind:class="['partie', 'rank'+partie.rank]" >
-						<header class='{{  partie.typeVide }}'><h1>{{ partie.choix[0].family }} {{ partie.typeVide }}</h1></header>
-						<article 	class="choix" 
-									v-for="choix in partie.choix"> {{ choix.name }}{{ choix.typeVide }}</article>
-						</article>
-					</main>
-			-->		<ul>
+				<ul>
 						<li v-for="partie in service.menu" 
 									v-bind:class="['partie', 'rank'+partie.rank, partie.typeVide]" >
 								<header><span >{{ partie.choix[0].family }}</span></header>

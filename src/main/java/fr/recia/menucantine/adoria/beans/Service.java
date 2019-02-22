@@ -23,6 +23,8 @@ public class Service {
 		@NonNull
 		Integer rank;
 		
+		Integer nbPlats; 
+		
 		String typeVide;
 	}
 	
@@ -34,6 +36,7 @@ public class Service {
 	
 	@JsonInclude(Include.NON_NULL)
 	List<SousMenu> menu;
+	
 	
 	String rank;
 	
@@ -54,20 +57,33 @@ public class Service {
 		if (recipes == null) return rankCompte;
 		menu = new ArrayList<Service.SousMenu>();
 		int oldRank = 0;
-		List<Plat> plats = new ArrayList<>();
-
+		List<Plat> plats = null;
+		SousMenu ssMenu = null;
+		int nbPlats = 0;
+		
 		for (Plat plat : recipes) {
 			plat.clean();
 			Integer rank = plat.getFamilyRank();
 			if (oldRank < rank) {
-				rankCompte.put(oldRank, plats.size());
+				
+				if (ssMenu != null) {
+					nbPlats = plats.size();
+					ssMenu.setNbPlats(nbPlats);
+				} 
+				
+				rankCompte.put(oldRank, nbPlats);
 				plats = new ArrayList<>();
-				menu.add(new SousMenu(plats, rank));
+				ssMenu = new SousMenu(plats, rank);
+				menu.add(ssMenu);
 				oldRank = rank;
 			}
 			plats.add(plat);
 		}
-		rankCompte.put(oldRank, plats.size());
+		if (ssMenu != null) {
+			nbPlats = plats.size();
+			ssMenu.setNbPlats(nbPlats);
+		}
+		rankCompte.put(oldRank, nbPlats);
 		recipes = null;
 		return rankCompte;
 	}

@@ -153,14 +153,15 @@ public class RestAdoriaClient {
 	}
 	
 		
-	public  ReponseAdoria call(String uai, Integer semaine, Integer annee) {
+	public  ReponseAdoria call(String uai, Integer semaine, Integer annee) throws RestAdoriaClientException {
 		ReponseAdoria res = null;
 		try {
 			
 			res = adoriaWebClient.call(new RequetteAdoria(uai, semaine, annee));
 			
 		} catch (RestAdoriaClientException e){
-			log.debug(e.getMessage());
+			log.error(e.getMessage());
+			throw e;
 		}
 		return res;
 	}

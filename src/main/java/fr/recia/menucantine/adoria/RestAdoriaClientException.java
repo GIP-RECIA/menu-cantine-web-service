@@ -1,5 +1,7 @@
 package fr.recia.menucantine.adoria;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.boot.json.JacksonJsonParser;
@@ -47,11 +49,13 @@ public class RestAdoriaClientException extends Exception {
 	}
 	
 	public Map<String, Object> getMap(){
-		Map<String, Object>  err = null;
+		Map<String, Object>  err = new LinkedHashMap<String, Object>();
 		if (webClientException != null) {
-			err =  parser.parseMap(webClientException.getResponseBodyAsString());
 			err.put("ErrorCode", webClientException.getRawStatusCode());
 			err.put("ErrorText", webClientException.getStatusCode());
+			
+			err.putAll(parser.parseMap(webClientException.getResponseBodyAsString()));
+			
 			if (requette != null) {
 				err.put("Requette", requette);
 			}

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import fr.recia.menucantine.adoria.RestAdoriaClient;
+import fr.recia.menucantine.adoria.RestAdoriaClientException;
 import fr.recia.menucantine.beans.Requette;
 import fr.recia.menucantine.beans.Semaine;
 
@@ -20,7 +21,7 @@ public class MenuCantineServices {
 	@Autowired
 	private RestAdoriaClient adoriaClient ;
 	
-	public Semaine findSemaine(Requette requette){
+	public Semaine findSemaine(Requette requette) throws RestAdoriaClientException{
 		
 		if (requette == null || requette.getUai() == null){
 			throw new NullPointerException("requette ou uai null");
