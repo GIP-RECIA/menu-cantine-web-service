@@ -62,18 +62,18 @@ public class Service {
 		if (recipes == null) return rankCompte;
 		
 		menu = new ArrayList<>();
-		int maxRank = 0;
 		
-		
-		for (Plat plat : recipes) {
+		recipes.forEach(plat -> { 
 			plat.clean();
 			Integer rank = plat.getFamilyRank();
 		
-			while (rank > maxRank) { // on creer un sous menu par rank possible 
-				menu.add(new SousMenu(new ArrayList<>(), ++maxRank));
+			while (rank > menu.size()) { // on creer un sous menu par rank possible 
+				menu.add(new SousMenu(new ArrayList<>(), menu.size()));
 			}
 			menu.get(rank-1).getChoix().add(plat);
-		}
+		});
+		
+		
 		for (SousMenu sousMenu : menu) {
 			int nbPlats = sousMenu.getChoix().size();
 			sousMenu.setNbPlats(nbPlats); 
