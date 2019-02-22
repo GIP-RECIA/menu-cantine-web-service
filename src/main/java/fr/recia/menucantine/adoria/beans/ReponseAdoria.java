@@ -80,6 +80,7 @@ public class ReponseAdoria {
 				nbJours = dates.size();
 			}
 		}
+		//TODO trier journee par date 
 		return this;
 	}
 	

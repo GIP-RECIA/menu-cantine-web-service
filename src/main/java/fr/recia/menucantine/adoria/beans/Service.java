@@ -49,41 +49,36 @@ public class Service {
 		return sm;
 	}
 	
+	/**
+	 * regroupe les plats par sous menu triéés
+	 * supprime les plat vide... 
+	 * @return
+	 */
 	NbPlatParSsMenu clean(){
 		
 	/*	recipes.forEach(Plat::clean); */
 	/* recipes.forEach(plat -> plat.clean());
 	 */
 		if (recipes == null) return rankCompte;
-		menu = new ArrayList<Service.SousMenu>();
-		int oldRank = 0;
-		List<Plat> plats = null;
-		SousMenu ssMenu = null;
-		int nbPlats = 0;
+		
+		menu = new ArrayList<>();
+		int maxRank = 0;
+		
 		
 		for (Plat plat : recipes) {
 			plat.clean();
 			Integer rank = plat.getFamilyRank();
-			if (oldRank < rank) {
-				
-				if (ssMenu != null) {
-					nbPlats = plats.size();
-					ssMenu.setNbPlats(nbPlats);
-				} 
-				
-				rankCompte.put(oldRank, nbPlats);
-				plats = new ArrayList<>();
-				ssMenu = new SousMenu(plats, rank);
-				menu.add(ssMenu);
-				oldRank = rank;
+		
+			while (rank > maxRank) { // on creer un sous menu par rank possible 
+				menu.add(new SousMenu(new ArrayList<>(), ++maxRank));
 			}
-			plats.add(plat);
+			menu.get(rank-1).getChoix().add(plat);
 		}
-		if (ssMenu != null) {
-			nbPlats = plats.size();
-			ssMenu.setNbPlats(nbPlats);
+		for (SousMenu sousMenu : menu) {
+			int nbPlats = sousMenu.getChoix().size();
+			sousMenu.setNbPlats(nbPlats); 
+			rankCompte.put(sousMenu.getRank(), nbPlats);
 		}
-		rankCompte.put(oldRank, nbPlats);
 		recipes = null;
 		return rankCompte;
 	}

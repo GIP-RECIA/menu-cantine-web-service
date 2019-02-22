@@ -2,6 +2,7 @@ package fr.recia.menucantine.adoria.beans;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class Journee {
 		if (jour == null && date != null) {
 			
 			jour = date.format(formatJour);
-			
+			//TODO ordonner les destination List<Service> orderedDestinations = new ArrayList<Service>(destinations.size());
 			for (Iterator<Service> iterator = destinations.iterator(); iterator.hasNext();) {
 				Service service = (Service) iterator.next();
 				if (service != null) {
