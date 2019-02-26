@@ -5,6 +5,12 @@ const modalTemplate =
       		<div class="modal-wrapper">
         		<div class="modal-container">
 					<span>{{ plat.name }}</span>
+					<div class="ifPlat" v-if="plat.gemrcn"> 
+						<div class="forColor" v-for="code_gemrcn in plat.gemrcn">
+								<!-- span :style="'background-color:' + gemrcn_list[code_gemrcn].color + '; display:inline-block; width: 1ex; height: 1ex;'" >&nbsp;</span -->
+								<span :style="'color:' + gemrcn_list[code_gemrcn].color + ';'">	{{ gemrcn_list[code_gemrcn].comment }} </span>
+						</div>
+					</div>
 					<ul>
 						<li v-for="elem in plat.nutritions">
 							<span>{{ elem.name }}: </span><span>{{ elem.value }} </span><span>{{ elem.unit }}</span>
@@ -41,7 +47,7 @@ var  laModal = {
 	 	},
 	  template: modalTemplate,
 	 
-	 props: [ 'plat'],
+	 props: [ 'plat', 'gemrcn_list'],
 	};
 
 
@@ -59,6 +65,7 @@ const menuCantine = new Vue({
 		noSemaine: '6',
 		erreur: '',
 		showModal: false,
+		gemRcnData:'',
 	},
 	
 	components: {
@@ -88,7 +95,9 @@ const menuCantine = new Vue({
 						this.menuSemaine = json;
 						this.debutPeriode = json.debut;
 						this.finPeriode = json.fin;
+						this.gemRcnData = json.allGemRcn;
 						this.jours = json.jours;
+						console.log(this.gemRcnData);
 						this.defaultStyle = {};
 					}
 				})

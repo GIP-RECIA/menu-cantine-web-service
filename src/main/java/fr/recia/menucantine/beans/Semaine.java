@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import fr.recia.menucantine.adoria.beans.GemRcn;
 import fr.recia.menucantine.adoria.beans.Journee;
 import fr.recia.menucantine.adoria.beans.ReponseAdoria;
 import lombok.Data;
@@ -18,6 +19,9 @@ public class Semaine {
 	Integer nbJours;
 	String debut;
 	String fin;
+	
+	List<GemRcn> allGemRcn = GemRcn.getList();
+	
 	
 
 	List<Journee> jours;

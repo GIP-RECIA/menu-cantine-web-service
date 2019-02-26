@@ -31,7 +31,7 @@
 	
 
 	<header  v-if="menuSemaine">Menu Cantine: <span>du {{ debutPeriode }}</span><span> au {{ finPeriode }}</span></header>
-	 <modal v-if="showModal" @close="showModal = false" v-bind:plat="plat">
+	 <modal v-if="showModal" @close="showModal = false" v-bind:plat="plat" v-bind:gemrcn_list="gemRcnData">
 	 </modal>
 	 
 	<section v-if="menuSemaine" class="semaine" >
@@ -50,7 +50,13 @@
 								<ul>
 									<li v-bind:class="['choix', choix.typeVide]"   
 									v-for="choix in partie.choix"> 
-									<a v-if="choix.nutritions" @click="displayModal(choix)"><span>{{ choix.name }}*</span></a>
+									<a v-if="choix.nutritions || choix.gemrcn " @click="displayModal(choix)">
+										<span>
+											<span v-for="code_gemrcn in choix.gemrcn" :style="'background-color:' + gemRcnData[code_gemrcn].color + '; width:1em;'">&nbsp;</span>
+											<span>{{ choix.name }}</span>
+											<span v-if="choix.nutritions">*</span>
+										</span>
+									</a>
 									<span v-else>{{ choix.name }}</span>
 									</li>
 								</ul>	

@@ -50,7 +50,7 @@ public class Journee {
 		if (jour == null && date != null) {
 			
 			jour = date.format(formatJour);
-			//TODO ordonner les destination List<Service> orderedDestinations = new ArrayList<Service>(destinations.size());
+
 			for (Iterator<Service> iterator = destinations.iterator(); iterator.hasNext();) {
 				Service service = (Service) iterator.next();
 				if (service != null) {
@@ -61,6 +61,15 @@ public class Journee {
 					}
 				}
 			}
+			destinations.sort((s1, s2) -> {
+					if (s1.rank != null) {
+						return s1.rank.compareTo(s2.rank);
+					}
+					if (s2.rank != null) {
+						return s2.rank.compareTo(s1.rank);
+					}
+				return 0;
+			});
 		}
 		return nbPlatParSsMenuParService;
 	}

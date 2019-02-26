@@ -38,7 +38,7 @@ public class Service {
 	List<SousMenu> menu;
 	
 	
-	String rank;
+	Integer rank;
 	
 	@JsonIgnore
 	NbPlatParSsMenu rankCompte = new NbPlatParSsMenu();
