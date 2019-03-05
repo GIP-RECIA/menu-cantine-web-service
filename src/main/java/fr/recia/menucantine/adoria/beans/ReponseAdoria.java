@@ -189,12 +189,12 @@ public class ReponseAdoria {
 			
 			initNbPlatMaxParTypeLine();
 			
-			while (dates.size() < 6) {
+	/*		while (dates.size() < 6) {
 				Journee jVide = new Journee();
 				jVide.setTypeVide(" vide2 vide3  ");
 				dates.add(jVide);
 			}
-			
+	*/		
 			int jour = 0;
 			for (Journee journee : dates) {
 				

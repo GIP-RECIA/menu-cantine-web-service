@@ -42,7 +42,7 @@ public class Journee {
 		return typeVide  != null;
 	}
 	
-	@JsonIgnore 
+//	@JsonIgnore 
 	NbPlatParSsMenuParService nbPlatParSsMenuParService = new NbPlatParSsMenuParService();
 	
 	

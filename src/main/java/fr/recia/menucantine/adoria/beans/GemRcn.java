@@ -52,8 +52,8 @@ public enum GemRcn {
 		DessertGluc("Dessert>20g gluc <15% lip", "Desserts ou produits laitiers contenant plus de 20g de glucides simples totaux par portion et moins de 15% de lipides",	15,	"#8C442B"),
 		DessertFruit("Dessert 100% fruits crus",	"Desserts de fruits crus 100% fruit cru, sans sucre ajouté(5) 8/20 mini",	16,	"#BAD65D"),
 		PlatPrepae("Plat préparé", "Préparations ou plats prêts à consommer contenant moins de 70 % du grammage recommandé pour la portion de viande, poisson ou œuf",	17,	"#ED1D24"),
-		//PLaitLip("P.Lait>100mg calc <5%lip",	"Produits laitiers ou desserts lactés contenant plus de 100 mg de calcium laitier, et moins de 5g de lipides par portion",	13,	"#02AFEF"),
-		
+		Fromage150Calc("Fromage> 150mg calc", "Fromages contenant au moins 150 mg de calcium laitier par portion", 18, "#02AFEF"),
+		ProduitLaitier("P.Lait>100mg calc <5%lip",	"Produits laitiers ou desserts lactés contenant plus de 100 mg de calcium laitier, et moins de 5g de lipides par portion",	19,	"#02AFEF")
 	;
 		
 	private static final Logger log = LoggerFactory.getLogger(GemRcn.class);	
