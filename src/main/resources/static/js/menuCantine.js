@@ -1,4 +1,5 @@
 
+
 const modalTemplate = 
 `<transition name="modal">
 		<div class="modal-mask">
@@ -23,6 +24,7 @@ const modalTemplate =
 </transition>`
 
 
+Vue.use('vue-glide-js');
 
 var data = new FormData();
 //data.append( "json", JSON.stringify({content: 'testPost'}));
@@ -101,7 +103,7 @@ const menuCantine = new Vue({
 						this.defaultStyle = {};
 					}
 				})
-			.catch(errot => console.error(error))
+			.catch(error => console.error(error))
 			;
 		},
 	}

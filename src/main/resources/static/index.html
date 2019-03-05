@@ -3,6 +3,10 @@
 </head>
 
 <script src="js/dist/vue.js"></script>
+<script src="js/dist/vue-glide.umd.js"></script>
+<link 	rel="stylesheet" 
+		type="text/css" 
+		href="css/vue-glade.css"/>
 
 <!-- production version, optimized for size and speed  vue.min.js
 -->
@@ -35,6 +39,7 @@
 	 </modal>
 	 
 	<section v-if="menuSemaine" class="semaine" >
+
 	<article  v-for="jour in jours" v-bind:class="['jour', jour.typeVide, jour.jour]"> 
 			<header><span class="name" >{{ jour.jour }}</span>
 					
@@ -66,7 +71,6 @@
 				</article>
 				
 			</main>
-	
 	</article>
 	</section>
 </div>
