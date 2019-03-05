@@ -1,6 +1,9 @@
 package fr.recia.menucantine;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.servlet.Filter;
 
 import org.apereo.portal.soffit.security.SoffitApiAuthenticationManager;
@@ -21,7 +24,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+
 
 
 @Configuration
@@ -69,9 +78,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/api/**").authenticated()
                 .antMatchers(HttpMethod.DELETE,"/api/**").denyAll()
                 .antMatchers(HttpMethod.PUT,"/api/**").denyAll()
-                .anyRequest().permitAll()
-                
-                
+                .anyRequest().permitAll() 
+            .and() // pour la dev en local host autorisation du cross domaine
+            	.cors()
+            	.configurationSource(corsConfigurationSource())
             .and()
             /*
              * Session fixation protection is provided by uPortal.  Since portlet tech requires
@@ -102,5 +112,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	        return filterRegistrationBean;
 	    }
 
-	
+	 @Bean
+	    CorsConfigurationSource corsConfigurationSource() {
+	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+	        boolean abilitaCors = true;
+	        if( abilitaCors )
+	        {
+	            if( log.isWarnEnabled() )
+	            {
+	                log.warn("CORS ABILITATI! CORS est autorisé");
+	            }
+	            CorsConfiguration configuration = new CorsConfiguration();
+	           	            configuration.setAllowedOrigins( Arrays.asList("http://localhost:8080"));
+	            configuration.setAllowedMethods(Arrays.asList(  RequestMethod.GET.name(),
+	                    RequestMethod.POST.name(), 
+	                    RequestMethod.OPTIONS.name(), 
+	                    RequestMethod.DELETE.name(),
+	                    RequestMethod.PUT.name()));
+	            configuration.setExposedHeaders(Arrays.asList("x-auth-token", "x-requested-with", "x-xsrf-token"));
+	            configuration.setAllowedHeaders(Arrays.asList("content-type", "x-com-persist", "X-Auth-Token","x-auth-token", "x-requested-with", "x-xsrf-token"));
+	            source.registerCorsConfiguration("/**", configuration);
+	        }
+	        return  source;
+	    }
 }
