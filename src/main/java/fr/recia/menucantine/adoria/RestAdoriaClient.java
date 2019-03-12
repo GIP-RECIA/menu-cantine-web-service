@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import fr.recia.menucantine.adoria.beans.ReponseAdoria;
-import fr.recia.menucantine.adoria.beans.RequetteAdoria;
+import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 
 
 @Configuration
@@ -139,7 +139,7 @@ public class RestAdoriaClient {
 		for (String uai : uais) {
 			try {
 				if ("0180823X".equals(uai)) {
-					res =  adoriaWebClient.call(new RequetteAdoria(uai, 6, 2019));
+					res =  adoriaWebClient.call(new RequeteAdoria(uai, 6, 2019));
 					
 					log.debug("etab ok : {}", uai);
 				//	logOk.info("reponse = {}", res); 
@@ -157,7 +157,7 @@ public class RestAdoriaClient {
 		ReponseAdoria res = null;
 		try {
 			
-			res = adoriaWebClient.call(new RequetteAdoria(uai, semaine, annee));
+			res = adoriaWebClient.call(new RequeteAdoria(uai, semaine, annee));
 			
 		} catch (RestAdoriaClientException e){
 			log.error(e.getMessage());

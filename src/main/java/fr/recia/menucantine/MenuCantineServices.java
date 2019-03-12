@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import fr.recia.menucantine.adoria.RestAdoriaClient;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
-import fr.recia.menucantine.beans.Requette;
+import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
 
 @Configuration
@@ -21,24 +21,26 @@ public class MenuCantineServices {
 	@Autowired
 	private RestAdoriaClient adoriaClient ;
 	
-	public Semaine findSemaine(Requette requette) throws RestAdoriaClientException{
+	public Semaine findSemaine(Requete requete) throws RestAdoriaClientException{
 		
-		if (requette == null || requette.getUai() == null){
-			throw new NullPointerException("requette ou uai null");
+		if (requete == null || requete.getUai() == null){
+			throw new NullPointerException("requete ou uai null: " + requete);
 		}
 	
-		Integer annee = requette.getAnnee();
-		Integer semaine = requette.getSemaine();
+		Integer annee = requete.getAnnee();
+		Integer semaine = requete.getSemaine();
 		LocalDate now = LocalDate.now();
 		
 		if (annee == null) {
 			annee = now.getYear();
+			requete.setAnnee(annee);
 		}
 		if (semaine == null) {
 			WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
 			semaine = now.get(weekFields.weekOfWeekBasedYear());
+			requete.setSemaine(semaine);
 		}
 		
-		return new Semaine(adoriaClient.call(requette.getUai(), semaine, annee));
+		return new Semaine(adoriaClient.call(requete.getUai(), semaine, annee));
 	}
 }

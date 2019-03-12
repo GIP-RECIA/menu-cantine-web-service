@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequetteAdoria {
+public class RequeteAdoria {
 	String siteInternalCode;
 	Integer weekNumber;
 	Integer year;

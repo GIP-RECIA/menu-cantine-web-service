@@ -4,7 +4,7 @@ import lombok.Data;
 
 
 @Data
-public class Requette {
+public class Requete {
 	Integer semaine;
 	Integer annee;
 	Integer jour;

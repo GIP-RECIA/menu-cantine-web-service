@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
-import fr.recia.menucantine.adoria.beans.RequetteAdoria;
+import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 
 public class RestAdoriaClientException extends Exception {
 	static JacksonJsonParser parser = new JacksonJsonParser();
@@ -26,7 +26,7 @@ public class RestAdoriaClientException extends Exception {
 	
 	
 	WebClientResponseException webClientException;
-	RequetteAdoria requette;
+	RequeteAdoria requete;
 	
 	public RestAdoriaClientException(){
 		super();
@@ -35,10 +35,10 @@ public class RestAdoriaClientException extends Exception {
 		super();
 		
 	}
-	public RestAdoriaClientException(WebClientResponseException webClientException, RequetteAdoria requette) {
+	public RestAdoriaClientException(WebClientResponseException webClientException, RequeteAdoria requete) {
 		super();
 		this.webClientException = webClientException;
-		this.requette = requette;
+		this.requete = requete;
 	}
 	
 	public String getJson(){
@@ -56,8 +56,8 @@ public class RestAdoriaClientException extends Exception {
 			
 			err.putAll(parser.parseMap(webClientException.getResponseBodyAsString()));
 			
-			if (requette != null) {
-				err.put("Requette", requette);
+			if (requete != null) {
+				err.put("Requete", requete);
 			}
 		}
 		return err;

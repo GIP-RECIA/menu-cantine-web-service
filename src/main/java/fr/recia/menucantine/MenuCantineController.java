@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.recia.menucantine.adoria.RestAdoriaClient;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
-import fr.recia.menucantine.beans.Requette;
+import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
 
 @RestController
@@ -41,15 +41,15 @@ public class MenuCantineController {
 		  @PostMapping(path="/hello", consumes = "application/json", produces = "application/json")
 		  public ResponseEntity<Object> post(
 			//	  @RequestHeader(name = "X-COM-PERSIST", required = true) String headerPersist,
-				  @RequestBody Requette requette) {
-			  Integer semaine = requette.getSemaine();
-			  log.debug("post requette =  {}", requette);
+				  @RequestBody Requete requete) {
+			  Integer semaine = requete.getSemaine();
+			  log.debug("post requete =  {}", requete);
 			  
 			  
 			//  Greeting newOne = new Greeting(String.format(template, name));
 			 
 			  try {
-				lastCall4debug = services.findSemaine(requette);
+				lastCall4debug = services.findSemaine(requete);
 			} catch (RestAdoriaClientException e) {
 				return new ResponseEntity<Object>(e.getMap(), HttpStatus.PARTIAL_CONTENT);
 			}

@@ -12,7 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import fr.recia.menucantine.adoria.beans.ReponseAdoria;
-import fr.recia.menucantine.adoria.beans.RequetteAdoria;
+import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 import reactor.core.publisher.Mono;
 
 
@@ -34,8 +34,8 @@ public class RestAdoriaWebClient {
     private WebClient webClient ;
 	
 	
-	@Cacheable("requettes")
-	public  ReponseAdoria call(RequetteAdoria requette) throws RestAdoriaClientException{	
+	@Cacheable("requetes")
+	public  ReponseAdoria call(RequeteAdoria requete) throws RestAdoriaClientException{	
 				try {	
 				/*	Mono<Map<String, Object>> reponse =  webClient.post()
 							.uri("https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt")
@@ -43,7 +43,7 @@ public class RestAdoriaWebClient {
 							.contentType(MediaType.APPLICATION_JSON)
 							.header("AdoriaClientKey", "3513501c-bebc-4f1f-b937-d426a6a76ce6")
 							.header("Guid", "46390997-f811-45cc-b86d-1291d36e753f")
-							.syncBody(requette)
+							.syncBody(requete)
 							.retrieve()
 							.bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {});
 				*/
@@ -57,7 +57,7 @@ public class RestAdoriaWebClient {
 							.contentType(MediaType.APPLICATION_JSON)
 							.header("AdoriaClientKey", "3513501c-bebc-4f1f-b937-d426a6a76ce6")
 							.header("Guid", "46390997-f811-45cc-b86d-1291d36e753f")
-							.syncBody(requette)
+							.syncBody(requete)
 							.retrieve()
 							.bodyToMono(ReponseAdoria.class);
 					 
@@ -66,7 +66,7 @@ public class RestAdoriaWebClient {
 					log.debug("reponse NOT IN CACHE");
 					return reponse.block().clean();
 				} catch (WebClientResponseException  e) {
-					throw new RestAdoriaClientException(e, requette);
+					throw new RestAdoriaClientException(e, requete);
 				}
 	}
 	 
