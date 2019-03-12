@@ -1,5 +1,6 @@
 package fr.recia.menucantine;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
@@ -29,6 +30,7 @@ public class MenuCantineServices {
 	
 		Integer annee = requete.getAnnee();
 		Integer semaine = requete.getSemaine();
+		Integer jour = requete.getJour();
 		LocalDate now = LocalDate.now();
 		
 		if (annee == null) {
@@ -39,8 +41,15 @@ public class MenuCantineServices {
 			WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
 			semaine = now.get(weekFields.weekOfWeekBasedYear());
 			requete.setSemaine(semaine);
+			jour = now.get(weekFields.dayOfWeek());
+			requete.setJour(jour);
 		}
 		
-		return new Semaine(adoriaClient.call(requete.getUai(), semaine, annee));
+		if (jour == null) {
+			jour = DayOfWeek.MONDAY.getValue();
+			requete.setJour(jour);
+		}
+		
+		return new Semaine(adoriaClient.call(requete.getUai(), semaine, annee), requete);
 	}
 }

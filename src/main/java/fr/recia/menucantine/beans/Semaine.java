@@ -20,20 +20,26 @@ public class Semaine {
 	String debut;
 	String fin;
 	
+	Requete requete;
+	
 	List<GemRcn> allGemRcn = GemRcn.getList();
 	
 	
-
+	Integer previousWeek;
+	Integer nextWeek;
+	
 	List<Journee> jours;
 	
 	public Semaine(){
 		super();
 	}
 	
-	public Semaine(ReponseAdoria menuSemaine) {
+	public Semaine(ReponseAdoria menuSemaine, Requete requete) {
 		super();
 		setMenuSemaine(menuSemaine);
+		setRequete(requete);
 	}
+	
 	
 	public void setMenuSemaine(ReponseAdoria menuSemaine) {
 	
@@ -54,6 +60,8 @@ public class Semaine {
 					fin = formatDate(nbJours-1);
 				}
 			}
+		//	previousWeekExportable = menuSemaine.getPreviousWeekExportable();
+		//	nextWeekExportable = menuSemaine.getNextWeekExportable();
 		}
 	}
 	
