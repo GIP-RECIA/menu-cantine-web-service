@@ -37,13 +37,13 @@ public class Journee {
 
 	List<Service> destinations;
 	
-	String typeVide;
+	Boolean typeVide = false;
 	boolean isVide(){
-		return typeVide  != null;
+		return typeVide;
 	}
 	
 //	@JsonIgnore 
-	NbPlatParSsMenuParService nbPlatParSsMenuParService = new NbPlatParSsMenuParService();
+	NbPlatParSsMenuParService serviceChoixNbPlats = new NbPlatParSsMenuParService();
 	
 	
 	NbPlatParSsMenuParService clean(){
@@ -57,7 +57,7 @@ public class Journee {
 					if (service.getRecipes().isEmpty()) {
 						iterator.remove();
 					} else {
-						nbPlatParSsMenuParService.put(service.name, service.clean());
+						serviceChoixNbPlats.put(service.name, service.clean());
 					}
 				}
 			}
@@ -71,6 +71,6 @@ public class Journee {
 				return 0;
 			});
 		}
-		return nbPlatParSsMenuParService;
+		return serviceChoixNbPlats;
 	}
 }

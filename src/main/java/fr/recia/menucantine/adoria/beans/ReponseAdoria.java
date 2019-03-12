@@ -21,10 +21,13 @@ public class ReponseAdoria {
 	static int NB_JOUR_MAX = 6;
 	static int NB_LIGNE_MAX = 3;
 	static int NB_TYPE_LIGNE_POSSIBLE = 6;
-	static String TYPE_FORMAT = " vide%d ";
+	static String TYPE_FORMAT = " vide ";
 	
 	//utile a la lecture du flux adoria
 	String cycleMenuName;
+
+	Boolean previousWeekExportable;
+	Boolean nextWeekExportable;
 	
 	//complement pour l'ecriture
 	@JsonInclude(Include.NON_NULL)
@@ -90,7 +93,7 @@ public class ReponseAdoria {
 			
 			for (Journee journee : dates) {
 				for (int nbLine = 1; nbLine <= 3 ; nbLine++) {
-					nbPlatMaxChoix(jour, nbLine, NB_JOUR_MAX).calculMax(journee.nbPlatParSsMenuParService);
+					nbPlatMaxChoix(jour, nbLine, NB_JOUR_MAX).calculMax(journee.serviceChoixNbPlats);
 				}
 				jour++;
 			}
@@ -124,23 +127,11 @@ public class ReponseAdoria {
 		int nbPlats = plats.size();
 		
 		if (nbPlats == 0) {
-			StringBuilder sb = new StringBuilder();
-			for (int line = 1; line < allMax.length; line++) {
-				if (allMax[line] != null && allMax[line] != 0 ) {
-					sb.append(String.format(TYPE_FORMAT, line));
-				}
-			}
-			ssMenu.setTypeVide(sb.toString());
+			ssMenu.setTypeVide(true);
 		}
 		
 		for (int i= nbPlats;  i < allMax[1]; i++ ) {
-			Plat plat = Plat.platVide(String.format(TYPE_FORMAT, 1));
-			plats.add(plat);
-			for (int line = 2; line < allMax.length; line++) {
-				if (allMax[line] != null && allMax[line] > i ) {
-					plat.addTypeVide(String.format(TYPE_FORMAT, line));
-				}
-			}
+			plats.add(Plat.platVide());
 		}
 	}
 	
@@ -164,7 +155,7 @@ public class ReponseAdoria {
 					Integer nbMaxNew[] = calculAllMax(jour, serviceName, rankCourant);
 					
 					if (nbMaxNew[1] != null && nbMaxNew[1] != 0 ) {
-						SousMenu newSsMenu = service.makeSousMenu(rankCourant, "");
+						SousMenu newSsMenu = service.makeSousMenu(rankCourant, false);
 						menuComplet.add(newSsMenu);
 						// on le remplie avec le nombre de plat vide qu'il faut.
 						

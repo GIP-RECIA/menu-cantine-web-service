@@ -19,7 +19,7 @@ public class Plat {
 	String name = " ";
 	String family = " "; // se sont des blancs insecable
 	String subFamily;
-	String typeVide;
+	Boolean typeVide = false;
 
 	List<String> gemrcn;
 
@@ -31,14 +31,14 @@ public class Plat {
 
 	Integer familyRank; // donne peut-être le rang dans le menu la place()
 
-	static Plat platVide(String typeVide) {
+	static Plat platVide() {
 		Plat p = new Plat();
-		p.typeVide = typeVide;
+		p.typeVide = true;
 		return p;
 	}
 
 	boolean isVide() {
-		return typeVide == null;
+		return typeVide == true;
 	}
 
 	void clean() {
@@ -63,21 +63,6 @@ public class Plat {
 				nutritions = null;
 			}
 		}
-	}
-
-	/**
-	 * Ajoute un type vide ssi le plat est déjà vide return true si ajout false
-	 * sinon
-	 * 
-	 * @param typeFormat
-	 */
-	public boolean addTypeVide(String typeFormat) {
-		if (typeVide != null) {
-			typeVide += typeFormat;
-			return true;
-		}
-		return false;
-
 	}
 
 }

@@ -25,7 +25,7 @@ public class Service {
 		
 		Integer nbPlats; 
 		
-		String typeVide;
+		Boolean typeVide = false;
 	}
 	
 	String name;
@@ -43,7 +43,7 @@ public class Service {
 	@JsonIgnore
 	NbPlatParSsMenu rankCompte = new NbPlatParSsMenu();
 	
-	SousMenu makeSousMenu(Integer rank, String typeVide){
+	SousMenu makeSousMenu(Integer rank, Boolean typeVide){
 		SousMenu sm =  new SousMenu(new ArrayList<>(), rank);
 		sm.typeVide = typeVide;
 		return sm;
