@@ -1,6 +1,5 @@
 package fr.recia.menucantine.adoria;
 
-import java.security.KeyStore;
 import java.util.function.Supplier;
 
 import javax.net.ssl.SSLContext;

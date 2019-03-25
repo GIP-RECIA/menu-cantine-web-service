@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -23,53 +22,37 @@ import reactor.core.publisher.Mono;
 public class RestAdoriaWebClient implements IRestAdoriaWebClient {
 	private static final Logger log = LoggerFactory.getLogger(RestAdoriaWebClient.class);	
 
-	
-	
+	@Autowired
+    private WebClient webClient ;
 	
 	public RestAdoriaWebClient() {
 		super();
 	}
-
-	
-	
-	@Autowired
-    private WebClient webClient ;
 	
 	@Override
 	@Cacheable("requetes")
 	public  ReponseAdoria call(RequeteAdoria requete) throws RestAdoriaClientException{	
-				try {	
-				/*	Mono<Map<String, Object>> reponse =  webClient.post()
-							.uri("https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt")
-							.accept(MediaType.APPLICATION_JSON)
-							.contentType(MediaType.APPLICATION_JSON)
-							.header("AdoriaClientKey", "3513501c-bebc-4f1f-b937-d426a6a76ce6")
-							.header("Guid", "46390997-f811-45cc-b86d-1291d36e753f")
-							.syncBody(requete)
-							.retrieve()
-							.bodyToMono(new ParameterizedTypeReference<Map<String,Object>>() {});
-				*/
-					/*	.onStatus(HttpStatus::is4xxClientError, 
+		try {	
+			Mono<ReponseAdoria> reponse =  webClient.post()
+				.uri("https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt")
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON)
+				.header("AdoriaClientKey", "3513501c-bebc-4f1f-b937-d426a6a76ce6")
+				.header("Guid", "46390997-f811-45cc-b86d-1291d36e753f")
+				.syncBody(requete)
+				.retrieve()
+				.bodyToMono(ReponseAdoria.class);
+		 
+				/*	.onStatus(HttpStatus::is4xxClientError, 
 					response -> response.bodyToMono(Void.class))
-			.onStatus(HttpStatus::is5xxServerError, response -> response.body(null))
-	*/	
-						Mono<ReponseAdoria> reponse =  webClient.post()
-							.uri("https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt")
-							.accept(MediaType.APPLICATION_JSON)
-							.contentType(MediaType.APPLICATION_JSON)
-							.header("AdoriaClientKey", "3513501c-bebc-4f1f-b937-d426a6a76ce6")
-							.header("Guid", "46390997-f811-45cc-b86d-1291d36e753f")
-							.syncBody(requete)
-							.retrieve()
-							.bodyToMono(ReponseAdoria.class);
-					 
-						
-							
-					log.debug("reponse NOT IN CACHE");
-					return reponse.block().clean();
-				} catch (WebClientResponseException  e) {
-					throw new RestAdoriaClientException(e, requete);
-				}
+					.onStatus(HttpStatus::is5xxServerError, response -> response.body(null))
+				 */	
+					
+			log.debug("reponse NOT IN CACHE");
+			return reponse.block().clean();
+		} catch (WebClientResponseException  e) {
+			throw new RestAdoriaClientException(e, requete);
+		}
 	}
 	 
 	

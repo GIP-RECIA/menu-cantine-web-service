@@ -1,6 +1,5 @@
 package fr.recia.menucantine.adoria;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,6 +9,10 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 
 public class RestAdoriaClientException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4941524452580166415L;
 	static JacksonJsonParser parser = new JacksonJsonParser();
 	
 	static enum TypeError{
@@ -19,9 +22,15 @@ public class RestAdoriaClientException extends Exception {
 		NoDatas ("No datas");
 		
 		private String texte;
+		
 		private TypeError(String texte){
 			this.texte = texte;
 		}
+
+		public String getTexte() {
+			return texte;
+		}
+		
 	}
 	
 	

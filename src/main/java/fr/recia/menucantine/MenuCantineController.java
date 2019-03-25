@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.recia.menucantine.adoria.RestAdoriaClient;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
@@ -21,10 +19,8 @@ import fr.recia.menucantine.beans.Semaine;
 @RequestMapping(path = "/api")
 public class MenuCantineController {
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineController.class);	
-		  private static final String template = "Hello, %s!";
-		 
-		  @Autowired
-		    private RestAdoriaClient adoriaClient ;
+		
+		  
 		  
 		  @Autowired
 		  private MenuCantineServices services;
@@ -42,7 +38,7 @@ public class MenuCantineController {
 		  public ResponseEntity<Object> post(
 			//	  @RequestHeader(name = "X-COM-PERSIST", required = true) String headerPersist,
 				  @RequestBody Requete requete) {
-			  Integer semaine = requete.getSemaine();
+			
 			  log.debug("post requete =  {}", requete);
 			  
 			  

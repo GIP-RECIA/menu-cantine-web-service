@@ -2,10 +2,6 @@ package fr.recia.menucantine;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Year;
-import java.time.temporal.ValueRange;
-import java.time.temporal.WeekFields;
-import java.util.Locale;
 
 import javax.annotation.ManagedBean;
 
@@ -25,6 +21,7 @@ import fr.recia.menucantine.beans.Semaine;
 @Configuration
 @ManagedBean
 public class MenuCantineServices {
+	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);	
 	
 	@Autowired

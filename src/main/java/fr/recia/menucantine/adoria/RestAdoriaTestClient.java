@@ -1,23 +1,22 @@
 package fr.recia.menucantine.adoria;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
 
-import fr.recia.menucantine.adoria.beans.ReponseAdoria;
-import fr.recia.menucantine.adoria.beans.RequeteAdoria;
+import javax.annotation.ManagedBean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ResourceLoaderAware;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.annotation.ManagedBean;
+import fr.recia.menucantine.adoria.beans.ReponseAdoria;
+import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 
 
 // @Configuration
@@ -56,12 +55,12 @@ public class RestAdoriaTestClient implements IRestAdoriaWebClient , ResourceLoad
 	public ReponseAdoria call(RequeteAdoria requete) throws RestAdoriaClientException {
 		// TODO Auto-generated method stub
 		try {
-						String fileName = String.format(formatFileName, requete.getWeekNumber());
-						File file = getResourceLoader().getResource(fileName).getFile();
-						return RestAdoriaTestClient.call(file);
-					} catch (IOException e) {
-						log.error(e.getMessage());
-					}
+			String fileName = String.format(formatFileName, requete.getWeekNumber());
+			File file = getResourceLoader().getResource(fileName).getFile();
+			return RestAdoriaTestClient.call(file);
+		} catch (IOException e) {
+			log.error(e.getMessage());
+		}
 					
 		return null;
 	}
