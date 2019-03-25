@@ -17,10 +17,10 @@ import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 import reactor.core.publisher.Mono;
 
 
-@Configuration
+// @Configuration
 @ManagedBean
-@Component("restAdoriaWebClient")
-public class RestAdoriaWebClient {
+@Component("adoriaWeb")
+public class RestAdoriaWebClient implements IRestAdoriaWebClient {
 	private static final Logger log = LoggerFactory.getLogger(RestAdoriaWebClient.class);	
 
 	
@@ -35,7 +35,7 @@ public class RestAdoriaWebClient {
 	@Autowired
     private WebClient webClient ;
 	
-	
+	@Override
 	@Cacheable("requetes")
 	public  ReponseAdoria call(RequeteAdoria requete) throws RestAdoriaClientException{	
 				try {	

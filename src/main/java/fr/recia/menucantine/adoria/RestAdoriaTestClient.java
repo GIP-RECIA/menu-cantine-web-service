@@ -4,13 +4,26 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.recia.menucantine.adoria.beans.ReponseAdoria;
+import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ResourceLoaderAware;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
+
 import java.io.File;
 import java.io.IOException;
 
-public class RestAdoriaTestClient {
+import javax.annotation.ManagedBean;
+
+
+// @Configuration
+@ManagedBean
+@Component("adoriaTest")
+public class RestAdoriaTestClient implements IRestAdoriaWebClient , ResourceLoaderAware{
 	private static final Logger log = LoggerFactory.getLogger(RestAdoriaTestClient.class);
 
 	static public ReponseAdoria call(File file)  throws IOException {
@@ -29,4 +42,37 @@ public class RestAdoriaTestClient {
         log.info(reponse.toString());
         return reponse.clean();
 	}
+
+	private ResourceLoader resourceLoader;
+	
+	@Value("${test.format-file-name}")
+	private String formatFileName;
+
+	public RestAdoriaTestClient() {
+		super();
+	}
+
+	@Override
+	public ReponseAdoria call(RequeteAdoria requete) throws RestAdoriaClientException {
+		// TODO Auto-generated method stub
+		try {
+						String fileName = String.format(formatFileName, requete.getWeekNumber());
+						File file = getResourceLoader().getResource(fileName).getFile();
+						return RestAdoriaTestClient.call(file);
+					} catch (IOException e) {
+						log.error(e.getMessage());
+					}
+					
+		return null;
+	}
+
+	private ResourceLoader getResourceLoader() {
+		return this.resourceLoader;
+	}
+
+	@Override
+	public void setResourceLoader(ResourceLoader resourceLoader) {
+		this.resourceLoader = resourceLoader;
+	}
+	
 }

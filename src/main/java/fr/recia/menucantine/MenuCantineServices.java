@@ -13,8 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import fr.recia.menucantine.adoria.IRestAdoriaWebClient;
 import fr.recia.menucantine.adoria.RestAdoriaClient;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
 import fr.recia.menucantine.beans.Requete;
@@ -28,7 +30,22 @@ public class MenuCantineServices {
 	@Autowired
 	private RestAdoriaClient adoriaClient ;
 	
+	@Autowired
+	IRestAdoriaWebClient adoriaWeb;
 	
+	@Autowired
+	IRestAdoriaWebClient adoriaTest;
+	
+	@Value("${test.no-web-service}")
+	Boolean noWebService;
+	
+	@Bean 
+	IRestAdoriaWebClient adoriaClient () {
+		if (noWebService) {
+			return adoriaTest;
+		} 
+		return adoriaWeb;
+	}
 	
 	public Semaine findSemaine(Requete requete) throws RestAdoriaClientException{
 		

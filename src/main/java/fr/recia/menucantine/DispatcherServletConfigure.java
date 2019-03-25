@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /* cette classe est utile juste pour changer la conf par défaut du bean 
- * DispatcherServlet pour ajouter des logs devrai être enlever en prod
+ * DispatcherServlet pour ajouter des logs devrait être enlever en prod
  * ou seulement le @Configure
  */
 @Configuration

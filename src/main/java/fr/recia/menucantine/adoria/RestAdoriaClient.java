@@ -10,6 +10,7 @@ import org.hibernate.validator.internal.util.privilegedactions.GetResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,6 @@ import fr.recia.menucantine.adoria.beans.ReponseAdoria;
 import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 
 
-@Configuration
 @ManagedBean
 public class RestAdoriaClient implements ResourceLoaderAware {
 	private static final Logger log = LoggerFactory.getLogger(RestAdoriaClient.class);	
@@ -38,7 +38,7 @@ public class RestAdoriaClient implements ResourceLoaderAware {
 	Boolean noWebService;
 	
 	@Autowired
-    private RestAdoriaWebClient adoriaWebClient ;
+    private IRestAdoriaWebClient adoriaClient ;
 	
 	public  ReponseAdoria callTest() {
 		Logger logOk = LoggerFactory.getLogger("FileOk");
@@ -150,7 +150,7 @@ public class RestAdoriaClient implements ResourceLoaderAware {
 		for (String uai : uais) {
 			try {
 				if ("0180823X".equals(uai)) {
-					res =  adoriaWebClient.call(new RequeteAdoria(uai, 6, 2019));
+					res =  adoriaClient.call(new RequeteAdoria(uai, 6, 2019));
 					
 					log.debug("etab ok : {}", uai);
 				//	logOk.info("reponse = {}", res); 
@@ -181,7 +181,7 @@ public class RestAdoriaClient implements ResourceLoaderAware {
 		}
 		try {
 			
-			res = adoriaWebClient.call(new RequeteAdoria(uai, semaine, annee));
+			res = adoriaClient.call(new RequeteAdoria(uai, semaine, annee));
 			
 		} catch (RestAdoriaClientException e){
 			log.error(e.getMessage());
