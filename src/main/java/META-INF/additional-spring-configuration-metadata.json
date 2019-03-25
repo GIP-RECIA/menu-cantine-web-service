@@ -8,5 +8,15 @@
     "name": "soffit.anonymous.acces",
     "type": "java.lang.String",
     "description": "Url permetant des acces non identifié"
+  },
+  {
+    "name": "test.no-web-service",
+    "type": "java.lang.Boolean",
+    "description": "On ne fait pas de requete au web service"
+  },
+  {
+    "name": "test.format-file-name",
+    "type": "java.lang.String",
+    "description": "Format des fichiers de test pour eviter les requetes au web service adoria"
   }
 ]}

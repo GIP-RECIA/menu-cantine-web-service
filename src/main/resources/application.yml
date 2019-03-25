@@ -15,7 +15,10 @@ server:
 soffit:
   # jwt.signatureKey: 
   anonymous.acces: /api/hello
-  
+ 
+test:
+  no-web-service: true
+  format-fileName: classpath:static/test/menuTest%d.json
  
 logging:
   level: 

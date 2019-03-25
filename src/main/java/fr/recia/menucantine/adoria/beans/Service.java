@@ -50,8 +50,10 @@ public class Service {
 	}
 	
 	/**
-	 * regroupe les plats par sous menu triéés
+	 * regroupe les plats par sous menu triés
 	 * supprime les plat vide... 
+	 * 
+	 * renvoie le nombre de plats par sous menu
 	 * @return
 	 */
 	NbPlatParSsMenu clean(){

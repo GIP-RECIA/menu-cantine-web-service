@@ -150,8 +150,6 @@ public class ReponseAdoria {
 
 				while (rank > rankCourant) { 
 						// il manque tout un sous menu
-					
-					
 					Integer nbMaxNew[] = calculAllMax(jour, serviceName, rankCourant);
 					
 					if (nbMaxNew[1] != null && nbMaxNew[1] != 0 ) {

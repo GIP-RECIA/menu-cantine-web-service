@@ -1,0 +1,3341 @@
+{
+  "cycleMenuName": "1 - Du 4 janvier 2019 au 9 février 6j",
+  "divisionName": "LP VAUVERT",
+  "previousWeekExportable": true,
+  "nextWeekExportable": false,
+  "dates": [
+    {
+      "date": "2019-02-04T00:00:00",
+      "destinations": [
+        {
+          "name": "Déjeuner",
+          "serviceName": "Déjeuner",
+          "recipes": [
+            {
+              "name": "citron",
+              "gemrcn": [],
+              "family": "Petit Déjeuner/Goûter",
+              "subFamily": "Fruit/Jus",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 1
+            },
+            {
+              "name": "Carottes râpées citron",
+              "gemrcn": [
+                "Crudités légume ou fruit"
+              ],
+              "family": "Entrées",
+              "subFamily": "Crudités",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": 173.5834,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": 0.0,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": 1.05,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": 7.09,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": 15.48,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": 0.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": 26.86,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 122,
+              "familyRank": 2
+            },
+            {
+              "name": "jambon sec",
+              "gemrcn": [],
+              "family": "Entrées",
+              "subFamily": "Entrées protidiques",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 122,
+              "familyRank": 2
+            },
+            {
+              "name": "mousse de foie cornichons",
+              "gemrcn": [
+                "Plat Protidique P/L>1"
+              ],
+              "family": "Entrées",
+              "subFamily": "Charcuteries",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 183,
+              "familyRank": 2
+            },
+            {
+              "name": "salade avocats pomelos crevettes coktail",
+              "gemrcn": [
+                "Crudités légume ou fruit"
+              ],
+              "family": "Entrées",
+              "subFamily": "Crudités",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 122,
+              "familyRank": 2
+            },
+            {
+              "name": "Filet de poisson meuniére",
+              "gemrcn": [],
+              "family": "Plat protidique",
+              "subFamily": "Poisson Frit",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 673,
+              "familyRank": 3
+            },
+            {
+              "name": "printanieres de légumes",
+              "gemrcn": [
+                "Légumes cuits"
+              ],
+              "family": "Garnitures d'accompagnement",
+              "subFamily": "Légumes",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 673,
+              "familyRank": 4
+            },
+            {
+              "name": "# Bleu d'auvergne #",
+              "gemrcn": [],
+              "family": "Produits laitiers",
+              "subFamily": "Fromage Coupe",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": 102.3,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": 0.0,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": 5.91,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": 0.42,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": 8.52,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": 0.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": 168.9,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 244,
+              "familyRank": 5
+            },
+            {
+              "name": "yaourt bio sucre danone",
+              "gemrcn": [
+                "Fromage <150mg calc"
+              ],
+              "family": "Produits laitiers",
+              "subFamily": "Laitage",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 146,
+              "familyRank": 5
+            },
+            {
+              "name": "yaourt nature bio",
+              "gemrcn": [
+                "Fromage <150mg calc"
+              ],
+              "family": "Produits laitiers",
+              "subFamily": "Laitage",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 146,
+              "familyRank": 5
+            },
+            {
+              "name": "creme dessert praline",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Buffet desserts",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 122,
+              "familyRank": 6
+            },
+            {
+              "name": "ou fruits",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Fruits crus",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 122,
+              "familyRank": 6
+            },
+            {
+              "name": "Riz au lait",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Buffet desserts",
+              "allergens": [
+                "Lait et produits à base de lait (y compris le lactose)"
+              ],
+              "nutritions": [
+                {
+                  "name": "Protéines",
+                  "value": 20.624,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": 142.488,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": 18.7,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": 6.768,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": 3.808,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": 1.4,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": 433.18,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Energie",
+                  "value": 3018.3728,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Energie",
+                  "value": 715.04,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Calcium",
+                  "value": 469.072,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 6
+            }
+          ],
+          "rank": 7
+        },
+        {
+          "name": "Repas froid",
+          "serviceName": "Déjeuner",
+          "recipes": [],
+          "rank": 14
+        }
+      ]
+    },
+    {
+      "date": "2019-02-05T00:00:00",
+      "destinations": [
+        {
+          "name": "Déjeuner",
+          "serviceName": "Déjeuner",
+          "recipes": [
+            {
+              "name": "beignets de crevettes",
+              "gemrcn": [],
+              "family": "Entrées",
+              "subFamily": "Entrées protidiques",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 152,
+              "familyRank": 2
+            },
+            {
+              "name": "moules au curry",
+              "gemrcn": [
+                "Poisson/Préparat° Poisson"
+              ],
+              "family": "Entrées",
+              "subFamily": "Entrées protidiques",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 152,
+              "familyRank": 2
+            },
+            {
+              "name": "nems poulet",
+              "gemrcn": [],
+              "family": "Entrées",
+              "subFamily": "Entrées protidiques",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 152,
+              "familyRank": 2
+            },
+            {
+              "name": "samoussas poulet",
+              "gemrcn": [],
+              "family": "Entrées",
+              "subFamily": "Entrées protidiques",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 152,
+              "familyRank": 2
+            },
+            {
+              "name": "emince de dinde mandarin",
+              "gemrcn": [],
+              "family": "Plat protidique",
+              "subFamily": "Volaille Braisé / Sauté / Ragout",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 671,
+              "familyRank": 3
+            },
+            {
+              "name": "riz cantonnais",
+              "gemrcn": [],
+              "family": "Garnitures d'accompagnement",
+              "subFamily": "Féculents",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 671,
+              "familyRank": 4
+            },
+            {
+              "name": "edam",
+              "gemrcn": [],
+              "family": "Produits laitiers",
+              "subFamily": "Fromage Coupe",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 244,
+              "familyRank": 5
+            },
+            {
+              "name": "yaourt aromatisé vanille",
+              "gemrcn": [
+                "Dessert>20g gluc <15% lip"
+              ],
+              "family": "Produits laitiers",
+              "subFamily": "Laitage",
+              "allergens": [],
+              "nutritions": [],
+              "effectif": 146,
+              "familyRank": 5
+            },
+            {
+              "name": "yaourt confiture de fraises",
+              "gemrcn": [
+                "P.Lait>100mg calc <5%lip"
+              ],
+              "family": "Produits laitiers",
+              "subFamily": "Laitage",
+              "allergens": [],
+              "nutritions": [],
+              "effectif": 146,
+              "familyRank": 5
+            },
+            {
+              "name": "beignets aux pommes",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Buffet desserts",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 122,
+              "familyRank": 6
+            },
+            {
+              "name": "ou fruits",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Fruits crus",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 61,
+              "familyRank": 6
+            },
+            {
+              "name": "salade de fruits exotiques",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Buffet desserts",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 122,
+              "familyRank": 6
+            },
+            {
+              "name": "tarte noix de coco",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Pâtisserie",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 305,
+              "familyRank": 6
+            }
+          ],
+          "rank": 7
+        },
+        {
+          "name": "Repas froid",
+          "serviceName": "Déjeuner",
+          "recipes": [],
+          "rank": 14
+        }
+      ]
+    },
+    {
+      "date": "2019-02-06T00:00:00",
+      "destinations": [
+        {
+          "name": "Déjeuner",
+          "serviceName": "Déjeuner",
+          "recipes": [
+            {
+              "name": "salade de perles au thon",
+              "gemrcn": [],
+              "family": "Entrées",
+              "subFamily": "Féculents",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 42,
+              "familyRank": 2
+            },
+            {
+              "name": "salade pommes de terre et boeuf cuit",
+              "gemrcn": [
+                "Légume sec féculent céréa"
+              ],
+              "family": "Entrées",
+              "subFamily": "Féculents",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 42,
+              "familyRank": 2
+            },
+            {
+              "name": "quenelles de  volaille sauce blanche",
+              "gemrcn": [],
+              "family": "Plat protidique",
+              "subFamily": "Volaille Poché",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 84,
+              "familyRank": 3
+            },
+            {
+              "name": "brocolis",
+              "gemrcn": [],
+              "family": "Garnitures d'accompagnement",
+              "subFamily": "Légumes",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": 193.5,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": 0.0,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": 6.81,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": 5.89,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": 14.36,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": 0.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": 136.4,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 84,
+              "familyRank": 4
+            },
+            {
+              "name": "Camembert  240 gr",
+              "gemrcn": [
+                "Fromage 100 à 150mg calc"
+              ],
+              "family": "Produits laitiers",
+              "subFamily": "Fromage Portion",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": 267.0,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": 0.0,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": 20.4,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": 1.22,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": 20.2,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": 0.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": 245.0,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 42,
+              "familyRank": 5
+            },
+            {
+              "name": "yaourt",
+              "gemrcn": [],
+              "family": "Produits laitiers",
+              "subFamily": "Laitage",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 42,
+              "familyRank": 5
+            },
+            {
+              "name": "mousse creme brulee",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Buffet desserts",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 42,
+              "familyRank": 6
+            },
+            {
+              "name": "ou fruits",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Fruits crus",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 42,
+              "familyRank": 6
+            }
+          ],
+          "rank": 7
+        },
+        {
+          "name": "Repas froid",
+          "serviceName": "Déjeuner",
+          "recipes": [],
+          "rank": 14
+        }
+      ]
+    },
+    {
+      "date": "2019-02-07T00:00:00",
+      "destinations": [
+        {
+          "name": "Déjeuner",
+          "serviceName": "Déjeuner",
+          "recipes": [
+            {
+              "name": "ballotine de volaille",
+              "gemrcn": [],
+              "family": "Entrées",
+              "subFamily": "Charcuteries",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 2
+            },
+            {
+              "name": "champignons a la grec",
+              "gemrcn": [],
+              "family": "Entrées",
+              "subFamily": "Cuidités",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 153,
+              "familyRank": 2
+            },
+            {
+              "name": "Poireaux vinaigrette mimosa",
+              "gemrcn": [
+                "Entrée>15% lipides"
+              ],
+              "family": "Entrées",
+              "subFamily": "Crudités",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 153,
+              "familyRank": 2
+            },
+            {
+              "name": "salade d endives a l emmenthal",
+              "gemrcn": [],
+              "family": "Entrées",
+              "subFamily": "Crudités",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 153,
+              "familyRank": 2
+            },
+            {
+              "name": "filet de hoki",
+              "gemrcn": [],
+              "family": "Plat protidique",
+              "subFamily": "Poisson Frit",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 3
+            },
+            {
+              "name": "palette a la diable au aromates",
+              "gemrcn": [
+                "Préparati° à base viande"
+              ],
+              "family": "Plat protidique",
+              "subFamily": "Porc Grillé",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 550,
+              "familyRank": 3
+            },
+            {
+              "name": "lentilles a la dijonnaise",
+              "gemrcn": [],
+              "family": "Garnitures d'accompagnement",
+              "subFamily": "Féculents",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 673,
+              "familyRank": 4
+            },
+            {
+              "name": "Fromage lait mélange des Alpes",
+              "gemrcn": [
+                "Fromage> 150mg calc"
+              ],
+              "family": "Produits laitiers",
+              "subFamily": "Fromage Coupe",
+              "allergens": [
+                "Lait et produits à base de lait (y compris le lactose)"
+              ],
+              "nutritions": [
+                {
+                  "name": "Protéines",
+                  "value": 7.98,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": 1.113,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": 9.09,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": 6.03,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": 379.5,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Energie",
+                  "value": 489.0,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Energie",
+                  "value": 117.9,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Calcium",
+                  "value": 223.5,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 244,
+              "familyRank": 5
+            },
+            {
+              "name": "yaourt activia citron",
+              "gemrcn": [],
+              "family": "Produits laitiers",
+              "subFamily": "Laitage",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 183,
+              "familyRank": 5
+            },
+            {
+              "name": "Yaourts aux Fruits",
+              "gemrcn": [
+                "Fromage <150mg calc"
+              ],
+              "family": "Produits laitiers",
+              "subFamily": "Laitage",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": 126.8,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": 0.0,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": 4.63,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": 18.5,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": 3.62,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": 0.0,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": 0.0,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": 0.0,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 183,
+              "familyRank": 5
+            },
+            {
+              "name": "flan nappé caramel",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Buffet desserts",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 122,
+              "familyRank": 6
+            },
+            {
+              "name": "ou fruits",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Fruits crus",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 61,
+              "familyRank": 6
+            },
+            {
+              "name": "singapour",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Pâtisserie",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 489,
+              "familyRank": 6
+            }
+          ],
+          "rank": 7
+        },
+        {
+          "name": "Repas froid",
+          "serviceName": "Déjeuner",
+          "recipes": [],
+          "rank": 14
+        }
+      ]
+    },
+    {
+      "date": "2019-02-08T00:00:00",
+      "destinations": [
+        {
+          "name": "Déjeuner",
+          "serviceName": "Déjeuner",
+          "recipes": [
+            {
+              "name": "entrees variees",
+              "gemrcn": [],
+              "family": "Entrées",
+              "subFamily": "Crudités",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 2
+            },
+            {
+              "name": "viande ou poisson",
+              "gemrcn": [],
+              "family": "Plat protidique",
+              "subFamily": "Abats",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 3
+            },
+            {
+              "name": "legumes et feculents",
+              "gemrcn": [],
+              "family": "Garnitures d'accompagnement",
+              "subFamily": "Légumes",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 4
+            },
+            {
+              "name": "fromages varies",
+              "gemrcn": [],
+              "family": "Produits laitiers",
+              "subFamily": "Fromage composé",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 5
+            },
+            {
+              "name": "yaourt",
+              "gemrcn": [],
+              "family": "Produits laitiers",
+              "subFamily": "Laitage",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 5
+            },
+            {
+              "name": "desserts varies",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Buffet desserts",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 6
+            },
+            {
+              "name": "ou fruits",
+              "gemrcn": [],
+              "family": "Desserts",
+              "subFamily": "Fruits crus",
+              "allergens": [],
+              "nutritions": [
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kcal"
+                },
+                {
+                  "name": "Energie",
+                  "value": null,
+                  "unit": "kJ"
+                },
+                {
+                  "name": "Protéines",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Glucides",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Matières grasses",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sucres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Acides gras saturés",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Fibres",
+                  "value": null,
+                  "unit": "g"
+                },
+                {
+                  "name": "Sel",
+                  "value": null,
+                  "unit": "mg"
+                },
+                {
+                  "name": "Calcium",
+                  "value": null,
+                  "unit": "mg"
+                }
+              ],
+              "effectif": 306,
+              "familyRank": 6
+            }
+          ],
+          "rank": 7
+        },
+        {
+          "name": "Repas froid",
+          "serviceName": "Déjeuner",
+          "recipes": [],
+          "rank": 14
+        }
+      ]
+    },
+    {
+      "date": "2019-02-09T00:00:00",
+      "destinations": [
+        {
+          "name": "Déjeuner",
+          "serviceName": "Déjeuner",
+          "recipes": [],
+          "rank": 7
+        },
+        {
+          "name": "Repas froid",
+          "serviceName": "Déjeuner",
+          "recipes": [],
+          "rank": 14
+        }
+      ]
+    }
+  ]
+}

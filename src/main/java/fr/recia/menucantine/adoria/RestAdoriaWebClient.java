@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -18,6 +19,7 @@ import reactor.core.publisher.Mono;
 
 @Configuration
 @ManagedBean
+@Component("restAdoriaWebClient")
 public class RestAdoriaWebClient {
 	private static final Logger log = LoggerFactory.getLogger(RestAdoriaWebClient.class);	
 
@@ -70,4 +72,6 @@ public class RestAdoriaWebClient {
 				}
 	}
 	 
+	
+	
 }

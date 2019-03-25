@@ -1,7 +1,6 @@
 package fr.recia.menucantine;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.servlet.Filter;

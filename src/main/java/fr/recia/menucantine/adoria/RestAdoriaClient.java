@@ -1,13 +1,19 @@
 package fr.recia.menucantine.adoria;
 
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 import javax.annotation.ManagedBean;
 
+import org.hibernate.validator.internal.util.privilegedactions.GetResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ResourceLoader;
 
 import fr.recia.menucantine.adoria.beans.ReponseAdoria;
 import fr.recia.menucantine.adoria.beans.RequeteAdoria;
@@ -15,16 +21,21 @@ import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 
 @Configuration
 @ManagedBean
-public class RestAdoriaClient {
+public class RestAdoriaClient implements ResourceLoaderAware {
 	private static final Logger log = LoggerFactory.getLogger(RestAdoriaClient.class);	
 
 	
-	
+	ResourceLoader resourceLoader;
 	
 	public RestAdoriaClient() {
 		super();
 	}
 
+	@Value("${test.format-file-name}")
+	String formatFileName;
+	
+	@Value("${test.no-web-service}")
+	Boolean noWebService;
 	
 	@Autowired
     private RestAdoriaWebClient adoriaWebClient ;
@@ -152,9 +163,22 @@ public class RestAdoriaClient {
 		
 	}
 	
+	public  ReponseAdoria callTest(String uai, Integer semaine, Integer annee) {
+		try {
+			String fileName = String.format(formatFileName, semaine);
+			File file = resourceLoader.getResource(fileName).getFile();
+			return RestAdoriaTestClient.call(file);
+		} catch (IOException e) {
+			log.error(e.getMessage());
+		}
+		return null;
+	}
 		
 	public  ReponseAdoria call(String uai, Integer semaine, Integer annee) throws RestAdoriaClientException {
 		ReponseAdoria res = null;
+		if (noWebService) {
+			return callTest(uai, semaine, annee);
+		}
 		try {
 			
 			res = adoriaWebClient.call(new RequeteAdoria(uai, semaine, annee));
@@ -164,6 +188,11 @@ public class RestAdoriaClient {
 			throw e;
 		}
 		return res;
+	}
+
+	@Override
+	public void setResourceLoader(ResourceLoader resourceLoader) {
+				this.resourceLoader = resourceLoader;
 	}
 	
 	 

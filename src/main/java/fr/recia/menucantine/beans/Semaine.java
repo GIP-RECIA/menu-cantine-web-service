@@ -1,7 +1,9 @@
 package fr.recia.menucantine.beans;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,8 +27,8 @@ public class Semaine {
 	List<GemRcn> allGemRcn = GemRcn.getList();
 	
 	
-	Integer previousWeek;
-	Integer nextWeek;
+	LocalDate previousWeek;
+	LocalDate nextWeek;
 	
 	List<Journee> jours;
 	
@@ -60,13 +62,23 @@ public class Semaine {
 					fin = formatDate(nbJours-1);
 				}
 			}
-		//	previousWeekExportable = menuSemaine.getPreviousWeekExportable();
-		//	nextWeekExportable = menuSemaine.getNextWeekExportable();
+			
+			if (menuSemaine.getPreviousWeekExportable()) {
+				previousWeek = dateJour(0).minusDays(7);
+			};
+			if (menuSemaine.getNextWeekExportable()) {
+				nextWeek = dateJour(0).plusDays(7);
+			}
+			 
 		}
 	}
 	
+	private LocalDate dateJour(Integer jour) {
+		return jours.get(jour).getDate();
+	}
+	
 	private String formatDate(Integer jour){
-		return jours.get(jour).getDate().format(formatter);
+		return dateJour(jour).format(formatter);
 	}
 
 	
