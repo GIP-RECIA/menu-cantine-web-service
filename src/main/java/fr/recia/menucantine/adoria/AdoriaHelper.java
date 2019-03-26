@@ -7,25 +7,27 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
 
 import fr.recia.menucantine.adoria.beans.ReponseAdoria;
 import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 
 
 @ManagedBean
-public class RestAdoriaClient implements ResourceLoaderAware {
-	private static final Logger log = LoggerFactory.getLogger(RestAdoriaClient.class);	
+@Component
+public class AdoriaHelper implements ResourceLoaderAware {
+	private static final Logger log = LoggerFactory.getLogger(AdoriaHelper.class);	
 
 	
 	ResourceLoader resourceLoader;
 	
-	public RestAdoriaClient() {
+	public AdoriaHelper() {
 		super();
 	}
 
 	
 	@Autowired
-    private IRestAdoriaWebClient adoriaClient ;
+    private IRestAdoriaClient adoriaClient ;
 	
 	public  ReponseAdoria callTest() {
 //		Logger logOk = LoggerFactory.getLogger("FileOk");

@@ -86,7 +86,7 @@ const menuCantine = new Vue({
 			this.menuSemaine = '';
 			this.erreur = '';
 			
-			fetch('api/hello', initPost(this.selected, this.noSemaine))
+			fetch('api/menu', initPost(this.selected, this.noSemaine))
 			.then(response => response.json())
 			.then(json => {
 					if (json.ErrorCode) {

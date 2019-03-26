@@ -22,7 +22,7 @@ import fr.recia.menucantine.adoria.beans.RequeteAdoria;
 // @Configuration
 @ManagedBean
 @Component("adoriaTest")
-public class RestAdoriaTestClient implements IRestAdoriaWebClient , ResourceLoaderAware{
+public class RestAdoriaTestClient implements IRestAdoriaClient , ResourceLoaderAware{
 	private static final Logger log = LoggerFactory.getLogger(RestAdoriaTestClient.class);
 
 	static public ReponseAdoria call(File file)  throws IOException {

@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 // @Configuration
 @ManagedBean
 @Component("adoriaWeb")
-public class RestAdoriaWebClient implements IRestAdoriaWebClient {
+public class RestAdoriaWebClient implements IRestAdoriaClient {
 	private static final Logger log = LoggerFactory.getLogger(RestAdoriaWebClient.class);	
 
 	@Autowired

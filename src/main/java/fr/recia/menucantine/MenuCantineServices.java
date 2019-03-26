@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
-import fr.recia.menucantine.adoria.IRestAdoriaWebClient;
-import fr.recia.menucantine.adoria.RestAdoriaClient;
+import fr.recia.menucantine.adoria.IRestAdoriaClient;
+import fr.recia.menucantine.adoria.AdoriaHelper;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
@@ -25,19 +26,20 @@ public class MenuCantineServices {
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);	
 	
 	@Autowired
-	private RestAdoriaClient adoriaClient ;
+	@Lazy
+	private AdoriaHelper adoriaHelper ;
 	
 	@Autowired
-	IRestAdoriaWebClient adoriaWeb;
+	IRestAdoriaClient adoriaWeb;
 	
 	@Autowired
-	IRestAdoriaWebClient adoriaTest;
+	IRestAdoriaClient adoriaTest;
 	
 	@Value("${test.no-web-service}")
 	Boolean noWebService;
 	
-	@Bean 
-	IRestAdoriaWebClient adoriaClient () {
+	@Bean
+	IRestAdoriaClient adoriaClient () {
 		if (noWebService) {
 			return adoriaTest;
 		} 
@@ -70,7 +72,7 @@ public class MenuCantineServices {
 			requete.setJour(jour);
 		}
 		
-		return new Semaine(adoriaClient.call(requete.getUai(), semaine, annee), requete);
+		return new Semaine(adoriaHelper.call(requete.getUai(), semaine, annee), requete);
 		 
 	}
 	

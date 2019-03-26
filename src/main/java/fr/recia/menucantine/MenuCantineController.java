@@ -27,14 +27,14 @@ public class MenuCantineController {
 		  
 		  private Semaine lastCall4debug;
 		  
-		  @GetMapping(path = "/hello")
+		  @GetMapping(path = "/menu")
 		    public  ResponseEntity<Object> get() {
 	
 		   
 		        return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
 		    }
 		  
-		  @PostMapping(path="/hello", consumes = "application/json", produces = "application/json")
+		  @PostMapping(path="/menu", consumes = "application/json", produces = "application/json")
 		  public ResponseEntity<Object> post(
 			//	  @RequestHeader(name = "X-COM-PERSIST", required = true) String headerPersist,
 				  @RequestBody Requete requete) {
