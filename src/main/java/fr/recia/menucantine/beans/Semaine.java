@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import fr.recia.menucantine.adoria.beans.GemRcn;
@@ -25,8 +26,10 @@ public class Semaine {
 	
 	List<GemRcn> allGemRcn = GemRcn.getList();
 	
-	
+	@JsonFormat(pattern = "dd/MM/YYYY")
 	LocalDate previousWeek;
+	
+	@JsonFormat(pattern = "dd/MM/YYYY")
 	LocalDate nextWeek;
 	
 	List<Journee> jours;

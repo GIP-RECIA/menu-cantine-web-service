@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
-import fr.recia.menucantine.adoria.IRestAdoriaClient;
 import fr.recia.menucantine.adoria.AdoriaHelper;
+import fr.recia.menucantine.adoria.IRestAdoriaClient;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
@@ -51,11 +51,14 @@ public class MenuCantineServices {
 		if (requete == null || requete.getUai() == null){
 			throw new NullPointerException("requete ou uai null: " + requete);
 		}
-	
+		
 		Integer annee = requete.getAnnee();
 		Integer semaine = requete.getSemaine();
-		Integer jour = requete.getJour();
-		LocalDate date = LocalDate.now();
+		LocalDate date = requete.getDate();
+		
+		if (date == null) {
+			date = LocalDate.now();
+		}
 		
 		if (annee == null) {
 			annee = date.getYear();
@@ -65,7 +68,9 @@ public class MenuCantineServices {
 			requete.setDate(date);
 			semaine = requete.getSemaine();
 			annee = requete.getAnnee();
-		} 
+		}
+		
+		Integer jour = requete.getJour();
 		
 		if (jour == null) {
 			jour = DayOfWeek.MONDAY.getValue();
@@ -89,16 +94,9 @@ public class MenuCantineServices {
 		System.out.println(r);
 		r.setDate(LocalDate.of(2020, 12, 31));
 		System.out.println(r);
-	/*
-		WeekFields weekFields = WeekFields.of(Locale.getDefault());
-		LocalDate date = LocalDate.of(2021, 1, 1);
-		System.out.println(date);
-		int semaine = date.get(weekFields.weekOfWeekBasedYear());
-		System.out.println(semaine);	
 		
-		date = date.minusDays(7);
-		 semaine = date.get(weekFields.weekOfWeekBasedYear());
-		System.out.println(semaine);
-	*/	
+		LocalDate date =  LocalDate.parse("31/12/2020" , Requete.dateFormatter);
+		System.out.println(date);
 	}
+	
 }

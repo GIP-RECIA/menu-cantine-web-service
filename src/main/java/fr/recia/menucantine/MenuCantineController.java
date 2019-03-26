@@ -19,51 +19,31 @@ import fr.recia.menucantine.beans.Semaine;
 @RequestMapping(path = "/api")
 public class MenuCantineController {
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineController.class);	
-		
-		  
-		  
-		  @Autowired
-		  private MenuCantineServices services;
-		  
-		  private Semaine lastCall4debug;
-		  
-		  @GetMapping(path = "/menu")
-		    public  ResponseEntity<Object> get() {
-	
-		   
-		        return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
-		    }
-		  
-		  @PostMapping(path="/menu", consumes = "application/json", produces = "application/json")
-		  public ResponseEntity<Object> post(
-			//	  @RequestHeader(name = "X-COM-PERSIST", required = true) String headerPersist,
-				  @RequestBody Requete requete) {
-			
-			  log.debug("post requete =  {}", requete);
 			  
-			  
-			//  Greeting newOne = new Greeting(String.format(template, name));
-			 
-			  try {
-				lastCall4debug = services.findSemaine(requete);
-			} catch (RestAdoriaClientException e) {
-				return new ResponseEntity<Object>(e.getMap(), HttpStatus.PARTIAL_CONTENT);
-			}
-			 return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
-			  //return new ResponseEntity<Object>(newOne, HttpStatus.OK);
-		  }
-		    
-		    /*
-		    @RequestMapping(value = "/files/{fileID}", method = RequestMethod.GET)
-		    public void getFile(
-		        @PathVariable("fileID") String fileName, 
-		        HttpServletResponse response) throws IOException {
-		            String src= "/home/legay/SpringBoot/" + fileName;
-		            InputStream is = new FileInputStream(src);
-		            IOUtils.copy(is, response.getOutputStream());
-		            response.flushBuffer();
-		    }
-		    */
-	
-
+	@Autowired
+	private MenuCantineServices services;
+	  
+	private Semaine lastCall4debug;
+	  
+	/**
+	 * Renvoie le dernier flux json demandé par la methode POST:
+	 * Utile uniquement en dev
+	 * @return
+	 */
+	@GetMapping(path = "/menu")
+	public  ResponseEntity<Object> get() {
+		return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
+	}
+	  
+	@PostMapping(path="/menu", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<Object> post(
+			@RequestBody Requete requete) {
+		log.debug("post requete =  {}", requete);
+		try {
+			lastCall4debug = services.findSemaine(requete);
+		} catch (RestAdoriaClientException e) {
+			return new ResponseEntity<Object>(e.getMap(), HttpStatus.PARTIAL_CONTENT);
+		}
+		return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
+	}
 }
