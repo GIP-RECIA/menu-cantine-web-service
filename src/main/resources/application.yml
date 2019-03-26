@@ -15,10 +15,14 @@ server:
 soffit:
   # jwt.signatureKey: 
   anonymous.acces: /api/menu
- 
-test:
-  no-web-service: true
-  format-fileName: classpath:static/test/menuTest%d.json
+
+adoria:
+  url: https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt
+  # client-key: 
+  # guid: 
+  test:
+    no-web-service: false
+    format-fileName: classpath:static/test/menuTest%d.json
  
 logging:
   level: 

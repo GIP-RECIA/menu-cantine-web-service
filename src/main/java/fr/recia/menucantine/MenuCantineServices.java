@@ -35,7 +35,7 @@ public class MenuCantineServices {
 	@Autowired
 	IRestAdoriaClient adoriaTest;
 	
-	@Value("${test.no-web-service}")
+	@Value("${adoria.test.no-web-service}")
 	Boolean noWebService;
 	
 	@Bean

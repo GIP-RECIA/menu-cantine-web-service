@@ -44,7 +44,7 @@ public class RestAdoriaTestClient implements IRestAdoriaClient , ResourceLoaderA
 
 	private ResourceLoader resourceLoader;
 	
-	@Value("${test.format-file-name}")
+	@Value("${adoria.test.format-file-name}")
 	private String formatFileName;
 
 	public RestAdoriaTestClient() {

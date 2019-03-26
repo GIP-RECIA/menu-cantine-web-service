@@ -5,6 +5,7 @@ import javax.annotation.ManagedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,15 @@ public class RestAdoriaWebClient implements IRestAdoriaClient {
 	@Autowired
     private WebClient webClient ;
 	
+	@Value("${adoria.url}")
+	private String webServiceUrl;
+	
+	@Value("${adoria.client-key}")
+	private String clientKey;
+	
+	@Value("${adoria.guid}")
+	private String guid;
+		
 	public RestAdoriaWebClient() {
 		super();
 	}
@@ -34,11 +44,11 @@ public class RestAdoriaWebClient implements IRestAdoriaClient {
 	public  ReponseAdoria call(RequeteAdoria requete) throws RestAdoriaClientException{	
 		try {	
 			Mono<ReponseAdoria> reponse =  webClient.post()
-				.uri("https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt")
+				.uri(webServiceUrl)
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
-				.header("AdoriaClientKey", "3513501c-bebc-4f1f-b937-d426a6a76ce6")
-				.header("Guid", "46390997-f811-45cc-b86d-1291d36e753f")
+				.header("AdoriaClientKey", clientKey)
+				.header("Guid", guid)
 				.syncBody(requete)
 				.retrieve()
 				.bodyToMono(ReponseAdoria.class);

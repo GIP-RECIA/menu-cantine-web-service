@@ -10,13 +10,28 @@
     "description": "Url permetant des acces non identifié"
   },
   {
-    "name": "test.no-web-service",
+    "name": "adoria.test.no-web-service",
     "type": "java.lang.Boolean",
     "description": "On ne fait pas de requete au web service"
   },
   {
-    "name": "test.format-file-name",
+    "name": "adoria.test.format-file-name",
     "type": "java.lang.String",
     "description": "Format des fichiers de test pour eviter les requetes au web service adoria"
+  },
+  {
+    "name": "adoria.url",
+    "type": "java.lang.String",
+    "description": "url du web service adoria"
+  },
+  {
+    "name": "adoria.client-key",
+    "type": "java.lang.String",
+    "description": "clef d'authentification adoria'"
+  },
+  {
+    "name": "adoria.guid",
+    "type": "java.lang.String",
+    "description": "uid du groupe adoria"
   }
 ]}
