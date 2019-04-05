@@ -6,6 +6,11 @@ import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
+/**
+ * Permet de normaliser les requetes et de calculer les dates
+ * @author legay
+ *
+ */
 public class RequeteHelper {
 	static public  WeekFields WEEK_FIELDS = WeekFields.of(Locale.getDefault());
 	static public DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

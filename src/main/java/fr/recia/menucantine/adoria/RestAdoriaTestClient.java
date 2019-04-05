@@ -31,13 +31,15 @@ public class RestAdoriaTestClient implements IRestAdoriaClient , ResourceLoaderA
 		log.debug("open file : {}", file.getName());
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		// utile pour l'usage des nouvelles class du pakage jackson-datatype-jsr310 comme par exemple localDate   
+			// utile pour l'usage des nouvelles class du pakage jackson-datatype-jsr310 comme par exemple localDate   
         objectMapper.findAndRegisterModules();  	
-        // pour ignoré les données non declarée dans les class
+        	
+        	// pour ignoré les données non declarée dans les class
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         
-      //  objectMapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
+        	// objectMapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
         ReponseAdoria reponse = objectMapper.readValue(file, ReponseAdoria.class);
+        
         log.info(reponse.toString());
         return reponse.clean();
 	}
@@ -53,13 +55,18 @@ public class RestAdoriaTestClient implements IRestAdoriaClient , ResourceLoaderA
 
 	@Override
 	public ReponseAdoria call(RequeteAdoria requete) throws RestAdoriaClientException {
-		// TODO Auto-generated method stub
+		
 		try {
 			String fileName = String.format(formatFileName, requete.getWeekNumber());
+		
 			File file = getResourceLoader().getResource(fileName).getFile();
+			
 			return RestAdoriaTestClient.call(file);
+		
 		} catch (IOException e) {
+		
 			log.error(e.getMessage());
+			
 			throw new RestAdoriaClientException(e, requete);
 		}
 	}
@@ -72,5 +79,4 @@ public class RestAdoriaTestClient implements IRestAdoriaClient , ResourceLoaderA
 	public void setResourceLoader(ResourceLoader resourceLoader) {
 		this.resourceLoader = resourceLoader;
 	}
-	
 }

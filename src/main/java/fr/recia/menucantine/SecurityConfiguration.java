@@ -79,7 +79,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             //   .antMatchers(HttpMethod.DELETE,"/api/**").denyAll()
              //   .antMatchers(HttpMethod.PUT,"/api/**").denyAll()
                 .anyRequest().permitAll() 
-            .and() // pour la dev en local host autorisation du cross domaine
+            .and() // pour la dev en localhost autorisation du cross domaine
             	.cors()
             	.configurationSource(corsConfigurationSource())
             .and()

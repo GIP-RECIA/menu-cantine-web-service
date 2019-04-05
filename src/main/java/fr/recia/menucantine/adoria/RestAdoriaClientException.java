@@ -14,6 +14,7 @@ public class RestAdoriaClientException extends Exception {
 	 * 
 	 */
 	private static final long serialVersionUID = -4941524452580166415L;
+	
 	static JacksonJsonParser parser = new JacksonJsonParser();
 	
 	static enum TypeError{
@@ -31,7 +32,6 @@ public class RestAdoriaClientException extends Exception {
 		public String getTexte() {
 			return texte;
 		}
-		
 	}
 	
 	private Map<String, Object> mapErreur;
@@ -51,18 +51,24 @@ public class RestAdoriaClientException extends Exception {
 	}
 	public RestAdoriaClientException(WebClientResponseException webClientException, RequeteAdoria requete) {
 		super();
+		
 		this.webClientException = webClientException;
+		
 		this.requete = requete;
 	}
 	public RestAdoriaClientException(IOException ioException, RequeteAdoria requete) {
 		super();
+		
 		this.ioException = ioException;
+		
 		this.requete = requete;
 	}
 	public String getJson(){
+		
 		if (webClientException != null) {
 			return  webClientException.getResponseBodyAsString();
 		}
+		
 		return null;
 	}
 	
@@ -72,18 +78,25 @@ public class RestAdoriaClientException extends Exception {
 		if (err == null) {
 			mapErreur = err = new LinkedHashMap<String, Object>();
 			if (webClientException != null) {
+				
 				err.put("ErrorCode", webClientException.getRawStatusCode());
+				
 				err.put("ErrorText", webClientException.getStatusCode());
-				err.putAll(parser.parseMap(webClientException.getResponseBodyAsString()));	
+				
+				err.putAll(parser.parseMap(webClientException.getResponseBodyAsString()));
+				
 			} else if (ioException != null) {
+				
 				err.put("ErrorCode", "404");
+				
 				err.put("ErrorText", ioException.getLocalizedMessage());
 			}
 			if (requete != null) {
+				
 				err.put("Requete", requete);
+			
 			}
 		}
 		return err;
-	}
-	
+	}	
 }

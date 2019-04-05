@@ -59,7 +59,9 @@ public class RestAdoriaWebClient implements IRestAdoriaClient {
 				 */	
 					
 			log.debug("reponse NOT IN CACHE");
+			
 			return reponse.block().clean();
+			
 		} catch (WebClientResponseException  e) {
 			throw new RestAdoriaClientException(e, requete);
 		}

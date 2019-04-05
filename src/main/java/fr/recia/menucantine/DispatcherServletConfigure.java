@@ -9,7 +9,7 @@ import org.springframework.web.servlet.DispatcherServlet;
  * DispatcherServlet pour ajouter des logs devrait être enlever en prod
  * ou seulement le @Configure
  */
-@Configuration
+// @Configuration
 public class DispatcherServletConfigure implements BeanPostProcessor {
 	
 	

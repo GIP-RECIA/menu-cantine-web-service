@@ -22,6 +22,7 @@ public class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
 	 */
 	void calculMax(NbPlatParSsMenu platParSsMenu){
 		if (this.isEmpty()) {
+			
 			this.putAll(platParSsMenu);
 		} else {
 			
@@ -39,9 +40,10 @@ public class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
 
 	@Override
 	public synchronized Integer get(Object key) {
-		
 		Integer i = super.get(key);
+		
 		if (i == null) return 0;
+		
 		return i;
 	}
 	 

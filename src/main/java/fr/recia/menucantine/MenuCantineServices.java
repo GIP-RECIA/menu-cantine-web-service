@@ -23,6 +23,7 @@ import fr.recia.menucantine.beans.Semaine;
 @Configuration
 @ManagedBean
 public class MenuCantineServices {
+	
 	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);	
 	
@@ -63,24 +64,40 @@ public class MenuCantineServices {
 				// on a pas de date la requette est basé sur la semaine 
 			date = rh.dateSemaine(requete);
 		}
-		rh.dateJour(requete,date);
+			// pour normalisé la requete
+		rh.dateJour(requete, date);
 		
 		try {
-			return new Semaine(adoriaHelper.call(requete.getUai(), requete.getSemaine(), requete.getAnnee()), requete);
+			
+			return new Semaine(	adoriaHelper.call(
+									requete.getUai(), 
+									requete.getSemaine(), 
+									requete.getAnnee()), 
+								requete);
+		
 		} catch (RestAdoriaClientException e) {
+			
 			LocalDate lundi = rh.dateFromYearWeekDay(requete.getAnnee(), requete.getSemaine(), 1);
+			
 			LocalDate vendredi = lundi.plusDays(4);
+			
 			e.getMap().put("debut", lundi.format(Semaine.formatter));
+			
 			e.getMap().put("fin", vendredi.format(Semaine.formatter));
 			
 			vendredi = lundi.minusDays(3);
+			
 			Requete rPrev = new Requete();
+			
 			rh.dateJour(rPrev, vendredi);
+			
 			try {
 				ReponseAdoria res = adoriaHelper.call(requete.getUai(), rPrev.getSemaine(), rPrev.getAnnee());
+				
 				if (res != null) {
 					e.getMap().put("previousWeek", vendredi.format(RequeteHelper.dateFormatter));
 				}
+				
 			} catch (Exception catched) {
 				log.debug("requette semaine precedante : " +  catched.getMessage());
 			}

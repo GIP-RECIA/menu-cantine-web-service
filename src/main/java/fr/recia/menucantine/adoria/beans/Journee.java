@@ -38,6 +38,7 @@ public class Journee {
 	List<Service> destinations;
 	
 	Boolean typeVide = false;
+	
 	boolean isVide(){
 		return typeVide;
 	}
@@ -52,7 +53,9 @@ public class Journee {
 			jour = date.format(formatJour);
 
 			for (Iterator<Service> iterator = destinations.iterator(); iterator.hasNext();) {
+				
 				Service service = (Service) iterator.next();
+				
 				if (service != null) {
 					if (service.getRecipes().isEmpty()) {
 						iterator.remove();

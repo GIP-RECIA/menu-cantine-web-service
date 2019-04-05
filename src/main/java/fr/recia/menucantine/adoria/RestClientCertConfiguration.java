@@ -72,12 +72,8 @@ public class RestClientCertConfiguration {
 				 			keyPass.toCharArray())
 	               // .loadTrustMaterial(ResourceUtils.getFile("classpath:truststore.jks"), keyStorePass.toCharArray())
 	                .build();
-*/
+		  */
 		 
-		 
-		 
-	                
-	
 		 reactor.netty.http.client.HttpClient httpClient = 
 				 	reactor.netty.http.client.HttpClient.create().secure();
 		 

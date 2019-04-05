@@ -35,16 +35,25 @@ public class MenuCantineController {
 		return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
 	}
 	  
-	@PostMapping(path="/menu", consumes = "application/json", produces = "application/json")
-	public ResponseEntity<Object> post(
-			@RequestBody Requete requete) {
+	@PostMapping(
+			path="/menu", 
+			consumes = "application/json", 
+			produces = "application/json"
+		)
+	public ResponseEntity<Object> post( @RequestBody Requete requete) {
 		log.debug("post requete =  {}", requete);
 		Semaine semaine;
+		
 		try {
+			
 			lastCall4debug = semaine =  services.findSemaine(requete);
+			
 		} catch (RestAdoriaClientException e) {
+			
 			return new ResponseEntity<Object>(e.getMap(), HttpStatus.PARTIAL_CONTENT);
+			
 		}
+		
 		return new ResponseEntity<Object>(semaine, HttpStatus.OK);
 	}
 }
