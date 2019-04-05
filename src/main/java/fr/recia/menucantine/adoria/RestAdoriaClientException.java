@@ -1,5 +1,6 @@
 package fr.recia.menucantine.adoria;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -35,6 +36,8 @@ public class RestAdoriaClientException extends Exception {
 	
 	
 	WebClientResponseException webClientException;
+	IOException ioException;
+	
 	RequeteAdoria requete;
 	
 	public RestAdoriaClientException(){
@@ -49,7 +52,11 @@ public class RestAdoriaClientException extends Exception {
 		this.webClientException = webClientException;
 		this.requete = requete;
 	}
-	
+	public RestAdoriaClientException(IOException ioException, RequeteAdoria requete) {
+		super();
+		this.ioException = ioException;
+		this.requete = requete;
+	}
 	public String getJson(){
 		if (webClientException != null) {
 			return  webClientException.getResponseBodyAsString();
@@ -62,12 +69,13 @@ public class RestAdoriaClientException extends Exception {
 		if (webClientException != null) {
 			err.put("ErrorCode", webClientException.getRawStatusCode());
 			err.put("ErrorText", webClientException.getStatusCode());
-			
-			err.putAll(parser.parseMap(webClientException.getResponseBodyAsString()));
-			
-			if (requete != null) {
-				err.put("Requete", requete);
-			}
+			err.putAll(parser.parseMap(webClientException.getResponseBodyAsString()));	
+		} else if (ioException != null) {
+			err.put("ErrorCode", "404");
+			err.put("ErrorText", ioException.getLocalizedMessage());
+		}
+		if (requete != null) {
+			err.put("Requete", requete);
 		}
 		return err;
 	}

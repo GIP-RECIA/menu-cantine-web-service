@@ -65,18 +65,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		log.debug("configure signatureKey = {}", signatureKey);
         final AbstractPreAuthenticatedProcessingFilter filter =
                 new SoffitApiPreAuthenticatedProcessingFilter(signatureKey);
+        
         filter.setAuthenticationManager(authenticationManager());
 
-        http.csrf().disable(); // attention c'est pour le crsf().disable  est pour les tests a partir de page static (sans csrf)
+        http.csrf().disable(); // attention le crsf().disable  est pour les tests a partir de page static (sans csrf)
         http
             .addFilter(filter)
             .authorizeRequests()
            		.antMatchers(HttpMethod.GET, forTest).anonymous()
-            	.antMatchers(HttpMethod.POST, forTest).anonymous()
-                .antMatchers(HttpMethod.GET,"/api/**").authenticated()
-                .antMatchers(HttpMethod.POST,"/api/**").authenticated()
-                .antMatchers(HttpMethod.DELETE,"/api/**").denyAll()
-                .antMatchers(HttpMethod.PUT,"/api/**").denyAll()
+            //	.antMatchers(HttpMethod.POST, forTest).anonymous()
+            //    .antMatchers(HttpMethod.GET,"/api/**").authenticated()
+                .antMatchers(HttpMethod.POST,"/api/menu").authenticated()
+            //   .antMatchers(HttpMethod.DELETE,"/api/**").denyAll()
+             //   .antMatchers(HttpMethod.PUT,"/api/**").denyAll()
                 .anyRequest().permitAll() 
             .and() // pour la dev en local host autorisation du cross domaine
             	.cors()
@@ -123,14 +124,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	                log.warn("CORS ABILITATI! CORS est autorisé");
 	            }
 	            CorsConfiguration configuration = new CorsConfiguration();
-	           	            configuration.setAllowedOrigins( Arrays.asList("http://localhost:8080"));
-	            configuration.setAllowedMethods(Arrays.asList(  RequestMethod.GET.name(),
+	           	            configuration.setAllowedOrigins( 
+	           	            		Arrays.asList("http://localhost:8080",
+	           	            					"http://192.168.45.196:8080",
+	           	            					"https://test-lycee.giprecia.net"));
+	            configuration.setAllowedMethods(Arrays.asList(  
+	            		RequestMethod.GET.name(),
 	                    RequestMethod.POST.name(), 
 	                    RequestMethod.OPTIONS.name(), 
 	                    RequestMethod.DELETE.name(),
 	                    RequestMethod.PUT.name()));
+	            
 	            configuration.setExposedHeaders(Arrays.asList("x-auth-token", "x-requested-with", "x-xsrf-token"));
-	            configuration.setAllowedHeaders(Arrays.asList("content-type", "x-com-persist", "X-Auth-Token","x-auth-token", "x-requested-with", "x-xsrf-token"));
+	            configuration.setAllowedHeaders(Arrays.asList("content-type", "authorization", "x-com-persist", "X-Auth-Token","x-auth-token", "x-requested-with", "x-xsrf-token"));
 	            source.registerCorsConfiguration("/**", configuration);
 	        }
 	        return  source;

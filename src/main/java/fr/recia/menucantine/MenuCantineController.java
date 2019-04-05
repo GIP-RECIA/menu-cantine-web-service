@@ -30,7 +30,7 @@ public class MenuCantineController {
 	 * Utile uniquement en dev
 	 * @return
 	 */
-	@GetMapping(path = "/menu")
+	@GetMapping(path = "/lastmenu")
 	public  ResponseEntity<Object> get() {
 		return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
 	}

@@ -60,9 +60,8 @@ public class RestAdoriaTestClient implements IRestAdoriaClient , ResourceLoaderA
 			return RestAdoriaTestClient.call(file);
 		} catch (IOException e) {
 			log.error(e.getMessage());
+			throw new RestAdoriaClientException(e, requete);
 		}
-					
-		return null;
 	}
 
 	private ResourceLoader getResourceLoader() {
