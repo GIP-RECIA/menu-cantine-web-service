@@ -16,7 +16,7 @@ import lombok.Data;
 @Data
 public class Semaine {
 	@JsonIgnore 
-	static DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
+	static public DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
 
 	Integer nbJours;
 	String debut;

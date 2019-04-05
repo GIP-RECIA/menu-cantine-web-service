@@ -34,6 +34,8 @@ public class RestAdoriaClientException extends Exception {
 		
 	}
 	
+	private Map<String, Object> mapErreur;
+	
 	
 	WebClientResponseException webClientException;
 	IOException ioException;
@@ -65,17 +67,21 @@ public class RestAdoriaClientException extends Exception {
 	}
 	
 	public Map<String, Object> getMap(){
-		Map<String, Object>  err = new LinkedHashMap<String, Object>();
-		if (webClientException != null) {
-			err.put("ErrorCode", webClientException.getRawStatusCode());
-			err.put("ErrorText", webClientException.getStatusCode());
-			err.putAll(parser.parseMap(webClientException.getResponseBodyAsString()));	
-		} else if (ioException != null) {
-			err.put("ErrorCode", "404");
-			err.put("ErrorText", ioException.getLocalizedMessage());
-		}
-		if (requete != null) {
-			err.put("Requete", requete);
+		
+		Map<String, Object>  err = mapErreur;
+		if (err == null) {
+			mapErreur = err = new LinkedHashMap<String, Object>();
+			if (webClientException != null) {
+				err.put("ErrorCode", webClientException.getRawStatusCode());
+				err.put("ErrorText", webClientException.getStatusCode());
+				err.putAll(parser.parseMap(webClientException.getResponseBodyAsString()));	
+			} else if (ioException != null) {
+				err.put("ErrorCode", "404");
+				err.put("ErrorText", ioException.getLocalizedMessage());
+			}
+			if (requete != null) {
+				err.put("Requete", requete);
+			}
 		}
 		return err;
 	}

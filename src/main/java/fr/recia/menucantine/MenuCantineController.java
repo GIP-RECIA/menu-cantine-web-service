@@ -39,11 +39,12 @@ public class MenuCantineController {
 	public ResponseEntity<Object> post(
 			@RequestBody Requete requete) {
 		log.debug("post requete =  {}", requete);
+		Semaine semaine;
 		try {
-			lastCall4debug = services.findSemaine(requete);
+			lastCall4debug = semaine =  services.findSemaine(requete);
 		} catch (RestAdoriaClientException e) {
 			return new ResponseEntity<Object>(e.getMap(), HttpStatus.PARTIAL_CONTENT);
 		}
-		return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
+		return new ResponseEntity<Object>(semaine, HttpStatus.OK);
 	}
 }

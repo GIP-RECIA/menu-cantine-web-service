@@ -1,6 +1,5 @@
 package fr.recia.menucantine;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import javax.annotation.ManagedBean;
@@ -16,7 +15,9 @@ import org.springframework.context.annotation.Lazy;
 import fr.recia.menucantine.adoria.AdoriaHelper;
 import fr.recia.menucantine.adoria.IRestAdoriaClient;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
+import fr.recia.menucantine.adoria.beans.ReponseAdoria;
 import fr.recia.menucantine.beans.Requete;
+import fr.recia.menucantine.beans.RequeteHelper;
 import fr.recia.menucantine.beans.Semaine;
 
 @Configuration
@@ -24,6 +25,7 @@ import fr.recia.menucantine.beans.Semaine;
 public class MenuCantineServices {
 	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);	
+	
 	
 	@Autowired
 	@Lazy
@@ -46,57 +48,46 @@ public class MenuCantineServices {
 		return adoriaWeb;
 	}
 	
+	
 	public Semaine findSemaine(Requete requete) throws RestAdoriaClientException{
 		
 		if (requete == null || requete.getUai() == null){
 			throw new NullPointerException("requete ou uai null: " + requete);
 		}
+		RequeteHelper rh = new RequeteHelper();
 		
-		Integer annee = requete.getAnnee();
-		Integer semaine = requete.getSemaine();
-		LocalDate date = requete.getDate();
 		
-		if (date == null) {
-			date = LocalDate.now();
+		LocalDate date = rh.dateJour(requete);
+		
+		if (date == null) { 
+				// on a pas de date la requette est basé sur la semaine 
+			date = rh.dateSemaine(requete);
 		}
+		rh.dateJour(requete,date);
 		
-		if (annee == null) {
-			annee = date.getYear();
-			requete.setAnnee(annee);
+		try {
+			return new Semaine(adoriaHelper.call(requete.getUai(), requete.getSemaine(), requete.getAnnee()), requete);
+		} catch (RestAdoriaClientException e) {
+			LocalDate lundi = rh.dateFromYearWeekDay(requete.getAnnee(), requete.getSemaine(), 1);
+			LocalDate vendredi = lundi.plusDays(4);
+			e.getMap().put("debut", lundi.format(Semaine.formatter));
+			e.getMap().put("fin", vendredi.format(Semaine.formatter));
+			
+			vendredi = lundi.minusDays(3);
+			Requete rPrev = new Requete();
+			rh.dateJour(rPrev, vendredi);
+			try {
+				ReponseAdoria res = adoriaHelper.call(requete.getUai(), rPrev.getSemaine(), rPrev.getAnnee());
+				if (res != null) {
+					e.getMap().put("previousWeek", vendredi.format(RequeteHelper.dateFormatter));
+				}
+			} catch (Exception catched) {
+				log.debug("requette semaine precedante : " +  catched.getMessage());
+			}
+			
+			throw e;
 		}
-		if (semaine == null) {
-			requete.setDate(date);
-			semaine = requete.getSemaine();
-			annee = requete.getAnnee();
-		}
-		
-		Integer jour = requete.getJour();
-		
-		if (jour == null) {
-			jour = DayOfWeek.MONDAY.getValue();
-			requete.setJour(jour);
-		}
-		
-		return new Semaine(adoriaHelper.call(requete.getUai(), semaine, annee), requete);
-		 
 	}
 	
-	
-	public static void main(String[] args) {
-		Requete r = new Requete();
-		r.setDate(LocalDate.of(2018, 12, 31));
-		System.out.println(r);
-		r.setDate(LocalDate.now());
-		System.out.println(r);
-		r.setDate(LocalDate.of(2019, 1, 1));
-		System.out.println(r);
-		r.setDate(LocalDate.of(2020, 1, 3));
-		System.out.println(r);
-		r.setDate(LocalDate.of(2020, 12, 31));
-		System.out.println(r);
-		
-		LocalDate date =  LocalDate.parse("31/12/2020" , Requete.dateFormatter);
-		System.out.println(date);
-	}
 	
 }
