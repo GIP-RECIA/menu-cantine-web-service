@@ -67,7 +67,10 @@ public class ReponseAdoria implements Serializable {
 		return res;
 	}
 
-	
+	/**
+	 * Le netoyage consiste a netoyer chaque jour et a supprimer les jours vide.
+	 * @return
+	 */
 	public ReponseAdoria clean(){
 		if (nbJours == null) { // clean n'a pas encore été fait
 			if (dates == null || dates.isEmpty()) {
@@ -177,17 +180,14 @@ public class ReponseAdoria implements Serializable {
 		}
 	}
 	
+	/**
+	 * complete les sous-menus avec des plat vide pour qu'ils ai tous la même taille.
+	 */
 	public void complete(){
 		if (nbPlatMaxParTypeLigne != null) {
-			
-			initNbPlatMaxParTypeLine();
-			
-	/*		while (dates.size() < 6) {
-				Journee jVide = new Journee();
-				jVide.setTypeVide(" vide2 vide3  ");
-				dates.add(jVide);
-			}
-	*/		
+			// TODO verifier et supprimer si ca ne sert plus
+			 initNbPlatMaxParTypeLine();
+				
 			int jour = 0;
 			for (Journee journee : dates) {
 				

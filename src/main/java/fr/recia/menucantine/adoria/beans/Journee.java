@@ -47,7 +47,13 @@ public class Journee implements Serializable {
 //	@JsonIgnore 
 	NbPlatParSsMenuParService serviceChoixNbPlats = new NbPlatParSsMenuParService();
 	
-	
+	/**
+	 * Netoyage de chaque service de la journée, suppression des service vide.
+	 * Calcul du nombre de plat proposé dans chaque sous-menu de chaque service.
+	 * 
+	 * Les services sont ordonnés suivant leurs rank
+	 * @return
+	 */
 	NbPlatParSsMenuParService clean(){
 		if (jour == null && date != null) {
 			

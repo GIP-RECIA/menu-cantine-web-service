@@ -24,6 +24,7 @@ public class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
 		if (this.isEmpty()) {
 			
 			this.putAll(platParSsMenu);
+		
 		} else {
 			
 			platParSsMenu.forEach(
@@ -33,12 +34,15 @@ public class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
 							this.put(cle, val);
 						}
 						
-					});
-			
+					});		
 		}
 	}
 
 	@Override
+	/**
+	 * Renvoie le nombre de plat d'un sous-menu donné.
+	 * s'il est vide renvoie 0.
+	 */
 	public synchronized Integer get(Object key) {
 		Integer i = super.get(key);
 		

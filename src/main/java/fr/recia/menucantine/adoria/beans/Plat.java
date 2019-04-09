@@ -46,6 +46,12 @@ public class Plat implements Serializable {
 		return typeVide == true;
 	}
 
+	/**
+	 * Netoyage d'un plat:
+	 * annule les liste des allergens vide.
+	 * remplace les gemrcn par leurs code.
+	 * supprime les info de nutrition null.
+	 */
 	void clean() {
 		if (allergens != null && allergens.isEmpty()) {
 			allergens = null;

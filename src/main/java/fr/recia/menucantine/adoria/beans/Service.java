@@ -63,8 +63,11 @@ public class Service implements Serializable {
 	/**
 	 * regroupe les plats par sous menu triés
 	 * supprime les plat vide... 
+	 * On creer des sous-menus intermediaire vide.
+	 * Mais pas en fin de liste (il peut donc en manqué). 
 	 * 
 	 * renvoie le nombre de plats par sous menu
+	 * Efface la liste des plats d'origines (ils sont placé par sous-menu).
 	 * @return
 	 */
 	NbPlatParSsMenu clean(){

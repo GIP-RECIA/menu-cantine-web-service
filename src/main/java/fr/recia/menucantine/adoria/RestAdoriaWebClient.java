@@ -42,7 +42,9 @@ public class RestAdoriaWebClient implements IRestAdoriaClient {
 	@Override
 	@Cacheable("requetes")
 	public  ReponseAdoria call(RequeteAdoria requete) throws RestAdoriaClientException{	
-		try {	
+		try {
+			log.debug("reponse NOT IN CACHE");
+
 			Mono<ReponseAdoria> reponse =  webClient.post()
 				.uri(webServiceUrl)
 				.accept(MediaType.APPLICATION_JSON)
@@ -56,10 +58,7 @@ public class RestAdoriaWebClient implements IRestAdoriaClient {
 				/*	.onStatus(HttpStatus::is4xxClientError, 
 					response -> response.bodyToMono(Void.class))
 					.onStatus(HttpStatus::is5xxServerError, response -> response.body(null))
-				 */	
-					
-			log.debug("reponse NOT IN CACHE");
-			
+				 */							
 			return reponse.block().clean();
 			
 		} catch (WebClientResponseException  e) {
