@@ -1,5 +1,6 @@
 package fr.recia.menucantine.adoria.beans;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 
 @Data
-public class Journee {
+public class Journee implements Serializable {
 	@JsonIgnore 
 	static DateTimeFormatter formatJour = DateTimeFormatter.ofPattern("cccc");//(FormatStyle.LONG);
 	

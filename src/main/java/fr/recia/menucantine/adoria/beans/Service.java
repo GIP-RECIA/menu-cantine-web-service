@@ -1,5 +1,6 @@
 package fr.recia.menucantine.adoria.beans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +12,22 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-public class Service {
+public class Service implements Serializable {
 	
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2763451889039709686L;
+
 	@Data
-	class SousMenu {
+	class SousMenu implements Serializable {
+		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 6998445821377161534L;
 		
 		@NonNull
 		List<Plat> choix;

@@ -1,5 +1,6 @@
 package fr.recia.menucantine.adoria.beans;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,7 +15,11 @@ import lombok.Data;
 
 
 @Data
-public class Plat {
+public class Plat implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6660011102902753149L;
 	private static final Logger log = LoggerFactory.getLogger(Plat.class);	
 	String name = " ";
 	String family = " "; // se sont des blancs insecable

@@ -1,7 +1,6 @@
 package fr.recia.menucantine.adoria.beans;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,8 +13,13 @@ import fr.recia.menucantine.adoria.beans.Service.SousMenu;
 import lombok.Data;
 
 @Data
-public class ReponseAdoria {
+public class ReponseAdoria implements Serializable {
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3442267876530079710L;
 	
 	@JsonIgnore
 	static int NB_JOUR_MAX = 6;
@@ -25,7 +29,7 @@ public class ReponseAdoria {
 	
 	//utile a la lecture du flux adoria
 	String cycleMenuName;
-
+	
 	Boolean previousWeekExportable;
 	Boolean nextWeekExportable;
 	
