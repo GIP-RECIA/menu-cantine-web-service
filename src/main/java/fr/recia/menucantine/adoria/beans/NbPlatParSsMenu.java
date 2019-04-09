@@ -13,7 +13,8 @@ public class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4312414121393987878L;
+	private static final long serialVersionUID = 2971745506304642901L;
+	private int maxKey = 0;
 
 	/**
 	 * Calcul le max pour chaque sous-menu du nombre de plats entre le {@link platParSsMenu} et this.
@@ -50,5 +51,16 @@ public class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
 		
 		return i;
 	}
-	 
+	
+	
+
+	@Override
+	public synchronized Integer put(Integer key, Integer value) {
+		if (key > maxKey) maxKey = key;
+		return super.put(key, value);
+	}
+
+	public synchronized int getMaxKey() {
+		return maxKey;
+	}
 }

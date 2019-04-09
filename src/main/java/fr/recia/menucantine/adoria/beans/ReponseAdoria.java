@@ -16,11 +16,14 @@ import lombok.Data;
 public class ReponseAdoria implements Serializable {
 	
 	
+	
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3442267876530079710L;
+	private static final long serialVersionUID = -6097943202328775674L;
 	
+
 	//utile a la lecture du flux adoria
 	String cycleMenuName;
 	
@@ -99,44 +102,54 @@ public class ReponseAdoria implements Serializable {
 		}
 	}
 	
+	
+	private void completeSsMenu(Service service) {
+		String serviceName = service.getName();
+		
+		List<SousMenu> menuComplet = new ArrayList<>();
+		NbPlatParSsMenu nbPlatMax = nbPlatMaxParService.get(serviceName);
+		
+		int nbSsMenu = nbPlatMax.getMaxKey();
+		
+		Iterator<SousMenu> iterator = service.getMenu().iterator();
+		SousMenu ssMenu = null;
+		Integer rankSsMenu;
+		
+		if (iterator.hasNext()) {
+			ssMenu = iterator.next();
+			rankSsMenu = ssMenu.getRank();
+		} else {
+			rankSsMenu = -1;
+		}
+		
+		for (int rank = 0; rank <= nbSsMenu; rank++){
+			int nbMax = nbPlatMax.get(rank);
+			SousMenu newSousMenu;
+		
+			if (rankSsMenu == rank) {
+				newSousMenu = ssMenu;
+				
+				if (iterator.hasNext()) {
+					ssMenu = iterator.next();
+					rankSsMenu = ssMenu.getRank();
+				} else {
+					rankSsMenu = -1;
+				}
+			} else {
+				// pas de sous-menu pour ce rank on le creer
+				newSousMenu = service.makeSousMenu(rank, false);
+			} 
+			
+			ajoutPlatVide(newSousMenu, nbMax);
+			menuComplet.add(newSousMenu);
+		}
+		service.setMenu(menuComplet);
+	}
+	
 	private void completeSsMenu(Journee journee){
 		
 		for (Service service : journee.getDestinations()) {
-			String serviceName = service.getName();
-	
-			List<SousMenu> menuComplet = new ArrayList<>();
-			
-			// no du sous-menu courant
-			int rankCourant = 0;
-			
-			for (SousMenu ssMenu : service.getMenu()) {
-					// no reel du sous-menu
-				Integer rank = ssMenu.getRank();
-				Integer nbMax = calculMaxPlat(serviceName, rank);
-
-					
-				while (rank > rankCourant) { 
-						// il manque encore un sous menu (il faut completer avec des ssmenus vide)
-					Integer nbMaxNew = calculMaxPlat(serviceName, rankCourant);
-					
-					if (nbMaxNew != null && nbMaxNew != 0 ) {
-						SousMenu newSsMenu = service.makeSousMenu(rankCourant, false);
-						menuComplet.add(newSsMenu);
-						// on le remplie avec le nombre de plat vide qu'il faut.
-						
-							ajoutPlatVide(newSsMenu, nbMaxNew);
-						
-					}
-					rankCourant++;
-				}	
-					// on ajoute des plat vide suplementaire si besoin
-				
-				ajoutPlatVide(ssMenu, nbMax);
-				
-				menuComplet.add(ssMenu);
-				rankCourant++;
-			}
-			service.setMenu(menuComplet);
+			completeSsMenu(service);
 		}
 	}
 	
