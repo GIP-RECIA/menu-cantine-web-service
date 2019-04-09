@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         updateCheck="true" monitoring="autodetect" dynamicConfig="true">
+
+ <!--   <diskStore path="java.io.tmpdir" />
+-->
+	<diskStore path="user.home/SpringBoot/cache" />
+	
+  <defaultCache eternal="false" maxElementsInMemory="1000" overflowToDisk="false" overflowToOffHeap="false" diskPersistent="false"/>
+
+  <cache name="requetes"
+         eternal="false"
+         maxEntriesLocalHeap="1000"
+         diskPersistent="true"
+         timeToIdleSeconds="3600"
+         timeToLiveSeconds="14400"
+         memoryStoreEvictionPolicy="LFU">
+  </cache>
+</ehcache>
