@@ -14,7 +14,6 @@ public class NbPlatParSsMenuParService extends Hashtable<String, NbPlatParSsMenu
 	 */
 	private static final long serialVersionUID = -2984649791310236653L;
 
-	// TODO VERIFIER QUE C'est encore utile
 	void calculMax(NbPlatParSsMenuParService src){
 		
 		src.forEach((service, rankCompte) -> {

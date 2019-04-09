@@ -53,7 +53,7 @@ public class Semaine {
 			fin = null;
 			jours = null;
 		} else {
-			menuSemaine.clean();
+			menuSemaine.clean(); // devrait déjà être clean
 			menuSemaine.complete();
 			nbJours = menuSemaine.getNbJours();
 			jours = menuSemaine.getDates();

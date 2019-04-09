@@ -21,12 +21,6 @@ public class ReponseAdoria implements Serializable {
 	 */
 	private static final long serialVersionUID = 3442267876530079710L;
 	
-	@JsonIgnore
-	static int NB_JOUR_MAX = 6;
-	static int NB_LIGNE_MAX = 3;
-	static int NB_TYPE_LIGNE_POSSIBLE = 6;
-	static String TYPE_FORMAT = " vide ";
-	
 	//utile a la lecture du flux adoria
 	String cycleMenuName;
 	
@@ -40,33 +34,8 @@ public class ReponseAdoria implements Serializable {
 	List<Journee> dates;
 	
 	@JsonIgnore
-	NbPlatParSsMenuParService nbPlatMaxParTypeLigne[]= new NbPlatParSsMenuParService[NB_TYPE_LIGNE_POSSIBLE];
+	NbPlatParSsMenuParService nbPlatMaxParService ; //= new NbPlatParSsMenuParService();
 	
-	NbPlatParSsMenuParService nbPlatMaxChoix(int jour, int nbLine, int nbJour) {
-		NbPlatParSsMenuParService res;
-		int indice = 0;
-		int minCol = nbJour / nbLine ; // nombre minimal de colonne par ligne. 
-		int supCol = nbJour % nbLine; // nombre de ligne avec une colonne suplémentaire
-		int line = 0;
-		int lastJour = 0; // dernier jour de la ligne en cour
-		
-		if (nbLine == 1) {
-			indice = 1;
-		} else {
-			while (jour >= lastJour) {
-				line++;
-				lastJour +=  minCol + (supCol > 0 ? 1 : 0);
-			}
-			indice = line + (nbLine * (nbLine -1)/ 2);
-		}
-		res = nbPlatMaxParTypeLigne[--indice];
-		if (res == null) {
-			res = new NbPlatParSsMenuParService();
-			nbPlatMaxParTypeLigne[indice] = res;
-		}
-		return res;
-	}
-
 	/**
 	 * Le netoyage consiste a netoyer chaque jour et a supprimer les jours vide.
 	 * @return
@@ -94,41 +63,29 @@ public class ReponseAdoria implements Serializable {
 		return this;
 	}
 	
-	private void initNbPlatMaxParTypeLine(){
+	private void initNbPlatMaxParService(){
 		if (dates != null) {
-			int jour = 0;
-			
+			nbPlatMaxParService = new NbPlatParSsMenuParService();
+
 			for (Journee journee : dates) {
-				for (int nbLine = 1; nbLine <= 3 ; nbLine++) {
-					nbPlatMaxChoix(jour, nbLine, NB_JOUR_MAX).calculMax(journee.serviceChoixNbPlats);
-				}
-				jour++;
+				nbPlatMaxParService.calculMax(journee.serviceChoixNbPlats);
 			}
 		}
 	}
 	
 	
-	private Integer[] calculAllMax(int jour, String serviceName, Integer rank) {
-		Integer allMax [] = new Integer[NB_LIGNE_MAX+1];
-		for (int nbLigne = 1; nbLigne <= NB_LIGNE_MAX; nbLigne++) {
-			
-			NbPlatParSsMenuParService nbPlatMaxParService = nbPlatMaxChoix(jour, nbLigne, NB_JOUR_MAX);
-			NbPlatParSsMenu platParSsMenuMax = nbPlatMaxParService.get(serviceName);
-			
-			if (platParSsMenuMax == null) continue ;
-			
-			Integer nbMax = platParSsMenuMax.get(rank);
-/*			if (ssMenu != null && nbMax != null && nbMax > 0) {
-				ssMenu.typeVide += String.format(TYPE_FORMAT, nbLigne);
-				
-			}
-	*/
-			allMax[nbLigne] = nbMax;
+	private Integer calculAllMax(int jour, String serviceName, Integer rank) {
+		//Integer allMax [] = new Integer[NB_LIGNE_MAX+1];
+		NbPlatParSsMenu platParSsMenuMax = nbPlatMaxParService.get(serviceName);
+		Integer nbMax = 0;	
+		if (platParSsMenuMax != null) {
+			nbMax = platParSsMenuMax.get(rank);
 		}
-		return allMax;
+		return nbMax;
 	}
 	
-	private void ajoutPlatVide(SousMenu ssMenu,  Integer allMax[]){
+	// ajout de plat vide au un sous-menu pour en obtenir le nombre max donnée
+	private void ajoutPlatVide(SousMenu ssMenu,  Integer max){
 		List<Plat> plats = ssMenu.choix;
 		
 		int nbPlats = plats.size();
@@ -137,7 +94,7 @@ public class ReponseAdoria implements Serializable {
 			ssMenu.setTypeVide(true);
 		}
 		
-		for (int i= nbPlats;  i < allMax[1]; i++ ) {
+		for (int i= nbPlats;  i < max; i++ ) {
 			plats.add(Plat.platVide());
 		}
 	}
@@ -149,17 +106,20 @@ public class ReponseAdoria implements Serializable {
 	
 			List<SousMenu> menuComplet = new ArrayList<>();
 			
+			// no du sous-menu courant
 			int rankCourant = 0;
 			
 			for (SousMenu ssMenu : service.getMenu()) {
+					// no reel du sous-menu
 				Integer rank = ssMenu.getRank();
-				Integer nbMax[] = calculAllMax(jour, serviceName, rank);
+				Integer nbMax = calculAllMax(jour, serviceName, rank);
 
-				while (rank > rankCourant) { 
-						// il manque tout un sous menu
-					Integer nbMaxNew[] = calculAllMax(jour, serviceName, rankCourant);
 					
-					if (nbMaxNew[1] != null && nbMaxNew[1] != 0 ) {
+				while (rank > rankCourant) { 
+						// il manque encore un sous menu (il faut completer avec des ssmenus vide)
+					Integer nbMaxNew = calculAllMax(jour, serviceName, rankCourant);
+					
+					if (nbMaxNew != null && nbMaxNew != 0 ) {
 						SousMenu newSsMenu = service.makeSousMenu(rankCourant, false);
 						menuComplet.add(newSsMenu);
 						// on le remplie avec le nombre de plat vide qu'il faut.
@@ -184,17 +144,15 @@ public class ReponseAdoria implements Serializable {
 	 * complete les sous-menus avec des plat vide pour qu'ils ai tous la même taille.
 	 */
 	public void complete(){
-		if (nbPlatMaxParTypeLigne != null) {
-			// TODO verifier et supprimer si ca ne sert plus
-			 initNbPlatMaxParTypeLine();
-				
-			int jour = 0;
+		
+		initNbPlatMaxParService();
+		int jour = 0;
+		if (dates != null) {
 			for (Journee journee : dates) {
 				
 				if ( ! journee.isVide()){
 					completeSsMenu(jour++, journee);
 				}
-				
 			};
 		}
 	}
