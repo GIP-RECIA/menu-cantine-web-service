@@ -32,8 +32,12 @@ public class MenuCantineController {
 	 */
 	@GetMapping(path = "/lastmenu")
 	public  ResponseEntity<Object> get() {
+		if (lastCall4debug == null) {
+			return new ResponseEntity<Object>(services.loadAllSemaine(),HttpStatus.OK) ;
+		}
 		return new ResponseEntity<Object>(lastCall4debug, HttpStatus.OK);
 	}
+	
 	  
 	@PostMapping(
 			path="/menu", 

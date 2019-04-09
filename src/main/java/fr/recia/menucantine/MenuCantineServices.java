@@ -1,6 +1,7 @@
 package fr.recia.menucantine;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.annotation.ManagedBean;
 
@@ -47,6 +48,15 @@ public class MenuCantineServices {
 			return adoriaTest;
 		} 
 		return adoriaWeb;
+	}
+	
+	
+	public List<String> loadAllSemaine() {
+		RequeteHelper rh = new RequeteHelper();
+		Requete requete = new Requete();
+		LocalDate date = rh.dateSemaine(requete);
+		rh.dateJour(requete, date);
+		return adoriaHelper.callTest(adoriaWeb, requete.getSemaine() -1 , requete.getAnnee());
 	}
 	
 	

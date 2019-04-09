@@ -21,7 +21,7 @@ adoria:
   # client-key: 
   # guid: 
   test:
-    no-web-service: true
+    no-web-service: false
     format-fileName: classpath:static/test/menuTest%d.json
  
 logging:

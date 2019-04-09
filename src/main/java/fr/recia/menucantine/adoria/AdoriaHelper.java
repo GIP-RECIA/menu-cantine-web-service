@@ -1,5 +1,8 @@
 package fr.recia.menucantine.adoria;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.ManagedBean;
 
 import org.slf4j.Logger;
@@ -29,10 +32,12 @@ public class AdoriaHelper implements ResourceLoaderAware {
 	@Autowired
     private IRestAdoriaClient adoriaClient ;
 	
-	public  ReponseAdoria callTest() {
-//		Logger logOk = LoggerFactory.getLogger("FileOk");
+	public  List<String> callTest(IRestAdoriaClient client, Integer semaine, Integer annee) {
+		// Logger logOk = LoggerFactory.getLogger("FileOk");
 		Logger logKo = LoggerFactory.getLogger("FileKo");
-
+		
+		List<String> uaiOk = new ArrayList<String>();
+		
 		String [] uais = { 
 				"0370001A",
 				"0410017W",
@@ -136,20 +141,20 @@ public class AdoriaHelper implements ResourceLoaderAware {
 				"0370016S",
 				};
 		ReponseAdoria res = null;
+		
 		for (String uai : uais) {
 			try {
-				if ("0180823X".equals(uai)) {
-					res =  adoriaClient.call(new RequeteAdoria(uai, 6, 2019));
-					
+				//if ("0180823X".equals(uai)) {
+					res =  client.call(new RequeteAdoria(uai, semaine, annee));
+					uaiOk.add(uai);
 					log.debug("etab ok : {}", uai);
 				//	logOk.info("reponse = {}", res); 
-				}
+				//}
 			} catch (RestAdoriaClientException e){
 				logKo.info("{} {}", uai, e.getJson());
 			}	
 		}
-		return  res;
-		
+		return uaiOk;
 	}
 	
 	
