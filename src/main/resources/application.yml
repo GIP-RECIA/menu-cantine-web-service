@@ -14,7 +14,9 @@ server:
     
 soffit:
   # jwt.signatureKey: 
-  anonymous.acces: /api/lastmenu
+  anonymous:
+    getacces: /api/lastmenu
+    postacces: /api/demomenu
 
 adoria:
   url: https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt

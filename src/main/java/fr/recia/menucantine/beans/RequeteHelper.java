@@ -15,11 +15,18 @@ public class RequeteHelper {
 	static public  WeekFields WEEK_FIELDS = WeekFields.of(Locale.getDefault());
 	static public DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
+
 	
+	static public LocalDate jourMemeSemaine(LocalDate jour, int jourDemande) {
+		int j = jour.get(WEEK_FIELDS.dayOfWeek());
+		if (j != jourDemande) {
+			return jour.plusDays(jourDemande - j);
+		}
+		return jour;
+	}
 	
 	private LocalDate now = LocalDate.now();
 
-	
 	/**
 	 * Fixe tous les attributs de la requete en fonction de la date donnée
 	 * @param date

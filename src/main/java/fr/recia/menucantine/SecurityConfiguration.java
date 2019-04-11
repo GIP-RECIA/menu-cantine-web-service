@@ -39,8 +39,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Value("${soffit.jwt.signatureKey:Changeme}")
     private String signatureKey;
 	
-	@Value("${soffit.anonymous.acces}")
-	private String forTest;
+	@Value("${soffit.anonymous.getacces}")
+	private String forTestGet;
+	
+	@Value("${soffit.anonymous.postacces}")
+	private String forTestPost;
 	
 	private static final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);	
 	@Override
@@ -72,9 +75,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .addFilter(filter)
             .authorizeRequests()
-           		.antMatchers(HttpMethod.GET, forTest).anonymous()
-            //	.antMatchers(HttpMethod.POST, forTest).anonymous()
-            //    .antMatchers(HttpMethod.GET,"/api/**").authenticated()
+           		.antMatchers(HttpMethod.GET, forTestGet).anonymous()
+            	.antMatchers(HttpMethod.POST, forTestPost).anonymous()
+                .antMatchers(HttpMethod.GET,"/api/**").authenticated()
                 .antMatchers(HttpMethod.POST,"/api/menu").authenticated()
             //   .antMatchers(HttpMethod.DELETE,"/api/**").denyAll()
              //   .antMatchers(HttpMethod.PUT,"/api/**").denyAll()

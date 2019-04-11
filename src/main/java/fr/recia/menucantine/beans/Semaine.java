@@ -66,10 +66,10 @@ public class Semaine {
 			}
 			
 			if (menuSemaine.getPreviousWeekExportable()) {
-				previousWeek = dateJour(0).minusDays(7);
+				previousWeek = RequeteHelper.jourMemeSemaine(dateJour(0), 5).minusDays(7);
 			};
 			if (menuSemaine.getNextWeekExportable()) {
-				nextWeek = dateJour(0).plusDays(7);
+				nextWeek = RequeteHelper.jourMemeSemaine(dateJour(0), 1).plusDays(7);
 			}
 			 
 		}

@@ -60,4 +60,13 @@ public class MenuCantineController {
 		
 		return new ResponseEntity<Object>(semaine, HttpStatus.OK);
 	}
+	
+	@PostMapping(
+			path="/demomenu", 
+			consumes = "application/json", 
+			produces = "application/json"
+		)
+	public ResponseEntity<Object> postDemo( @RequestBody Requete requete) {
+		return post(requete);
+	}
 }
