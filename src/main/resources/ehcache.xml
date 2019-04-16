@@ -19,4 +19,19 @@
          timeToLiveSeconds="14400"
          memoryStoreEvictionPolicy="LFU">
   </cache>
+  <cache name="permanent"
+         eternal="true"
+         maxEntriesLocalHeap="1000"
+         diskPersistent="true"
+         maxBytesLocalDisk="100M"
+         memoryStoreEvictionPolicy="FIFO">
+  </cache>
+  <cache name="erreur"
+  		eternal="false"
+         maxEntriesLocalHeap="1000"
+         diskPersistent="false"
+         timeToIdleSeconds="3600"
+         timeToLiveSeconds="3600"
+         memoryStoreEvictionPolicy="LRU">
+  </cache>
 </ehcache>

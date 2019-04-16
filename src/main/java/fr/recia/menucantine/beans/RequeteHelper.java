@@ -25,6 +25,10 @@ public class RequeteHelper {
 		return jour;
 	}
 	
+	static public int semaine(LocalDate jour) {
+		return jour.get(WEEK_FIELDS.weekOfWeekBasedYear());
+	}
+	
 	private LocalDate now = LocalDate.now();
 
 	/**
@@ -40,7 +44,7 @@ public class RequeteHelper {
 			jeudi = date.plusDays( 4 - requete.jour );
 		}
 		requete.annee = jeudi.getYear();
-		requete.semaine = jeudi.get(WEEK_FIELDS.weekOfWeekBasedYear());
+		requete.semaine = semaine(jeudi);
 		requete.dateJour = date.format(dateFormatter);
 		// dateJour = String.format("%td/%tm/%tY", date, date, date);
 	}
@@ -79,7 +83,7 @@ public class RequeteHelper {
 		LocalDate date;
 		
 		if (semaine == null || semaine == 0) {
-			semaine = now.get(WEEK_FIELDS.weekOfWeekBasedYear());
+			semaine = semaine(now);
 		}
 		if (jour == null || jour == 0) {
 			jour = now.get(WEEK_FIELDS.dayOfWeek());
