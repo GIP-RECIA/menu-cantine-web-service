@@ -156,21 +156,22 @@ public class AdoriaHelper implements ResourceLoaderAware {
 		}
 		return uaiOk;
 	}
-	
-	
 		
 	public  ReponseAdoria call(String uai, Integer semaine, Integer annee) throws RestAdoriaClientException {
+		
 		ReponseAdoria res = null;
 		
-		try {
-			
-			res = adoriaClient.call(new RequeteAdoria(uai, semaine, annee));
-			
-		} catch (RestAdoriaClientException e){
-			log.error(e.getMessage());
-			throw e;
+		String lock = String.format("%s%d%d", uai, semaine, annee).intern();
+		
+		synchronized (lock) {
+			try {
+				res = adoriaClient.call(new RequeteAdoria(uai, semaine, annee));
+			} catch (RestAdoriaClientException e){
+				log.error(e.getMessage());
+				throw e;
+			}
+			return res;
 		}
-		return res;
 	}
 
 	@Override
