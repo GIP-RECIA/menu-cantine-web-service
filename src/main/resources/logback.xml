@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <!-- Log message format -->
-    <encoder>
-      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-      </pattern>
-    </encoder>
+  
+<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+  		<file>${LOG_FILE:-/tmp/menucantine}.log</file>
+	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	  	<fileNamePattern>${LOG_FILE}-%d{yyyy-MM-dd}.log</fileNamePattern>
+	  </rollingPolicy>
+	  <encoder>
+	      <pattern>%d %-5level  %logger{36} - %msg%n</pattern>
+	  </encoder>
   </appender>
   
-<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+  <appender name="FILE1" class="ch.qos.logback.core.FileAppender">
     <!-- Name of the file where the log messages are written -->
     <file>uaiOk.log</file>
     <encoder>
@@ -22,12 +25,13 @@
       <pattern>%msg%n</pattern>
     </encoder>
   </appender>
+  
   <!-- Setting the root level of logging to INFO -->
   <root level="">
-    <appender-ref ref="STDOUT" />
+    <appender-ref ref="FILE" />
   </root>
   <logger name="FileOk" level="INFO" >
-  	<appender-ref ref="FILE" />
+  	<appender-ref ref="FILE1" />
   </logger>
   <logger name="FileKo" level="INFO" >
   	<appender-ref ref="FILE2" />

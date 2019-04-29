@@ -27,9 +27,11 @@ adoria:
     format-fileName: classpath:static/test/menuTest%d.json
  
 logging:
+  file: /home/esco/logs/menucantine
   level: 
-    web: debug
-    web.servlet.DispatcherServlet: trace
+    web: info
+    web.servlet.DispatcherServlet: info
     fr:
       recia:
-        menucantine: DEBUG
+        menucantine: info
+
