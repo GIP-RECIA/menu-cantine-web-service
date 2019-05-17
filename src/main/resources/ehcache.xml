@@ -11,6 +11,7 @@
 	
   <defaultCache eternal="false" maxElementsInMemory="1000" overflowToDisk="false" overflowToOffHeap="false" diskPersistent="false"/>
 
+<!-- Pour les réponses valides de le semaine courante (elles peuvent encore changées) -->
   <cache name="requetes"
          eternal="false"
          maxEntriesLocalHeap="1000"
@@ -19,6 +20,8 @@
          timeToLiveSeconds="14400"
          memoryStoreEvictionPolicy="LFU">
   </cache>
+  
+<!--  Pour les menus des semaines passées ils ne devraient plus changer, on les gardes tant qu'il y de la place  -->
   <cache name="permanent"
          eternal="true"
          maxEntriesLocalHeap="1000"
@@ -26,6 +29,8 @@
          maxBytesLocalDisk="100M"
          memoryStoreEvictionPolicy="FIFO">
   </cache>
+  
+<!--  pour les réponses en erreur peut-être avec une période courte -->
   <cache name="erreur"
   		eternal="false"
          maxEntriesLocalHeap="1000"

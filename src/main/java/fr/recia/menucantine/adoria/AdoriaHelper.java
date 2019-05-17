@@ -154,6 +154,9 @@ public class AdoriaHelper implements ResourceLoaderAware {
 				logKo.info("{} {}", uai, e.getJson());
 			}	
 		}
+		if (uaiOk.isEmpty()) {
+			uaiOk.add(" Il n'y pas de menu valide pour cette semaine");
+		}
 		return uaiOk;
 	}
 		
