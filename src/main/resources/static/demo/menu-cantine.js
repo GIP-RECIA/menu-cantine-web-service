@@ -2152,7 +2152,7 @@ function initBreakpoints(nbJour) {
   // nbJour = this.nbJour; glideOptions = this.glideOptions
   var largeur = parseInt("275");
   var winWidth = window.innerWidth;
-  var offsetWidth = document.getElementsByTagName('menu-cantine-menu-semaine')[0].offsetWidth;
+  var offsetWidth = document.querySelector('menu-cantine-menu-semaine').offsetWidth;
   var delta = ~~(2 * (winWidth - offsetWidth) / ((nbJour + 1) * nbJour));
   var breakpoints = [];
   var idx = largeur;
@@ -2541,9 +2541,9 @@ var _components;
       var url;
 
       if (this.isDemo) {
-        url = "https://192.168.45.196:8443/menuCantine/api/demomenu";
+        url = "/menuCantine/api/demomenu";
       } else {
-        url = "https://192.168.45.196:8443/menuCantine/api/menu";
+        url = "/menuCantine/api/menu";
       }
 
       var headers = {
