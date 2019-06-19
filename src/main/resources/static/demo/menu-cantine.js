@@ -1151,7 +1151,7 @@ __webpack_require__.r(__webpack_exports__);
 // This file is imported into lib/wc client bundles.
 
 if (typeof window !== 'undefined') {
-  if (Object({"NODE_ENV":"production","VUE_APP_URL_REST_API":"https://192.168.45.196:8443/menuCantine/api/menu","VUE_APP_URL_REST_API_DEMO":"https://192.168.45.196:8443/menuCantine/api/demomenu","VUE_APP_ENV":"dev","VUE_APP_PORTAL_CONTEXT":"/portail","VUE_APP_USER_INFO_URI":"/api/v5-1/userinfo","VUE_APP_URL_API_ETAB":"/change-etablissement/rest/v2/structures/structs/","VUE_APP_BREAKPOINT_WIDTH":"275","BASE_URL":"/"}).NEED_CURRENTSCRIPT_POLYFILL) {
+  if (Object({"NODE_ENV":"production","VUE_APP_ENV":"dev","VUE_APP_PORTAL_CONTEXT":"/portail","VUE_APP_USER_INFO_URI":"/api/v5-1/userinfo","VUE_APP_URL_REST_API":"/menuCantine/api/menu","VUE_APP_URL_API_ETAB":"/change-etablissement/rest/v2/structures/structs/","VUE_APP_URL_REST_API_DEMO":"/menuCantine/api/demomenu","VUE_APP_BREAKPOINT_WIDTH":"275","BASE_URL":"/"}).NEED_CURRENTSCRIPT_POLYFILL) {
     __webpack_require__("f6fd")
   }
 
@@ -2715,9 +2715,9 @@ var _components;
           uaiEtab = this.selected;
         }
 
-        url = "https://192.168.45.196:8443/menuCantine/api/demomenu";
+        url = "/menuCantine/api/demomenu";
       } else {
-        url = "https://192.168.45.196:8443/menuCantine/api/menu";
+        url = "/menuCantine/api/menu";
       }
 
       var headers = {
