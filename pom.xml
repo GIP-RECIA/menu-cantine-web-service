@@ -10,10 +10,10 @@
 	</parent>
 	<groupId>fr.recia</groupId>
 	<artifactId>menu-cantine</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>menu-cantine</name>
-	<description>Service rest pour les menu de cantine</description>
+	<description>Service rest pour les menus de cantine</description>
 
 	<properties>
 		<java.version>1.8</java.version>
