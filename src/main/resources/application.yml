@@ -2,10 +2,10 @@ server:
   address: 192.168.45.196
   port: 8443
   ssl:
-    enabled: true
+    enabled: false
     key-alias: tomcat-localhost
     # key-password: 
-    key-store: /home/legay/SpringBoot/demoSpringBootCas/keystore.jks
+    key-store: classpath:menucantine.jks
     key-store-provider: SUN
     key-store-type: JKS
     # key-store-password: 
