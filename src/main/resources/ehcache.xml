@@ -7,7 +7,7 @@
 
  <!--   <diskStore path="java.io.tmpdir" />
 -->
-	<diskStore path="user.home/SpringBoot/cache" />
+	<diskStore path="ehcache.disk.store.dir/menu-cantine" />
 	
   <defaultCache eternal="false" maxElementsInMemory="1000" overflowToDisk="false" overflowToOffHeap="false" diskPersistent="false"/>
 
