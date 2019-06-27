@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>fr.recia</groupId>
 	<artifactId>menu-cantine</artifactId>
-	<version>0.2.3-SNAPSHOT</version>
+	<version>0.2.4-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>menu-cantine</name>
 	<description>Service rest pour les menus de cantine</description>
