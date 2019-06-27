@@ -19,52 +19,52 @@
 		<login.ent>pierre.legay</login.ent>
 	</properties>
 	<repositories>
-   <repository>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <url>https://repo.spring.io/snapshot</url>
-      <snapshots>
-         <enabled>true</enabled>
-      </snapshots>
-   </repository>
-   <repository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-   </repository>
-</repositories>
-<pluginRepositories>
-   <pluginRepository>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <url>https://repo.spring.io/snapshot</url>
-      <snapshots>
-         <enabled>true</enabled>
-      </snapshots>
-   </pluginRepository>
-   <pluginRepository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-   </pluginRepository>
-</pluginRepositories>
-	
-	
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+
 	<distributionManagement>
-        <repository>
-            <id>esco-releases</id>
-            <url>https://nexus.recia.fr/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>esco-snapshots</id>
-            <url>https://nexus.recia.fr/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-    <scm>
-        <connection>scm:git:ssh://${login.ent}@git.recia.fr/srv/git/shared/menu-cantine-web-service.git</connection>
-        <developerConnection>scm:git:ssh://${login.ent}@git.recia.fr/srv/git/shared/menu-cantine-web-service.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
+		<repository>
+			<id>esco-releases</id>
+			<url>https://nexus.recia.fr/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>esco-snapshots</id>
+			<url>https://nexus.recia.fr/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<scm>
+		<connection>scm:git:ssh://${login.ent}@git.recia.fr/srv/git/shared/menu-cantine-web-service.git</connection>
+		<developerConnection>scm:git:ssh://${login.ent}@git.recia.fr/srv/git/shared/menu-cantine-web-service.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -86,9 +86,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-    		<groupId>org.jasig.portal</groupId>
-    		<artifactId>uPortal-soffit-renderer</artifactId>
-    		<version>5.4.0</version>
+			<groupId>org.jasig.portal</groupId>
+			<artifactId>uPortal-soffit-renderer</artifactId>
+			<version>5.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -123,40 +123,38 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-    			<plugin>
+			<plugin>
 				<groupId>org.lesscss</groupId>
-			    <artifactId>lesscss-maven-plugin</artifactId>
-			    <version>1.7.0.1.1</version>
-			       
-			    <executions>
-			        <execution>
-			        	<id>generate-resources</id>
-                        <phase>generate-resources</phase>
-			            <goals>
-			                <goal>compile</goal>
-			             </goals>
-			           <configuration>
-			        <sourceDirectory>${project.basedir}/src/main/resources/static/less</sourceDirectory>
-			        <outputDirectory>${project.basedir}/target/classes/static/css</outputDirectory>
-			        <compress>false</compress>
-			    </configuration>
-			        </execution>
-			         <execution>
-			            <goals>
-			                <goal>compile</goal>
-			             </goals>
-			           <configuration>
-			        <sourceDirectory>${project.basedir}/src/main/resources/static/less</sourceDirectory>
-			        <outputDirectory>${project.basedir}/src/main/resources/static/css</outputDirectory>
-			        <compress>true</compress>
-			    </configuration>
-			            
-			         
-			        </execution>
-			    </executions>
-			</plugin>
+				<artifactId>lesscss-maven-plugin</artifactId>
+				<version>1.7.0.1.1</version>
 
-  
+				<executions>
+					<execution>
+						<id>generate-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${project.basedir}/src/main/resources/static/less</sourceDirectory>
+							<outputDirectory>${project.basedir}/target/classes/static/css</outputDirectory>
+							<compress>false</compress>
+						</configuration>
+					</execution>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${project.basedir}/src/main/resources/static/less</sourceDirectory>
+							<outputDirectory>${project.basedir}/src/main/resources/static/css</outputDirectory>
+							<compress>true</compress>
+						</configuration>
+
+
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
