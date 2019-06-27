@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>fr.recia</groupId>
 	<artifactId>menu-cantine</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.2.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>menu-cantine</name>
 	<description>Service rest pour les menus de cantine</description>
@@ -30,7 +30,7 @@
     <scm>
         <connection>scm:git:ssh://pierre.legay@git.recia.fr/srv/git/shared/menu-cantine-web-service.git</connection>
         <developerConnection>scm:git:ssh://pierre.legay@git.recia.fr/srv/git/shared/menu-cantine-web-service.git</developerConnection>
-        <tag>menu-cantine-0.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 	<dependencies>
 		<dependency>
