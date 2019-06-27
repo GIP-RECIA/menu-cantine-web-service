@@ -155,6 +155,36 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<header>etc/header.template</header>
+					<!--<licenseName>apache_v2</licenseName>-->
+					<includes>
+						<include>**/*.java</include>
+						<include>src/**/*.xml</include>
+						<include>**/*.properties</include>
+						<include>**/*.yml</include>
+						<!-- <include>**/*.jsp</include> -->
+						<!-- <include>**/*.txt</include> -->
+						<include>**/*.css</include>
+					</includes>
+					<strictCheck>true</strictCheck>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jasig.maven</groupId>
+				<artifactId>maven-notice-plugin</artifactId>
+				<version>1.1.0</version>
+				<configuration>
+					<noticeTemplate>etc/NOTICE.template</noticeTemplate>
+					<licenseMapping>
+						<param>/etc/license-mappings.xml</param>
+					</licenseMapping>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
