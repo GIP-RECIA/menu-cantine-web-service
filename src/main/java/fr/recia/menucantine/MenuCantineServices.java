@@ -116,8 +116,18 @@ public class MenuCantineServices {
 			
 			rh.dateJour(rPrev, vendredi);
 			
+			LocalDate aux = vendredi;
+			
 			try {
-				ReponseAdoria res = adoriaHelper.call(requete.getUai(), rPrev.getSemaine(), rPrev.getAnnee());
+				int nbIterBack = 5;
+				ReponseAdoria res = null;
+				while (res == null && nbIterBack -- > 0){
+						rh.dateJour(rPrev, aux);
+						
+						res = adoriaHelper.call(requete.getUai(), rPrev.getSemaine(), rPrev.getAnnee());
+						
+						aux = aux.minusDays(7);
+				}
 				
 				if (res != null) {
 					e.getMap().put("previousWeek", vendredi.format(RequeteHelper.dateFormatter));
