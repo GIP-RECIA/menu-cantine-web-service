@@ -90,6 +90,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .addFilter(filter)
             .authorizeRequests()
+            	.antMatchers(HttpMethod.GET, "/health-check").anonymous()
            		.antMatchers(HttpMethod.GET, forTestGet).anonymous()
             	.antMatchers(HttpMethod.POST, forTestPost).anonymous()
                 .antMatchers(HttpMethod.GET,"/api/**").authenticated()
