@@ -92,16 +92,6 @@ public class ReponseAdoria implements Serializable {
 	}
 	
 	
-	private Integer calculMaxPlat(String serviceName, Integer rank) {
-		//Integer allMax [] = new Integer[NB_LIGNE_MAX+1];
-		NbPlatParSsMenu platParSsMenuMax = nbPlatMaxParService.get(serviceName);
-		Integer nbMax = 0;	
-		if (platParSsMenuMax != null) {
-			nbMax = platParSsMenuMax.get(rank);
-		}
-		return nbMax;
-	}
-	
 	// ajout de plat vide au un sous-menu pour en obtenir le nombre max donnée
 	private void ajoutPlatVide(SousMenu ssMenu,  Integer max){
 		List<Plat> plats = ssMenu.choix;

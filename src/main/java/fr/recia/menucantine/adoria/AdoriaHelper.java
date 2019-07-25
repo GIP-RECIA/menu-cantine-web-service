@@ -155,16 +155,14 @@ public class AdoriaHelper implements ResourceLoaderAware {
 				"0360024F",
 				"0370016S",
 				};
-		ReponseAdoria res = null;
+		
 		
 		for (String uai : uais) {
 			try {
-				//if ("0180823X".equals(uai)) {
-					res =  client.call(new RequeteAdoria(uai, semaine, annee));
-					uaiOk.add(uai);
-					log.debug("etab ok : {}", uai);
-				//	logOk.info("reponse = {}", res); 
-				//}
+				client.call(new RequeteAdoria(uai, semaine, annee));
+				uaiOk.add(uai);
+				log.debug("etab ok : {}", uai);
+				
 			} catch (RestAdoriaClientException e){
 				logKo.info("{} {}", uai, e.getJson());
 			}	
