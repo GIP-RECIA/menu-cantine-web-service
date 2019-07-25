@@ -63,7 +63,8 @@ public class GemRcn {
 	}
 	
 	public static void loadFile (String fileName)  {
-		try (Scanner scannerFile = new Scanner(ResourceUtils.getFile(fileName))) {		
+		try (Scanner scannerFile = new Scanner(ResourceUtils.getFile(fileName))) {
+			log.info("load GemRcn nomenclature file {}",  fileName );
 			while (scannerFile.hasNextLine()) {
 				try (Scanner scannerLine = new Scanner(scannerFile.nextLine())){
 					//scannerLine.useDelimiter("(\"?\\s*,\\s*\")|(\"\\s*$)");

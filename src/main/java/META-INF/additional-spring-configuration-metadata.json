@@ -43,5 +43,10 @@
     "name": "soffit.anonymous.postacces",
     "type": "java.lang.String",
     "description": "A description for 'soffit.anonymous.postacces'"
+  },
+  {
+    "name": "adoria.gemrcn-csv",
+    "type": "java.lang.String",
+    "description": "fichier.csv de nomenclature GemRcn complémentaire."
   }
 ]}

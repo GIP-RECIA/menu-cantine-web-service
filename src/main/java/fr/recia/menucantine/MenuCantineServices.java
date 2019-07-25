@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ import org.springframework.context.annotation.Lazy;
 import fr.recia.menucantine.adoria.AdoriaHelper;
 import fr.recia.menucantine.adoria.IRestAdoriaClient;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
+import fr.recia.menucantine.adoria.beans.GemRcn;
 import fr.recia.menucantine.adoria.beans.ReponseAdoria;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.RequeteHelper;
@@ -40,7 +42,6 @@ import fr.recia.menucantine.beans.Semaine;
 @ManagedBean
 public class MenuCantineServices {
 	
-	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);	
 	
 	
@@ -65,6 +66,13 @@ public class MenuCantineServices {
 		return adoriaWeb;
 	}
 	
+	@Value("${adoria.gemrcn-csv}")
+	String gemrcnFilename;
+	
+	@PostConstruct
+	public void postConstructInit(){
+		GemRcn.loadFile(gemrcnFilename);
+	}
 	
 	public List<String> loadAllSemaine() {
 		RequeteHelper rh = new RequeteHelper();
