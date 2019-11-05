@@ -27,7 +27,6 @@ public class Labels implements Serializable {
 	private static final long serialVersionUID = 4037048636409313674L;
 	private static final String DEFAULT_FILE = "classpath:labels.csv";
 	
-	private static final String DEFAULT_IMG = "img/";
 	
 	private static final Pattern PV = Pattern.compile("\\s*;\\s*");
 	
@@ -62,9 +61,6 @@ public class Labels implements Serializable {
 						label.ordre = scannerLine.nextInt();
 						label.nom = scannerLine.next();
 						label.logo =  scannerLine.next();
-						if (label.logo.indexOf('/') < 0 ) {
-							label.logo = DEFAULT_IMG .concat(label.logo); 
-						}
 						labelByName.put(label.nom , label);
 						
 					}
