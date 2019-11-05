@@ -1,9 +1,8 @@
 package fr.recia.menucantine.adoria.beans;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -15,15 +14,21 @@ import org.springframework.util.ResourceUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
-import lombok.Getter;
 
 
 
 
 @Data
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public class Labels {
+public class Labels implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4037048636409313674L;
 	private static final String DEFAULT_FILE = "classpath:labels.csv";
+	
+	private static final String DEFAULT_IMG = "img/";
+	
 	private static final Pattern PV = Pattern.compile("\\s*;\\s*");
 	
 	private static final Logger log = LoggerFactory.getLogger(Labels.class);
@@ -56,7 +61,10 @@ public class Labels {
 						Labels label = new Labels();
 						label.ordre = scannerLine.nextInt();
 						label.nom = scannerLine.next();
-						//label.logo =  scannerLine.next();
+						label.logo =  scannerLine.next();
+						if (label.logo.indexOf('/') < 0 ) {
+							label.logo = DEFAULT_IMG .concat(label.logo); 
+						}
 						labelByName.put(label.nom , label);
 						
 					}

@@ -1,16 +1,16 @@
 ordre; nom; logo; comment
-1; BIO;
-2;  Fait Maison;
-3; Végetarien;
-4; AOC;
-5; AOP;
-6; Label Rouge;
-7; Produit Fermier;
-8; Vdf;
-9; Pêche durable;
-10; Bleu Blanc Coeur;
-11; HVE;
-12; IGP;
-13; STG;
-14; CQC;
+1; BIO; ab-transp.png;
+2;  Fait Maison; maison.png;
+3; Végetarien; Vege3.jpg;
+4; AOC; AOC-transp.png;
+5; AOP; AOP-transp.png;
+6; Label Rouge; rouge.png;
+7; Produit Fermier; fermier.png;
+8; Vdf; Vdf.png;
+9; Pêche durable; MSC.png;
+10; Bleu Blanc Coeur; bbc.png;
+11; HVE; HVE.png;
+12; IGP; IGP-transp.png;
+13; STG; STG-transp.png;
+14; CQC; CQG.png;
 
