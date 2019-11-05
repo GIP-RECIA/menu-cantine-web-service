@@ -1,4 +1,4 @@
-package fr.recia.menucantine.beans;
+package fr.recia.menucantine.adoria.beans;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class Labels {
 	//private static List<Labels> allLabels = new ArrayList<>();
 	
 	
-	private static Map<String, Labels> labelByName; 
+	private static Map<String, Labels> labelByName = new HashMap<String, Labels>();
 	
 	int ordre;
 	String nom;
@@ -47,8 +47,6 @@ public class Labels {
 			
 			scannerFile.nextLine();
 			
-			
-			labelByName = new HashMap<String, Labels>();
 			
 			while (scannerFile.hasNextLine()) {
 				try (Scanner scannerLine = new Scanner(scannerFile.nextLine())){

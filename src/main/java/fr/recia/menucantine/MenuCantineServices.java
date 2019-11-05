@@ -29,10 +29,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
+import com.sun.xml.internal.ws.org.objectweb.asm.Label;
+
 import fr.recia.menucantine.adoria.AdoriaHelper;
 import fr.recia.menucantine.adoria.IRestAdoriaClient;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
 import fr.recia.menucantine.adoria.beans.GemRcn;
+import fr.recia.menucantine.adoria.beans.Labels;
 import fr.recia.menucantine.adoria.beans.ReponseAdoria;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.RequeteHelper;
@@ -69,10 +72,15 @@ public class MenuCantineServices {
 	@Value("${adoria.gemrcn-csv}")
 	String gemrcnFilename;
 	
+	@Value("${adoria.labels-csv}")
+	String labelsFilename;
+	
 	@PostConstruct
 	public void postConstructInit(){
 		GemRcn.loadFile(gemrcnFilename);
+		Labels.loadFile(labelsFilename);
 	}
+	
 	
 	public List<String> loadAllSemaine() {
 		RequeteHelper rh = new RequeteHelper();
