@@ -34,7 +34,7 @@ public class Labels implements Serializable {
 	//private static List<Labels> allLabels = new ArrayList<>();
 	
 	
-	private static Map<String, Labels> labelByName = new HashMap<String, Labels>();
+	private static final Map<String, Labels> labelByName = new HashMap<String, Labels>();
 	
 	int ordre;
 	String nom;

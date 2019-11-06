@@ -38,6 +38,8 @@ adoria:
   url: https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt
   # client-key: 
   # guid: 
+  gemrcn-csv: classpath:GemRcn.csv
+  labels-csv: classpath:labels.csv
   test:
     no-web-service: false
     format-fileName: classpath:static/test/menuTest%d.json
