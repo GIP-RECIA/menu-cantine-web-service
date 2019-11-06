@@ -17,7 +17,6 @@ package fr.recia.menucantine;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.DispatcherServlet;
 
 /* cette classe est utile juste pour changer la conf par défaut du bean 

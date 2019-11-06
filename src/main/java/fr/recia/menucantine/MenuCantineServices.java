@@ -29,8 +29,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.Label;
-
 import fr.recia.menucantine.adoria.AdoriaHelper;
 import fr.recia.menucantine.adoria.IRestAdoriaClient;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
