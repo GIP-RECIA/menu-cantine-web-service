@@ -132,6 +132,7 @@ public class MenuCantineServices {
 			
 			LocalDate aux = vendredi;
 			
+		/*	
 			try {
 				int nbIterBack = 5;
 				ReponseAdoria res = null;
@@ -150,7 +151,10 @@ public class MenuCantineServices {
 			} catch (Exception catched) {
 				log.debug("requette semaine precedante : " +  catched.getMessage());
 			}
-			
+		*/	
+			lundi = lundi.plusDays(7);
+			e.getMap().put("previousWeek", vendredi.format(RequeteHelper.dateFormatter));
+			e.getMap().put("nextWeek", lundi.format(RequeteHelper.dateFormatter));
 			throw e;
 		}
 	}
