@@ -17,8 +17,10 @@ package fr.recia.menucantine.adoria.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -53,6 +55,9 @@ public class ReponseAdoria implements Serializable {
 	
 	@JsonIgnore
 	NbPlatParSsMenuParService nbPlatMaxParService ; 
+	
+	@JsonIgnore
+	List<Service> serviceVideAvailable;
 	
 	/**
 	 * Le netoyage consiste a netoyer chaque jour et a supprimer les jours vide.
@@ -116,11 +121,16 @@ public class ReponseAdoria implements Serializable {
 		
 		int nbSsMenu = nbPlatMax.getMaxKey();
 		
-		Iterator<SousMenu> iterator = service.getMenu().iterator();
+		Iterator<SousMenu> iterator = null;
+		List<SousMenu> menuIncomplet = service.getMenu();
+		if (menuIncomplet != null) {
+			iterator = service.getMenu().iterator();
+		}
+		
 		SousMenu ssMenu = null;
 		Integer rankSsMenu;
 		
-		if (iterator.hasNext()) {
+		if (iterator != null && iterator.hasNext()) {
 			ssMenu = iterator.next();
 			rankSsMenu = ssMenu.getRank();
 		} else {
@@ -134,7 +144,7 @@ public class ReponseAdoria implements Serializable {
 			if (rankSsMenu == rank) {
 				newSousMenu = ssMenu;
 				
-				if (iterator.hasNext()) {
+				if (iterator != null && iterator.hasNext()) {
 					ssMenu = iterator.next();
 					rankSsMenu = ssMenu.getRank();
 				} else {
@@ -152,21 +162,56 @@ public class ReponseAdoria implements Serializable {
 	}
 	
 	private void completeSsMenu(Journee journee){
+		int currentSVide = 0;
+		
+		List<Service> destinations = new ArrayList<>();
 		
 		for (Service service : journee.getDestinations()) {
+			
+			Service sVide = serviceVideAvailable.get(currentSVide++);
+		
+			while (service.rank > sVide.rank) {
+				//ajout d'un service vide
+				destinations.add(sVide);
+				completeSsMenu(sVide);
+				sVide = serviceVideAvailable.get(currentSVide++);
+			}
+				
+			destinations.add(service);
 			completeSsMenu(service);
 		}
+		
+		journee.setDestinations(destinations);
+		
+	}
+	
+	private void initServiceVideAvailabled(){
+		Map<String, Service> map = new HashMap<>();
+		for (Journee journee : dates) {
+			for (Service service : journee.destinations){
+				Service sVide = map.get(service.name);
+				if (sVide == null) {
+					sVide = new Service();
+					sVide.name = service.name;
+					sVide.rank = service.rank;
+					sVide.typeVide = true;
+					map.put(service.name, sVide);
+				}
+			}
+		}
+		serviceVideAvailable= new ArrayList<>(map.values());
+		serviceVideAvailable.sort((s1, s2) -> Integer.compare(s1.rank, s2.rank));
 	}
 	
 	/**
-	 * complete les sous-menus avec des plat vide pour qu'ils ai tous la même taille.
+	 * complete les sous-menus avec des plats vides pour qu'ils aient tous la même taille.
 	 */
 	public void complete(){
 		
 		initNbPlatMaxParService();
+		initServiceVideAvailabled();
 		if (dates != null) {
 			for (Journee journee : dates) {
-				
 				if ( ! journee.isVide()){
 					completeSsMenu(journee);
 				}

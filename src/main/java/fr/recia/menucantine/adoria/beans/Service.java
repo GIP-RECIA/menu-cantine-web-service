@@ -66,6 +66,9 @@ public class Service implements Serializable {
 	
 	Integer rank;
 	
+	@JsonInclude(Include.NON_NULL)
+	Boolean typeVide;
+	
 	@JsonIgnore
 	NbPlatParSsMenu rankCompte = new NbPlatParSsMenu();
 	
