@@ -87,6 +87,14 @@ public class RestAdoriaClientException extends Exception {
 		return null;
 	}
 	
+	public String getMessage(){
+		String mess = getJson();
+		if (mess == null) {
+			return super.getMessage();
+		}
+		return mess;
+	}
+	
 	public Map<String, Object> getMap(){
 		
 		Map<String, Object>  err = mapErreur;
