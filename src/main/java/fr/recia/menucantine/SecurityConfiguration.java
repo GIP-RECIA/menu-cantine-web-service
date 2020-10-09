@@ -145,8 +145,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	            CorsConfiguration configuration = new CorsConfiguration();
 	           	            configuration.setAllowedOrigins( 
 	           	            		Arrays.asList("http://localhost:8080",
+	           	            					"https://localhost:8443",
 	           	            					"http://192.168.45.196:8080",
 	           	            					"http://192.168.45.156:8080",
+	           	            					"http://192.168.3.13:8080",
 	           	            					"https://test-lycee.giprecia.net"));
 	            configuration.setAllowedMethods(Arrays.asList(  
 	            		RequestMethod.GET.name(),
