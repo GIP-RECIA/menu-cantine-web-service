@@ -19,7 +19,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
-import java.util.Locale;
 
 /**
  * Permet de normaliser les requetes et de calculer les dates
@@ -27,7 +26,8 @@ import java.util.Locale;
  *
  */
 public class RequeteHelper {
-	static public  WeekFields WEEK_FIELDS = WeekFields.of(Locale.getDefault());
+	//static public  WeekFields WEEK_FIELDS = WeekFields.of(Locale.getDefault());
+	static public  WeekFields WEEK_FIELDS = WeekFields.ISO;
 	static public DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 
@@ -88,7 +88,8 @@ public class RequeteHelper {
 
 	/**
 	 * Donne la date en fonction de l'annee, la semaine et le jour dans la semaine.
-	 * si une valeur est  0 on prend celle  du jour courant  (now)
+	 * si une valeur est  0 ou null on prend celle  du jour courant  (now)
+	 * jour: 1 => lundi,..., 7 => dimanche
 	 * @param annee
 	 * @param semaine
 	 * @param jour
@@ -106,16 +107,12 @@ public class RequeteHelper {
 		if (annee == null || annee == 0) {
 			date = now;
 		} else {
-			date  = LocalDate.of(annee, 1, 1);
+			/* le 4 janvier donne toujours la 1er semaine de l'année (norme ISO)*/
+			date  = LocalDate.of(annee, 1, 4);
 		}
 		
 		date = date.with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, semaine);
 
 		return date.plusDays(jour - date.get(WEEK_FIELDS.dayOfWeek()));
-		// return  date.with(TemporalAdjusters.previousOrSame(DayOfWeek.of(jour)));
 	}
-
-
-	
-	
 }
