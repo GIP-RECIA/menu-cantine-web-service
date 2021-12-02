@@ -186,8 +186,8 @@ public class AdoriaHelper implements ResourceLoaderAware {
 				log.error(e.getMessage());
 				throw e;
 			}
-			return res;
 		}
+		return res;
 	}
 
 	@Override

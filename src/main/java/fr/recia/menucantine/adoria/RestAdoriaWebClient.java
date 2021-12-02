@@ -78,7 +78,7 @@ public class RestAdoriaWebClient implements IRestAdoriaClient {
 	@Override
 	@Cacheable("requetes")
 	public  ReponseAdoria call(RequeteAdoria requete) throws RestAdoriaClientException{	
-		ReponseAdoria reponseAdoria;
+		ReponseAdoria reponseAdoria = null;
 		try {
 			log.debug("reponse NOT IN CACHE: {}", cacheManager.getClass());
 			
@@ -86,51 +86,54 @@ public class RestAdoriaWebClient implements IRestAdoriaClient {
 			if (e != null) throw e;
 			
 			LocalDate now = LocalDate.now();
-			if (	RequeteHelper.semaine(now) > requete.getWeekNumber()
+				
+				// on recupere les menus du cache permanent que pour les menus des semaines passées
+			if ((		now.getYear() == requete.getYear()
+					&& 	RequeteHelper.semaine(now) > requete.getWeekNumber()
+				)
 				||  now.getYear() > requete.getYear()) {
 					
 				reponseAdoria = (ReponseAdoria) getFromCache(getCachePerm(), requete);
-				if (reponseAdoria != null) return reponseAdoria;
 			}
 			
+			if (reponseAdoria == null) {
 			
-			Mono<ReponseAdoria> reponse =  webClient.post()
-				.uri(webServiceUrl)
-				.accept(MediaType.APPLICATION_JSON)
-				.contentType(MediaType.APPLICATION_JSON)
-				.header("AdoriaClientKey", clientKey)
-				.header("Guid", guid)
-				.syncBody(requete)
-				.retrieve()
-				.bodyToMono(ReponseAdoria.class);
-		 
-				/*	.onStatus(HttpStatus::is4xxClientError, 
-					response -> response.bodyToMono(Void.class))
-					.onStatus(HttpStatus::is5xxServerError, response -> response.body(null))
-				 */	
-				
-			reponseAdoria = reponse.block().clean();
-			getCachePerm().put(new Element(requete, reponseAdoria));
-			return reponseAdoria;
+				Mono<ReponseAdoria> reponse =  webClient.post()
+					.uri(webServiceUrl)
+					.accept(MediaType.APPLICATION_JSON)
+					.contentType(MediaType.APPLICATION_JSON)
+					.header("AdoriaClientKey", clientKey)
+					.header("Guid", guid)
+					.syncBody(requete)
+					.retrieve()
+					.bodyToMono(ReponseAdoria.class);
+			 
+					/*	.onStatus(HttpStatus::is4xxClientError, 
+						response -> response.bodyToMono(Void.class))
+						.onStatus(HttpStatus::is5xxServerError, response -> response.body(null))
+					 */	
+					
+				reponseAdoria = reponse.block().clean();
+				getCachePerm().put(new Element(requete, reponseAdoria));
+			}
 			
 		} catch (WebClientResponseException  e) {
 			reponseAdoria = (ReponseAdoria) getFromCache(getCachePerm(),requete);
 			
-			if (reponseAdoria != null ) {
-					return reponseAdoria;
+			if (reponseAdoria == null ) {
+				RestAdoriaClientException ee = new RestAdoriaClientException(e, requete);
+				getCacheErreur().put(new Element(requete, ee));
+				throw ee;
 			}
-			
-			RestAdoriaClientException ee = new RestAdoriaClientException(e, requete);
-			getCacheErreur().put(new Element(requete, ee));
-			throw ee;
 		}
+		return reponseAdoria;
 	}
 	 
 	private Object getFromCache(Cache cache, RequeteAdoria requete) {
 		Object reponse;
 		Element cacheElem = cache.get(requete);
 		if (cacheElem != null ) {
-			reponse = cacheElem.getObjectValue()			;
+			reponse = cacheElem.getObjectValue();
 			if (reponse != null) {
 				return reponse;
 			}
