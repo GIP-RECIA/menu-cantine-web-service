@@ -113,7 +113,7 @@ public class RestAdoriaWebClient implements IRestAdoriaClient {
 						.onStatus(HttpStatus::is5xxServerError, response -> response.body(null))
 					 */	
 					
-				reponseAdoria = reponse.block().clean();
+				reponseAdoria = reponse.block();
 				getCachePerm().put(new Element(requete, reponseAdoria));
 			}
 			

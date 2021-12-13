@@ -28,13 +28,13 @@ import lombok.Data;
 
 
 @Data
-public class Plat implements Serializable {
+public class Plat implements Serializable, Cloneable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6660011102902753149L;
 	String name = " ";
-	String family = " "; // se sont des blancs insécables
+	String family = " "; // ce sont des blancs insécables
 	String subFamily;
 	Boolean typeVide = false;
 
@@ -107,5 +107,33 @@ public class Plat implements Serializable {
 				nutritions = null;
 			}
 		}
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Plat clone =  (Plat) super.clone();
+		if (allergens != null) {
+			clone.allergens = new ArrayList<String>(allergens);
+		}
+		if (gemrcn != null) {
+			clone.gemrcn = new ArrayList<String>(gemrcn);
+		}
+		if (labels != null) {
+			clone.labels = new ArrayList<String>(labels);
+		}
+		if (labelsInfo != null) {
+			clone.labelsInfo = new ArrayList<Labels>(labelsInfo.size());
+			for (Labels labels :labelsInfo ) {
+				clone.labelsInfo.add((Labels) labels.clone());
+			}
+			
+		}
+		if (nutritions != null) {
+			clone.nutritions = new ArrayList<Nutrition>(nutritions.size());
+			for (Nutrition n : nutritions) {
+				clone.nutritions.add((Nutrition) n.clone());
+			}
+		}
+		return clone;
 	}
 }

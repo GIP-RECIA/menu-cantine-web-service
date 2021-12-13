@@ -18,6 +18,7 @@ package fr.recia.menucantine.adoria.beans;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,7 +30,9 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 
 @Data
-public class Journee implements Serializable {
+public class Journee implements Serializable, Cloneable {
+	
+
 	/**
 	 * 
 	 */
@@ -101,5 +104,18 @@ public class Journee implements Serializable {
 			});
 		}
 		return serviceChoixNbPlats;
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Journee j =  (Journee) super.clone();
+		j.serviceChoixNbPlats = (NbPlatParSsMenuParService) serviceChoixNbPlats.clone();
+		if (destinations != null) {
+			j.destinations =  new ArrayList<>(destinations.size());
+			for (Service service : destinations) {
+				j.destinations.add((Service) service.clone());
+			}
+		}
+		return j;
 	}
 }

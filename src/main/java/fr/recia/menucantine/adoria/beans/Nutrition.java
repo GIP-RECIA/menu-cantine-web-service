@@ -20,7 +20,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class Nutrition implements Serializable {
+public class Nutrition implements Serializable, Cloneable {
 	/**
 	 * 
 	 */
@@ -28,4 +28,11 @@ public class Nutrition implements Serializable {
 	String name;
 	Float value;
 	String unit;
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+	
+	
 }

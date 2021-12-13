@@ -20,7 +20,7 @@ import lombok.Data;
 
 @Data
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public class Labels implements Serializable {
+public class Labels implements Serializable, Cloneable {
 	/**
 	 * 
 	 */
@@ -82,6 +82,11 @@ public class Labels implements Serializable {
 			labelByName.put(name, l);
 		}
 		return l;
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 	
 }

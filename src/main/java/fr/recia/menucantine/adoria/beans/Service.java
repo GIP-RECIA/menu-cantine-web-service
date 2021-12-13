@@ -27,17 +27,16 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-public class Service implements Serializable {
+public class Service implements Serializable, Cloneable {
 	
-	
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2763451889039709686L;
 
 	@Data
-	class SousMenu implements Serializable {
+	class SousMenu implements Serializable, Cloneable {
 		
 		/**
 		 * 
@@ -52,6 +51,19 @@ public class Service implements Serializable {
 		Integer nbPlats; 
 		
 		Boolean typeVide = false;
+
+		@Override
+		protected Object clone() throws CloneNotSupportedException {
+			SousMenu clone = (SousMenu) super.clone();
+			if (choix != null) {
+				clone.choix = new ArrayList<Plat>(choix.size());
+				for (Plat plat :choix) {
+					clone.choix.add((Plat) plat.clone());
+				}
+			}
+			return clone;
+		}
+		
 	}
 	
 	String name;
@@ -116,4 +128,27 @@ public class Service implements Serializable {
 		recipes = null;
 		return rankCompte;
 	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Service clone = (Service) super.clone();
+		if (menu != null) {
+			clone.menu = new ArrayList<SousMenu>(menu.size());
+			for (SousMenu sousMenu : menu) {
+				clone.menu.add((SousMenu) sousMenu.clone());
+			}
+		}
+		if (rankCompte != null) {
+			clone.rankCompte = (NbPlatParSsMenu) rankCompte.clone();
+		}
+		if (recipes != null) {
+			clone.recipes = new ArrayList<Plat>(recipes.size());
+			for (Plat p : recipes) {
+				clone.recipes.add((Plat) p.clone());
+			}
+		}
+		return clone;
+	}
+	
+	
 }

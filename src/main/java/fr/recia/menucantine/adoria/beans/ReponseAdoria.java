@@ -30,7 +30,7 @@ import fr.recia.menucantine.adoria.beans.Service.SousMenu;
 import lombok.Data;
 
 @Data
-public class ReponseAdoria implements Serializable {
+public class ReponseAdoria implements Serializable, Cloneable {
 	
 	
 	
@@ -58,6 +58,28 @@ public class ReponseAdoria implements Serializable {
 	
 	@JsonIgnore
 	List<Service> serviceVideAvailable;
+	
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		ReponseAdoria clone = (ReponseAdoria) super.clone();
+		if (dates != null) {
+			clone.dates = new ArrayList<Journee>(dates.size());
+			for (Journee journee : dates) {
+				clone.dates.add((Journee) journee.clone());
+			}
+		}
+		if (nbPlatMaxParService != null) {
+			clone.nbPlatMaxParService = (NbPlatParSsMenuParService) nbPlatMaxParService.clone();
+		}
+		if (serviceVideAvailable != null) {
+			clone.serviceVideAvailable = new ArrayList<Service>(serviceVideAvailable.size());
+			for (Service s : serviceVideAvailable) {
+				clone.serviceVideAvailable.add((Service) s.clone()); 
+			}
+		}
+		return clone;
+	}
 	
 	/**
 	 * Le netoyage consiste a netoyer chaque jour et a supprimer les jours vide.
@@ -218,5 +240,7 @@ public class ReponseAdoria implements Serializable {
 			};
 		}
 	}
+
+	
 	
 }

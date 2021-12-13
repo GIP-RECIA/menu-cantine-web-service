@@ -160,6 +160,7 @@ public class AdoriaHelper implements ResourceLoaderAware {
 		for (String uai : uais) {
 			try {
 				client.call(new RequeteAdoria(uai, semaine, annee));
+				
 				uaiOk.add(uai);
 				log.debug("etab ok : {}", uai);
 				
@@ -178,16 +179,23 @@ public class AdoriaHelper implements ResourceLoaderAware {
 		ReponseAdoria res = null;
 		
 		String lock = String.format("%s%d%d", uai, semaine, annee).intern();
-		
-		synchronized (lock) {
-			try {
-				res = adoriaClient.call(new RequeteAdoria(uai, semaine, annee));
-			} catch (RestAdoriaClientException e){
-				log.error(e.getMessage());
-				throw e;
+		try {
+			synchronized (lock) {
+				try {
+					res = adoriaClient.call(new RequeteAdoria(uai, semaine, annee));
+					res = (ReponseAdoria) res.clone();
+				} catch (RestAdoriaClientException e){
+					log.error(e.getMessage());
+					throw e;
+				} 
 			}
+			res = (ReponseAdoria) res.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			log.error(e.getMessage());
+			e.printStackTrace();
 		}
-		return res;
+		return  res.clean();
 	}
 
 	@Override
