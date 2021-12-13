@@ -183,7 +183,6 @@ public class AdoriaHelper implements ResourceLoaderAware {
 			synchronized (lock) {
 				try {
 					res = adoriaClient.call(new RequeteAdoria(uai, semaine, annee));
-					res = (ReponseAdoria) res.clone();
 				} catch (RestAdoriaClientException e){
 					log.error(e.getMessage());
 					throw e;
@@ -191,9 +190,7 @@ public class AdoriaHelper implements ResourceLoaderAware {
 			}
 			res = (ReponseAdoria) res.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			log.error(e.getMessage());
-			e.printStackTrace();
 		}
 		return  res.clean();
 	}
