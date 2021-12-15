@@ -98,9 +98,11 @@ public class GemRcn {
 	}
 	
 	static public GemRcn getGemRcn(String codeS) {
-		GemRcn g = s2GemRcn.get(codeS);
+		String normalized = codeS.replace('\u00A0', ' '); 
+
+		GemRcn g = s2GemRcn.get(normalized);
 		if (g == null) {
-			log.warn("not found: {}", codeS);
+			log.warn("not found:{}.", codeS);
 		}
 		return g == null ? Autre : g;
 	}

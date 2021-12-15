@@ -4,7 +4,7 @@
 5, 	"#ED1D24",	"Plat Protidique P/L>1",	"Plats protidiques ayant un rapport P/L = 1"
 6, 	"#ED1D24",	"Poisson/Préparat° Poisson","Poissons ou préparations à base de poisson contenant au moins 70 % de poisson, et ayant un P/L = 2"
 7, 	"#ED1D24",	"Viande non hachée/abats",	"Viandes non hachées de bœuf, de veau ou d’agneau, et abats de boucherie"																														
-8, 	"#ED1D24", 	"Préparati° à base viande",	"Préparations ou plats prêts à consommer à base de viande, de poisson, d’œuf et/ou de fromage, contenant moins de 70 % du grammage recommandé pour la denrée protidique des plats composés"
+8, 	"#ED1D24", 	"Préparati° à base viande",	"Préparations ou plats prêts à consommer à base de viande, de poisson, d’œuf et/ou de fromage, contenant moins de 70 % du grammage recommandé pour la denrée protidique des plats composés"
 9, 	"#02A54F", 	"Légumes cuits", 			"Légumes cuits, autres que secs, seuls, ou en mélange contenant au moins 50 % de légumes"
 10, "#8C442B", 	"Légume sec féculent céréa","Légumes secs, féculents ou céréales, seuls, ou en mélange contenant au moins 50 % de légumes secs, féculents ou céréales"
 11, "#02AFEF", 	"Fromage <150mg calc",		"Fromages contenant au moins 150 mg de calcium laitier par portion (4)"	
@@ -14,7 +14,10 @@
 15,	"#8C442B", 	"Dessert>20g gluc <15% lip","Desserts ou produits laitiers contenant plus de 20g de glucides simples totaux par portion et moins de 15% de lipides"
 16,	"#BAD65D", 	"Dessert 100% fruits crus",	"Desserts de fruits crus 100% fruit cru, sans sucre ajouté(5) 8/20 mini"
 17,	"#ED1D24" , "Plat préparé", 			"Préparations ou plats prêts à consommer contenant moins de 70 % du grammage recommandé pour la portion de viande, poisson ou œuf"	
-
 18, "#02AFEF", 	"Fromage> 150mg calc", 		"Fromages contenant au moins 150 mg de calcium laitier par portion" 
-19,	"#02AFEF", 	"P.Lait>100mg calc <5%lip",	"Produits laitiers ou desserts lactés contenant plus de 100 mg de calcium laitier, et moins de 5g de lipides par portion"
-
+19,	"#02AFEF", 	"P.Lait>100mg calc <5%lip",	"Produits laitiers ou desserts lactés contenant plus de 100 mg de calcium laitier, et moins de 5g de lipides par portion" 
+20, "#ED1D24", 	"Poisson/Préparat° P/L>2", 	"Poissons ou préparation à base de poisson contenant au moins 70% de poisson, et ayant un P/L > 2" 
+21, "#ffffff",	"Plat végétarien complet",  "Composants ou plats complets végétariens" 
+22, "#02AFEF",  "Fromage >150mg calc",		"Fromages contenant au moins 150mg de calcium laitier par portion" 
+23, "#ED1D24",	"Plat Protidique P/L<=1", 	"Plats protidiques ayant un rapport P/L <= 1" 
+24, "#ED1D24",	"Préparat° viande/poiss",	"Préparations ou plats prêts à consommer à base de viande, de poison, d’œuf et/ou de fromage" 
