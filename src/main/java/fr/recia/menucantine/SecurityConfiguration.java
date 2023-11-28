@@ -35,6 +35,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
@@ -49,7 +51,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration{
 
 	@Value("${soffit.jwt.signatureKey:Changeme}")
     private String signatureKey;
@@ -61,21 +63,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private String forTestPost;
 	
 	private static final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);	
-	@Override
-    public void configure(WebSecurity web) throws Exception {
+	@Bean
+    public WebSecurityCustomizer webSecurityCustomizer() throws Exception {
         /*
          * Since this module includes portlets, we only want to apply Spring Security to requests
          * targeting our REST APIs.
          */
         final RequestMatcher pathMatcher = new AntPathRequestMatcher("/api/**");
         final RequestMatcher inverseMatcher = new NegatedRequestMatcher(pathMatcher);
-        web.ignoring().requestMatchers(inverseMatcher);
-        log.debug("configure(WebSecurity)");
-        
+		log.debug("configure(WebSecurity)");
+        return (web) -> web.ignoring().requestMatchers(inverseMatcher);
     }
-	
+/*
 	@Override
-    protected void configure(HttpSecurity http) throws Exception {
+	protected void configure(HttpSecurity security) throws Exception
+	{
+		security.httpBasic().disable();
+	}
+*/
+
+	@Bean
+    protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		  /*
          * Provide a SoffitApiPreAuthenticatedProcessingFilter (from uPortal) that is NOT a
          * top-level bean in the Spring Application Context.
@@ -109,7 +117,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
              */
             .sessionManagement()
                 .sessionFixation().none();
+
+			return http.build();
 	}
+
 	@Bean
     public AuthenticationManager authenticationManager() {
         return new SoffitApiAuthenticationManager();

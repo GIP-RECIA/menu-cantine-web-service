@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 import lombok.NonNull;
 
+
 @Data
 public class Service implements Serializable, Cloneable {
 	
@@ -34,37 +35,6 @@ public class Service implements Serializable, Cloneable {
 	 * 
 	 */
 	private static final long serialVersionUID = 2763451889039709686L;
-
-	@Data
-	class SousMenu implements Serializable, Cloneable {
-		
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 6998445821377161534L;
-		
-		@NonNull
-		List<Plat> choix;
-		@NonNull
-		Integer rank;
-		
-		Integer nbPlats; 
-		
-		Boolean typeVide = false;
-
-		@Override
-		protected Object clone() throws CloneNotSupportedException {
-			SousMenu clone = (SousMenu) super.clone();
-			if (choix != null) {
-				clone.choix = new ArrayList<Plat>(choix.size());
-				for (Plat plat :choix) {
-					clone.choix.add((Plat) plat.clone());
-				}
-			}
-			return clone;
-		}
-		
-	}
 	
 	String name;
 	String serviceName;

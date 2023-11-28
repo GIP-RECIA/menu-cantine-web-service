@@ -16,11 +16,15 @@
 package fr.recia.menucantine;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
+import fr.recia.menucantine.adoria.Mapper;
+import fr.recia.menucantine.dto.JourneeDTO;
+import fr.recia.menucantine.dto.ServiceDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +48,7 @@ import fr.recia.menucantine.beans.Semaine;
 public class MenuCantineServices {
 	
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);	
-	
-	
+
 	@Autowired
 	@Lazy
 	private AdoriaHelper adoriaHelper ;
@@ -58,6 +61,12 @@ public class MenuCantineServices {
 	
 	@Value("${adoria.test.no-web-service}")
 	Boolean noWebService;
+
+	@Autowired
+	APIClient apiClient;
+
+	@Autowired
+	Mapper mapper;
 	
 	@Bean
 	IRestAdoriaClient adoriaClient () {
@@ -86,6 +95,32 @@ public class MenuCantineServices {
 		LocalDate date = rh.dateSemaine(requete);
 		rh.dateJour(requete, date);
 		return adoriaHelper.callTest(adoriaWeb, requete.getSemaine() -1 , requete.getAnnee());
+	}
+
+	public Semaine newFindSemaine(String uai){
+		System.out.println("Arrivée dans la méthode newFindSemaine");
+		System.out.println(apiClient.toString());
+
+		final LocalDate today = LocalDate.now();
+		// On doit faire une requête par jour de la semaine pour reconstituer la semaine (numJour=1=lundi, ...)
+		List<JourneeDTO> journeeDTOList = new ArrayList<>();
+		for(int numJour=1; numJour<=5; numJour++){
+			JourneeDTO journeeDTO = new JourneeDTO();
+			LocalDate menuDay = RequeteHelper.jourMemeSemaine(today, numJour);
+			journeeDTO.setDate(menuDay);
+			String menuDayString = RequeteHelper.localeDateToString(menuDay);
+			// On doit aussi faire une requête par service pour reconstituer une journée (numService=2=déjeuner, ...)
+			for(int numService=1; numService<=4; numService++){
+				System.out.println("Requête : "+uai+" "+menuDayString+" "+numService);
+				ServiceDTO serviceDTO = apiClient.makeAuthenticatedApiCallGetMenu(uai, menuDayString, numService);
+				journeeDTO.addService(EnumTypeService.serviceNumber(numService), serviceDTO);
+			}
+			journeeDTOList.add(journeeDTO);
+		}
+
+		// A partir de la liste des journées, on peut alors reconstituer une semaine
+		// On mappe notre semaine sur l'ancien model pour l'envoyer au front
+		return mapper.buildSemaine(journeeDTOList);
 	}
 	
 	

@@ -29,9 +29,12 @@ public class RequeteHelper {
 	//static public  WeekFields WEEK_FIELDS = WeekFields.of(Locale.getDefault());
 	static public  WeekFields WEEK_FIELDS = WeekFields.ISO;
 	static public DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	
 
-	
+	public static DateTimeFormatter newDateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+	public static DateTimeFormatter completeDateFormatter = DateTimeFormatter.ofPattern("d MMMM yy");
+
+
+
 	static public LocalDate jourMemeSemaine(LocalDate jour, int jourDemande) {
 		int j = jour.get(WEEK_FIELDS.dayOfWeek());
 		if (j != jourDemande) {
@@ -62,6 +65,17 @@ public class RequeteHelper {
 		requete.semaine = semaine(jeudi);
 		requete.dateJour = date.format(dateFormatter);
 		// dateJour = String.format("%td/%tm/%tY", date, date, date);
+	}
+
+	/**
+	 * Transforme un objet LocaleDate en un String utilisable dans la requête
+	 */
+	public static String localeDateToString(LocalDate date){
+		return date.format(newDateFormatter);
+	}
+
+	public static String localeDateToCompleteString(LocalDate date){
+		return date.format(completeDateFormatter);
 	}
 	
 	/**

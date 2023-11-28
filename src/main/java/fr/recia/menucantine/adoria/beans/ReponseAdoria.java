@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import fr.recia.menucantine.adoria.beans.Service.SousMenu;
+import fr.recia.menucantine.adoria.beans.SousMenu;
 import lombok.Data;
 
 @Data
