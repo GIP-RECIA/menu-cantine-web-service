@@ -1,6 +1,6 @@
 ordre; nom; logo; comment
 1; BIO; ab-transp.png;
-2;  Fait Maison; maison.png;
+2; Fait Maison; maison.png;
 3; Végetarien; Vege3.jpg;
 4; AOC; AOC-transp.png;
 5; AOP; AOP-transp.png;
@@ -13,4 +13,5 @@ ordre; nom; logo; comment
 12; IGP; IGP-transp.png;
 13; STG; STG-transp.png;
 14; CQC; CQC.png;
+15; Local; local.png;
 

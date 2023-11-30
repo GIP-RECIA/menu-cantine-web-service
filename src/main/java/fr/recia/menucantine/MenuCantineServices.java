@@ -16,6 +16,7 @@
 package fr.recia.menucantine;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,11 +98,20 @@ public class MenuCantineServices {
 		return adoriaHelper.callTest(adoriaWeb, requete.getSemaine() -1 , requete.getAnnee());
 	}
 
-	public Semaine newFindSemaine(String uai){
+	public Semaine newFindSemaine(String uai, Requete requete){
 		System.out.println("Arrivée dans la méthode newFindSemaine");
 		System.out.println(apiClient.toString());
 
-		final LocalDate today = LocalDate.now();
+		// Par défaut on cherche par rapport au jour d'aujourd'hui, mais si jamais on spécifie la date dans la requête
+		// alors on cherche par rapport à cette date en question
+		LocalDate today = LocalDate.now();
+		if(requete != null){
+			if(requete.getDateJour() != null){
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				today = LocalDate.parse(requete.getDateJour(), formatter);
+			}
+		}
+
 		// On doit faire une requête par jour de la semaine pour reconstituer la semaine (numJour=1=lundi, ...)
 		List<JourneeDTO> journeeDTOList = new ArrayList<>();
 		for(int numJour=1; numJour<=5; numJour++){
@@ -119,8 +129,8 @@ public class MenuCantineServices {
 		}
 
 		// A partir de la liste des journées, on peut alors reconstituer une semaine
-		// On mappe notre semaine sur l'ancien model pour l'envoyer au front
-		return mapper.buildSemaine(journeeDTOList);
+		// On map la semaine sur l'ancien model pour l'envoyer au front, en donnant aussi la date de la requête et l'uai
+		return mapper.buildSemaine(journeeDTOList, today, uai);
 	}
 	
 	

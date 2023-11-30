@@ -82,7 +82,7 @@ public class MenuCantineController {
 			produces = "application/json"
 		)
 	public ResponseEntity<Object> postDemo( @RequestBody Requete requete) {
-		Semaine semaine = services.newFindSemaine("0281197Z");
+		Semaine semaine = services.newFindSemaine("0281197Z", requete);
 		return new ResponseEntity<Object>(semaine, HttpStatus.OK);
 		//return post(requete);
 	}
@@ -94,7 +94,7 @@ public class MenuCantineController {
 	)
 	public ResponseEntity<Object> getTest() {
 		System.out.println("APPEL");
-		Semaine semaine = services.newFindSemaine("0281197Z");
+		Semaine semaine = services.newFindSemaine("0281197Z", null);
 		return new ResponseEntity<Object>(semaine, HttpStatus.OK);
 	}
 }
