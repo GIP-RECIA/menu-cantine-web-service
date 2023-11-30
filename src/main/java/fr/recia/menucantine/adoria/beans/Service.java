@@ -54,7 +54,7 @@ public class Service implements Serializable, Cloneable {
 	@JsonIgnore
 	NbPlatParSsMenu rankCompte = new NbPlatParSsMenu();
 	
-	SousMenu makeSousMenu(Integer rank, Boolean typeVide){
+	public SousMenu makeSousMenu(Integer rank, Boolean typeVide){
 		SousMenu sm =  new SousMenu(new ArrayList<>(), rank);
 		sm.typeVide = typeVide;
 		return sm;
@@ -88,8 +88,7 @@ public class Service implements Serializable, Cloneable {
 			}
 			menu.get(rank-1).getChoix().add(plat);
 		});
-		
-		
+
 		for (SousMenu sousMenu : menu) {
 			int nbPlats = sousMenu.getChoix().size();
 			sousMenu.setNbPlats(nbPlats); 
@@ -97,6 +96,16 @@ public class Service implements Serializable, Cloneable {
 		}
 		recipes = null;
 		return rankCompte;
+	}
+
+	NbPlatParSsMenu newclean(){
+		NbPlatParSsMenu nbPlatParSsMenu = new NbPlatParSsMenu();
+		for (SousMenu sousMenu : menu) {
+			int nbPlats = sousMenu.getChoix().size();
+			sousMenu.setNbPlats(nbPlats);
+			nbPlatParSsMenu.put(sousMenu.getRank(), nbPlats);
+		}
+		return nbPlatParSsMenu;
 	}
 
 	@Override

@@ -70,6 +70,10 @@ public class RequeteHelper {
 	/**
 	 * Transforme un objet LocaleDate en un String utilisable dans la requête
 	 */
+	public static String localeDateToOldString(LocalDate date){
+		return date.format(dateFormatter);
+	}
+
 	public static String localeDateToString(LocalDate date){
 		return date.format(newDateFormatter);
 	}

@@ -18,14 +18,12 @@ package fr.recia.menucantine.beans;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.List;
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import fr.recia.menucantine.adoria.beans.GemRcn;
-import fr.recia.menucantine.adoria.beans.Journee;
-import fr.recia.menucantine.adoria.beans.ReponseAdoria;
+import fr.recia.menucantine.adoria.beans.*;
 import lombok.Data;
 
 @Data
@@ -49,7 +47,9 @@ public class Semaine {
 	LocalDate nextWeek;
 	
 	List<Journee> jours;
-	
+
+	NbPlatParSsMenuParService nbPlatMaxParService;
+
 	public Semaine(){
 		super();
 	}
@@ -99,5 +99,105 @@ public class Semaine {
 		return dateJour(jour).format(formatter);
 	}
 
-	
+	/**
+	 * Le netoyage consiste a netoyer chaque jour et a supprimer les jours vide.
+	 * @return
+	 */
+	public void clean() {
+		for(Journee journee: this.getJours()){
+			journee.newclean();
+		}
+	}
+
+	public void complete(){
+		initNbPlatMaxParService();
+		if (this.getJours() != null) {
+			for(Journee journee : this.getJours()) {
+				if (!journee.isVide()){
+					completeSsMenu(journee);
+				}
+			};
+		}
+	}
+
+	private void initNbPlatMaxParService(){
+		if (this.getJours() != null) {
+			nbPlatMaxParService = new NbPlatParSsMenuParService();
+			for (Journee journee : this.getJours()) {
+				nbPlatMaxParService.calculMax(journee.getServiceChoixNbPlats());
+			}
+		}
+	}
+
+	// ajout de plat vide au un sous-menu pour en obtenir le nombre max donnée
+	private void ajoutPlatVide(SousMenu ssMenu, Integer max){
+		List<Plat> plats = ssMenu.getChoix();
+
+		int nbPlats = plats.size();
+
+		if (nbPlats == 0) {
+			ssMenu.setTypeVide(true);
+		}
+
+		for (int i= nbPlats;  i < max; i++ ) {
+			plats.add(Plat.platVide());
+		}
+	}
+
+
+	private void completeSsMenu(Service service) {
+		String serviceName = service.getName();
+
+		List<SousMenu> menuComplet = new ArrayList<>();
+		System.out.println(nbPlatMaxParService);
+		NbPlatParSsMenu nbPlatMax = nbPlatMaxParService.get(serviceName);
+
+		int nbSsMenu = nbPlatMax.getMaxKey();
+
+		Iterator<SousMenu> iterator = null;
+		List<SousMenu> menuIncomplet = service.getMenu();
+		if (menuIncomplet != null) {
+			iterator = service.getMenu().iterator();
+		}
+
+		SousMenu ssMenu = null;
+		Integer rankSsMenu;
+
+		if (iterator != null && iterator.hasNext()) {
+			ssMenu = iterator.next();
+			rankSsMenu = ssMenu.getRank();
+		} else {
+			rankSsMenu = -1;
+		}
+
+		for (int rank = 0; rank <= nbSsMenu; rank++){
+			int nbMax = nbPlatMax.get(rank);
+			SousMenu newSousMenu;
+
+			if (rankSsMenu == rank) {
+				newSousMenu = ssMenu;
+
+				if (iterator != null && iterator.hasNext()) {
+					ssMenu = iterator.next();
+					rankSsMenu = ssMenu.getRank();
+				} else {
+					rankSsMenu = -1;
+				}
+			} else {
+				// pas de sous-menu pour ce rank on le creer
+				newSousMenu = service.makeSousMenu(rank, false);
+			}
+
+			ajoutPlatVide(newSousMenu, nbMax);
+			menuComplet.add(newSousMenu);
+		}
+		service.setMenu(menuComplet);
+	}
+
+	private void completeSsMenu(Journee journee){
+		for (Service service : journee.getDestinations()) {
+			completeSsMenu(service);
+		}
+	}
+
 }

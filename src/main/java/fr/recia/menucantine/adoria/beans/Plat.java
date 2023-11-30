@@ -54,7 +54,7 @@ public class Plat implements Serializable, Cloneable {
 	
 	Integer familyRank; // donne peut-être le rang dans le menu la place()
 
-	static Plat platVide() {
+	public static Plat platVide() {
 		Plat p = new Plat();
 		p.typeVide = true;
 		return p;

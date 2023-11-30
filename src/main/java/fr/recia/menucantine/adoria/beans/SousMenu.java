@@ -25,6 +25,7 @@ public class SousMenu implements Serializable, Cloneable {
     Boolean typeVide = false;
 
     public void addChoix(Plat choix){
+        this.nbPlats += 1;
         this.choix.add(choix);
     }
 

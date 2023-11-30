@@ -62,7 +62,7 @@ public class Journee implements Serializable, Cloneable {
 	
 	Boolean typeVide = false;
 	
-	boolean isVide(){
+	public boolean isVide(){
 		return typeVide;
 	}
 	
@@ -76,7 +76,7 @@ public class Journee implements Serializable, Cloneable {
 	 * Les services sont ordonnés suivant leurs rank
 	 * @return
 	 */
-	NbPlatParSsMenuParService clean(){
+	public NbPlatParSsMenuParService clean(){
 		if (jour == null && date != null) {
 			
 			jour = date.format(formatJour);
@@ -104,6 +104,12 @@ public class Journee implements Serializable, Cloneable {
 			});
 		}
 		return serviceChoixNbPlats;
+	}
+
+	public void newclean(){
+		for(Service service : this.destinations){
+			serviceChoixNbPlats.put(service.name, service.newclean());
+		}
 	}
 
 	@Override
