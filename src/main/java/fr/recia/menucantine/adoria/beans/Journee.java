@@ -107,9 +107,29 @@ public class Journee implements Serializable, Cloneable {
 	}
 
 	public void newclean(){
-		for(Service service : this.destinations){
-			serviceChoixNbPlats.put(service.name, service.newclean());
+
+		for (Iterator<Service> iterator = destinations.iterator(); iterator.hasNext();) {
+
+			Service service = (Service) iterator.next();
+
+			if (service != null) {
+				if (service.getTypeVide()) {
+					iterator.remove();
+				} else {
+					serviceChoixNbPlats.put(service.name, service.newclean());
+				}
+			}
 		}
+		destinations.sort((s1, s2) -> {
+			if (s1.rank != null) {
+				return s1.rank.compareTo(s2.rank);
+			}
+			if (s2.rank != null) {
+				return s2.rank.compareTo(s1.rank);
+			}
+			return 0;
+		});
+
 	}
 
 	@Override

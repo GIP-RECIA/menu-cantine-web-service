@@ -23,7 +23,7 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
-import fr.recia.menucantine.adoria.Mapper;
+import fr.recia.menucantine.adoria.MapperWebGerest;
 import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
 import org.slf4j.Logger;
@@ -39,7 +39,6 @@ import fr.recia.menucantine.adoria.IRestAdoriaClient;
 import fr.recia.menucantine.adoria.RestAdoriaClientException;
 import fr.recia.menucantine.adoria.beans.GemRcn;
 import fr.recia.menucantine.adoria.beans.Labels;
-import fr.recia.menucantine.adoria.beans.ReponseAdoria;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.RequeteHelper;
 import fr.recia.menucantine.beans.Semaine;
@@ -67,7 +66,7 @@ public class MenuCantineServices {
 	APIClient apiClient;
 
 	@Autowired
-	Mapper mapper;
+	MapperWebGerest mapper;
 	
 	@Bean
 	IRestAdoriaClient adoriaClient () {
