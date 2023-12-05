@@ -34,12 +34,12 @@ public class APIClient {
     @Value("${api.client_id}")
     private String client_id;
 
-    // TODO : associer un token à une URL
-    private String authToken; // Token utilisé pour les requêtes
     private Map<String,String> dynamicURL; // Associe un UAI a une URL
+    private Map<String,String> authToken; // Associe une URL à un token utilisé pour les requêtes
 
     public APIClient(WebClient.Builder webClientBuilder) {
         this.dynamicURL = new HashMap<>();
+        this.authToken = new HashMap<>();
         this.webClient = webClientBuilder.build();
     }
 
@@ -79,7 +79,7 @@ public class APIClient {
         return webClient.get()
                 .uri(url + menuEndpoint+"?rne={rne}&date_menu={datemenu}&service={service}",
                                 uai, datemenu, service)
-                .header("Authorization", authToken)
+                .header("Authorization", authToken.get(url))
                 .retrieve()
                 .bodyToMono(ServiceDTO.class)
                 .block();
@@ -110,7 +110,7 @@ public class APIClient {
             // Si erreur 401 on recupère un nouveau token et on rééssaye une fois
             if(webClientResponseException.getStatusCode().value() == 401){
                 System.out.println("Nouvelle tentative");
-                this.authToken = authenticateAndGetToken(url).getToken();
+                authToken.put(url, authenticateAndGetToken(url).getToken());
                 System.out.println("TOKEN : "+this.authToken);
                 serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
             }
