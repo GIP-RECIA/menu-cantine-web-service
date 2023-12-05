@@ -23,7 +23,7 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
-import fr.recia.menucantine.adoria.MapperWebGerest;
+import fr.recia.menucantine.mapper.MapperWebGerest;
 import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
 import org.slf4j.Logger;

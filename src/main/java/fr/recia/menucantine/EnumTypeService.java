@@ -1,15 +1,20 @@
 package fr.recia.menucantine;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public enum EnumTypeService {
-    PETIT_DEJEUNER(1), DEJEUNER(2), GOUTER(3), DINER(4);
+    PETIT_DEJEUNER(1, "Petit déjeuner"), DEJEUNER(2,"Déjeuner"), GOUTER(3,"Goûter"), DINER(4,"Dîner");
 
     private final int numService;
+    private final String nomService;
 
-    private EnumTypeService(int numService) {
+    private EnumTypeService(int numService, String nomService) {
         this.numService = numService;
+        this.nomService = nomService;
     }
 
     private static final Map<Integer, EnumTypeService> BY_NUMBER = new HashMap<>();
@@ -24,7 +29,4 @@ public enum EnumTypeService {
         return BY_NUMBER.get(numService);
     }
 
-    public int getNumService(){
-        return this.numService;
-    }
 }

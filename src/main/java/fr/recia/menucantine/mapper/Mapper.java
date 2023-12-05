@@ -1,4 +1,4 @@
-package fr.recia.menucantine.adoria;
+package fr.recia.menucantine.mapper;
 
 import fr.recia.menucantine.EnumTypeService;
 import fr.recia.menucantine.adoria.beans.*;

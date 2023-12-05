@@ -1,6 +1,7 @@
-package fr.recia.menucantine.adoria;
+package fr.recia.menucantine.mapper;
 
 import fr.recia.menucantine.EnumTypeService;
+import fr.recia.menucantine.EnumTypeSousMenu;
 import fr.recia.menucantine.adoria.beans.*;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.RequeteHelper;
@@ -16,7 +17,7 @@ import java.util.*;
 
 
 @Component
-public class MapperWebGerest implements Mapper{
+public class MapperWebGerest implements Mapper {
 
     public Semaine buildSemaine(List<JourneeDTO> journeeDTOList, LocalDate requestDate, String uai){
         // Première étape : constuire la Semaine
@@ -69,9 +70,8 @@ public class MapperWebGerest implements Mapper{
 
     public Service buildService(ServiceDTO serviceDTO, EnumTypeService typeService){
         Service service = new Service();
-        String serviceName = Character.toUpperCase(typeService.name().charAt(0)) + typeService.name().substring(1);
-        service.setName(serviceName);
-        service.setServiceName(serviceName);
+        service.setName(typeService.getNomService());
+        service.setServiceName(typeService.getNomService());
         service.setRank(typeService.getNumService()-1);
         service.setTypeVide(false);
         // typeVide vaut true si jamais il n'y a pas de plat dans le service = il n'y a pas de service
@@ -87,28 +87,8 @@ public class MapperWebGerest implements Mapper{
         Map<String, SousMenu> sousMenuMap = new HashMap<>();
         for(PlatDTO platDTO: serviceDTO.getContenu()){
             if(!sousMenuMap.containsKey(platDTO.getType())){
-                // TODO : L'API ne propose pas de moyen de trier les sous-menus, pour l'instant tri temporaire = A CHANGER
-                // NOTE : Passer juste le rank au front ne suffit pas, il faut faire le calcul au préalable
-                int numSousMenu = 0;
-                if(platDTO.getType().equals("entree")){
-                    numSousMenu = 1;
-                }
-                if(platDTO.getType().equals("plat")){
-                    numSousMenu = 2;
-                }
-                if(platDTO.getType().equals("accompagnement")){
-                    numSousMenu = 3;
-                }
-                if(platDTO.getType().equals("fromage")){
-                    numSousMenu = 4;
-                }
-                if(platDTO.getType().equals("dessert")){
-                    numSousMenu = 5;
-                }
-                if(platDTO.getType().equals("autre")){
-                    numSousMenu = 6;
-                }
-                SousMenu sousMenu = new SousMenu(new ArrayList<>(), numSousMenu);
+                // Tri des menus fait grâce à l'enum EnumTypeSousMenu, pas d'info dans l'API autre que le type
+                SousMenu sousMenu = new SousMenu(new ArrayList<>(), EnumTypeSousMenu.sousMenuRankFromName(platDTO.getType()));
                 sousMenu.setNbPlats(0);
                 sousMenu.addChoix(buildPlat(platDTO));
                 sousMenuMap.put(platDTO.getType(), sousMenu);
@@ -136,16 +116,19 @@ public class MapperWebGerest implements Mapper{
 
     public Plat buildPlat(PlatDTO platDTO){
         Plat plat = new Plat();
-        plat.setName(platDTO.getNom());
+        String nomPlatCleaned = platDTO.getNom();
+        nomPlatCleaned = nomPlatCleaned.replace("*","");
+        plat.setName(Character.toUpperCase(nomPlatCleaned.charAt(0)) + nomPlatCleaned.toLowerCase().substring(1));
         plat.setAllergens(buildAllergens(platDTO));
-        plat.setFamily(platDTO.getType());
+        // La family du plat permet de changer l'intitulé du sous-menu auquel appartient le plat
+        plat.setFamily(EnumTypeSousMenu.sousMenuFromName(platDTO.getType()).getNomServiceFinal());
         plat.setLabels(new ArrayList<>()); // TODO : utilité ?
         plat.setLabelsInfo(buildLabels(platDTO));
         plat.setGemrcn(buildGemrcn(platDTO));
         plat.setNutritions(buildNutritions(platDTO));
         plat.setFamilyRank(platDTO.getOrdre());
-        plat.setSubFamily(""); // pas de notion de sous-famille dans l'API
-        plat.setTypeVide(false); // TODO : qu'est ce qu'un plat vide ???
+        plat.setSubFamily("");
+        plat.setTypeVide(false);
         return plat;
     }
 
