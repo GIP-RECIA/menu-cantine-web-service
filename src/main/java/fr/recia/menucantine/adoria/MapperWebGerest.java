@@ -18,15 +18,8 @@ import java.util.*;
 @Component
 public class MapperWebGerest implements Mapper{
 
-    /**
-     * Construit une une semaine de type Semaine à envoyer au front tel quel
-     * @param journeeDTOList la liste des journées récupérées directement depuis l'API
-     * @param requestDate la date demandée par la requête
-     * @param uai l'uai demandé par la requête
-     * @return La semaine construite et prête à être envoyée au front
-     */
     public Semaine buildSemaine(List<JourneeDTO> journeeDTOList, LocalDate requestDate, String uai){
-        // Première étape : constuire la semaine
+        // Première étape : constuire la Semaine
         final LocalDate lundi = RequeteHelper.jourMemeSemaine(requestDate, 1);
         final LocalDate vendredi = RequeteHelper.jourMemeSemaine(requestDate, 5);
         Semaine semaine = new Semaine();
@@ -35,7 +28,7 @@ public class MapperWebGerest implements Mapper{
         semaine.setNbJours(5);
         semaine.setPreviousWeek(lundi.minusDays(3));
         semaine.setNextWeek(lundi.plusDays(7));
-        semaine.setAllGemRcn(new ArrayList<>()); // TODO : pas de gemrcn dans la nouvelle version de l'API
+        semaine.setAllGemRcn(new ArrayList<>()); // pas de gemrcn dans cette API
         List<Journee> journeeList = new ArrayList<>();
         for(JourneeDTO journeeDTO: journeeDTOList){
             journeeList.add(this.buildJournee(journeeDTO));
@@ -43,7 +36,7 @@ public class MapperWebGerest implements Mapper{
         semaine.setJours(journeeList);
         semaine.setRequete(buildRequete(requestDate, uai));
 
-        // Deuxième étape : faire les modifications nécéssaires avant d'envoyer au front (on se branche sur l'ancien back)
+        // Deuxième étape : se brancher sur l'ancien back (complétion des sous-menus, tri, etc..)
         semaine.clean();
         semaine.complete();
         return semaine;
@@ -67,8 +60,7 @@ public class MapperWebGerest implements Mapper{
         journee.setTypeVide(false); // TODO ???
         List<Service> destinations = new ArrayList<>();
         for(EnumTypeService enumTypeService: journeeDTO.getMapTypeServiceToService().keySet()){
-            /* On n'intègre pas directement le type du service dans le Service car on ne l'a pas par le JSON, mais par l'URL
-               de laquelle on fait la requête = on ne mélange pas ce qu'on récupère depuis le JSON et les infos qu'on donne en entrée */
+            // On n'intègre pas directement le type du service dans le ServiceDTO car on ne l'a pas par le JSON, mais par l'URL
             destinations.add(this.buildService(journeeDTO.getMapTypeServiceToService().get(enumTypeService), enumTypeService));
         }
         journee.setDestinations(destinations);
@@ -86,10 +78,7 @@ public class MapperWebGerest implements Mapper{
         if(serviceDTO.getContenu().isEmpty()){
             service.setTypeVide(true);
         }
-        // On donne un service entier et non la liste des sous menu du service car on ne sait pas quel plat
-        // appartient à quel sous menu sans avoir à parcourir la liste des plats du service
-        List<SousMenu> menus = buildListSousMenu(serviceDTO);
-        service.setMenu(menus);
+        service.setMenu(buildListSousMenu(serviceDTO));
         return service;
     }
 
@@ -155,7 +144,7 @@ public class MapperWebGerest implements Mapper{
         plat.setGemrcn(buildGemrcn(platDTO));
         plat.setNutritions(buildNutritions(platDTO));
         plat.setFamilyRank(platDTO.getOrdre());
-        plat.setSubFamily(""); // TODO : on n'a pas de notion de sous-famille dans l'API
+        plat.setSubFamily(""); // pas de notion de sous-famille dans l'API
         plat.setTypeVide(false); // TODO : qu'est ce qu'un plat vide ???
         return plat;
     }
