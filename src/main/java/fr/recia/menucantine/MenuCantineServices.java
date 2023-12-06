@@ -18,6 +18,7 @@ package fr.recia.menucantine;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.ManagedBean;
@@ -30,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -97,21 +99,21 @@ public class MenuCantineServices {
 		return adoriaHelper.callTest(adoriaWeb, requete.getSemaine() -1 , requete.getAnnee());
 	}
 
-	public Semaine newFindSemaine(String uai, Requete requete){
-		System.out.println("Arrivée dans la méthode newFindSemaine");
-		System.out.println(apiClient.toString());
+	public Semaine newFindSemaine(Requete requete){
+
+		log.trace("Dans la méthode newFindSemaine");
 
 		// Par défaut on cherche par rapport au jour d'aujourd'hui, mais si jamais on spécifie la date dans la requête
 		// alors on cherche par rapport à cette date en question
+		final String uai = requete.getUai();
 		LocalDate today = LocalDate.now();
-		if(requete != null){
-			if(requete.getDateJour() != null){
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-				today = LocalDate.parse(requete.getDateJour(), formatter);
-			}
-		}
+        if (requete.getDateJour() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            today = LocalDate.parse(requete.getDateJour(), formatter);
+        }
+		log.debug("Date demandée par la requête : " + today);
 
-		// On doit faire une requête par jour de la semaine pour reconstituer la semaine (numJour=1=lundi, ...)
+        // On doit faire une requête par jour de la semaine pour reconstituer la semaine (numJour=1=lundi, ...)
 		List<JourneeDTO> journeeDTOList = new ArrayList<>();
 		for(int numJour=1; numJour<=5; numJour++){
 			JourneeDTO journeeDTO = new JourneeDTO();
@@ -120,7 +122,7 @@ public class MenuCantineServices {
 			String menuDayString = RequeteHelper.localeDateToString(menuDay);
 			// On doit aussi faire une requête par service pour reconstituer une journée (numService=2=déjeuner, ...)
 			for(int numService=1; numService<=4; numService++){
-				System.out.println("Requête : "+uai+" "+menuDayString+" "+numService);
+				log.debug("Requête avec les paramètres uai={}, date={}, service={}",uai, menuDayString, numService);
 				ServiceDTO serviceDTO = apiClient.makeAuthenticatedApiCallGetMenu(uai, menuDayString, numService);
 				journeeDTO.addService(EnumTypeService.serviceNumber(numService), serviceDTO);
 			}

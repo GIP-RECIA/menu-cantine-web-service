@@ -2,26 +2,25 @@ package fr.recia.menucantine;
 
 import fr.recia.menucantine.dto.ServiceDTO;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import reactor.core.publisher.Mono;
-import reactor.util.retry.Retry;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 @Data
 public class APIClient {
+
+    private static final Logger log = LoggerFactory.getLogger(APIClient.class);
 
     @Autowired
     private CacheManager cacheManager;
@@ -58,6 +57,7 @@ public class APIClient {
      * @return Un objet contenant l'url à utiliser
      */
     public DynamicURLResponse initializeAndGetDynamicEndpoint(String uai){
+        log.trace("Dans la méthode initializeAndGetDynamicEndpoint");
         return webClient.get()
                 .uri(initialQueryURL+"?rne={uai}", uai)
                 .retrieve()
@@ -72,7 +72,7 @@ public class APIClient {
      * @return Un objet contenant le token à utiliser (valable environ 24h)
      */
     public AuthResponse authenticateAndGetToken(String url) {
-        System.out.println("Récupération d'un nouveau token");
+        log.trace("Dans la méthode authenticateAndGetToken");
         return webClient.get()
                 .uri(url + authEndpoint + "?client_id={client_id}&client_secret={client_secret}",
                         client_id, client_secret)
@@ -91,7 +91,7 @@ public class APIClient {
      * @return Un objet qui représente le résultat de l'appel sans aucune transformation
      */
     public ServiceDTO makeAuthenticatedApiCallGetMenuInternal(String url, String uai, String datemenu, int service) {
-        System.out.println("Arrivée dans la méthode makeAuthenticatedApiCallGetMenu");
+        log.trace("Dans la méthode makeAuthenticatedApiCallGetMenuInternal");
         return webClient.get()
                 .uri(url + menuEndpoint+"?rne={rne}&date_menu={datemenu}&service={service}",
                                 uai, datemenu, service)
@@ -115,6 +115,9 @@ public class APIClient {
      */
     public ServiceDTO makeAuthenticatedApiCallGetMenu(String uai, String datemenu, int service) {
 
+        log.trace("Dans la méthode makeAuthenticatedApiCallGetMenu");
+        log.debug("Recherche de la réponse de la requête dans le cache");
+
         // Première étape : vérification du cache avant de faire la requête
         final LocalDate today = LocalDate.now();
         final LocalDate dateRequete = LocalDate.parse(datemenu, DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -125,7 +128,7 @@ public class APIClient {
         if(today.isAfter(dateRequete)){
             ServiceDTO serviceDTO = cacheManager.getCache("permanent").get(cacheKeyRequete, ServiceDTO.class);
             if(serviceDTO != null){
-                System.out.println("Récupération de la requête depuis le cache permanent");
+                log.debug("Récupération de la réponse de la requête depuis le cache permanent");
                 return serviceDTO;
             }
         }
@@ -133,17 +136,17 @@ public class APIClient {
         else{
             ServiceDTO serviceDTO = cacheManager.getCache("requetes").get(cacheKeyRequete, ServiceDTO.class);
             if(serviceDTO != null){
-                System.out.println("Récupération de la requête depuis le cache requetes");
+                log.debug("Récupération de la réponse de la requête depuis le cache requetes");
                 return serviceDTO;
             }
         }
 
         // Si on passe par là, c'est que la requête n'était pas dans le cache
-        System.out.println("Requête non stockée dans le cache. On va faire appel à l'API.");
+        log.debug("Requête non stockée dans le cache. On va faire appel à l'API.");
 
         // Deuxième étape : regarder si on a l'URL associée à l'UAI
         if(!dynamicURL.containsKey(uai)){
-            System.out.println("Nouvel UAI, pas d'association connue");
+            log.debug("Nouvel UAI, pas d'association connue");
             dynamicURL.put(uai, initializeAndGetDynamicEndpoint(uai).getContenu());
         }
         final String url = dynamicURL.get(uai);
@@ -152,26 +155,32 @@ public class APIClient {
         ServiceDTO serviceDTO = null;
         try {
             serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
-            System.out.println("Requête réussie");
         }catch(WebClientResponseException webClientResponseException){
-            System.out.println("Erreur");
+            log.debug("Erreur dans la requête : code erreur "+webClientResponseException.getStatusCode().value());
             // Si erreur 401 on recupère un nouveau token et on rééssaye une fois
             if(webClientResponseException.getStatusCode().value() == 401){
-                System.out.println("Nouvelle tentative");
+                log.debug("Récupération d'un nouveau token");
                 authToken.put(url, authenticateAndGetToken(url).getToken());
                 System.out.println("TOKEN : "+this.authToken);
+                log.debug("Nouvelle requête avec le nouveau token");
                 serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
+            }
+            // TODO : que faire dans le cas ou on a une autre erreur ?
+            else{
+                log.error("Erreur innatendue lors de la requête");
             }
         }
 
         //Avant de retourner la valeur on la place dans le bon cache
         if(today.isAfter(dateRequete)){
-            System.out.println("Stockage de la requête dans le cache permanent");
+            log.debug("Stockage de la réponse de la requête dans le cache permanent");
             cacheManager.getCache("permanent").put(cacheKeyRequete, serviceDTO);
         }else{
-            System.out.println("Stockage de la requête dans le cache requetes");
+            log.debug("Stockage de la réponse de la requête dans le cache requetes");
             cacheManager.getCache("requetes").put(cacheKeyRequete, serviceDTO);
         }
+
+        log.debug("Retour de la réponse récupérée depuis l'API");
         return serviceDTO;
     }
 }

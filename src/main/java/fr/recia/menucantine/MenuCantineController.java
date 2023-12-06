@@ -82,19 +82,18 @@ public class MenuCantineController {
 			produces = "application/json"
 		)
 	public ResponseEntity<Object> postDemo( @RequestBody Requete requete) {
-		Semaine semaine = services.newFindSemaine("0281197Z", requete);
+		Semaine semaine = services.newFindSemaine(requete);
 		return new ResponseEntity<Object>(semaine, HttpStatus.OK);
-		//return post(requete);
 	}
 
 
 	@GetMapping(
-			path="/test",
+			path="/menu",
 			produces = "application/json"
 	)
 	public ResponseEntity<Object> getTest() {
-		System.out.println("APPEL");
-		Semaine semaine = services.newFindSemaine("0281197Z", null);
+		log.trace("Requête sur la path /menu");
+		Semaine semaine = services.newFindSemaine(new Requete());
 		return new ResponseEntity<Object>(semaine, HttpStatus.OK);
 	}
 }

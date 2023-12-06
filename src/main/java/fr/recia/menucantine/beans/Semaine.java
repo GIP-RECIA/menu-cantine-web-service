@@ -149,7 +149,6 @@ public class Semaine {
 		String serviceName = service.getName();
 
 		List<SousMenu> menuComplet = new ArrayList<>();
-		System.out.println(nbPlatMaxParService);
 		NbPlatParSsMenu nbPlatMax = nbPlatMaxParService.get(serviceName);
 
 		int nbSsMenu = nbPlatMax.getMaxKey();

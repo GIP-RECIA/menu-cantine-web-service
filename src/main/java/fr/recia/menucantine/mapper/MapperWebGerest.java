@@ -54,7 +54,6 @@ public class MapperWebGerest implements Mapper {
     }
 
     public Journee buildJournee(JourneeDTO journeeDTO){
-        System.out.println(journeeDTO);
         Journee journee = new Journee();
         journee.setJour(journeeDTO.getDate().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.FRENCH));
         journee.setDate(journeeDTO.getDate());
