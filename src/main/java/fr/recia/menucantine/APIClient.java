@@ -52,9 +52,10 @@ public class APIClient {
         this.webClient = webClientBuilder.build();
     }
 
-    /*
-    Requête pour récupérer l'URL à utiliser pour les toutes les autres requêtes
-    Pas besoin de token pour celle-ci. Prend en entrée l'UAI de l'établissement.
+    /**
+     * Requête pour récupérer l'URL à utiliser pour les toutes les autres requêtes. Pas besoin de token pour celle-ci.
+     * @param uai L'UAI de l'établissement à chercher
+     * @return Un objet contenant l'url à utiliser
      */
     public DynamicURLResponse initializeAndGetDynamicEndpoint(String uai){
         return webClient.get()
@@ -64,9 +65,11 @@ public class APIClient {
                 .block();
     }
 
-    /*
-    Requête permettant de récupérer le token que l'on va utiliser pour s'authentifier dans
-    les autres requêtes. Chagre directement les infos nécéssaires depuis la config
+    /**
+     * Requête permettant de récupérer le token que l'on va utiliser pour s'authentifier dans les autres requêtes.
+     * Charge directement les infos nécéssaires pour l'authentification depuis la config.
+     * @param url L'url sur laquelle il faut faire la requête
+     * @return Un objet contenant le token à utiliser (valable environ 24h)
      */
     public AuthResponse authenticateAndGetToken(String url) {
         System.out.println("Récupération d'un nouveau token");
@@ -78,10 +81,14 @@ public class APIClient {
                 .block();
     }
 
-    /*
-    Fait un appel à l'API pour récupérer un menu pour un UAI donné, une date donnée et un service donné
-    La date est de la forme suivante : YYYYMMJJ
-    Le service est un entier compris entre 1 et 4 inclus (petit déjeuner, déjeuner, gouter, diner)
+    /**
+     * Fait un appel à l'API pour récupérer un menu pour un UAI donné, une date donnée et un service donné.
+     * Le token n'est pas passé en paramètre mais chargé depuis les attributs de la classe.
+     * @param url L'url sur laquelle il faut faire la requête
+     * @param uai L'UAI de l'établissement recherché
+     * @param datemenu La date recherchée sous forme de String (YYYYMMJJ)
+     * @param service Un entier compris entre 1 et 4 inclus (petit déjeuner, déjeuner, gouter, diner)
+     * @return Un objet qui représente le résultat de l'appel sans aucune transformation
      */
     public ServiceDTO makeAuthenticatedApiCallGetMenuInternal(String url, String uai, String datemenu, int service) {
         System.out.println("Arrivée dans la méthode makeAuthenticatedApiCallGetMenu");
@@ -94,11 +101,17 @@ public class APIClient {
                 .block();
     }
 
-    /*
-    Se charge de préparer tout ce qui est nécéssaire pour faire un appel à l'API, puis fait l'appel
-    1) Cherche si on a déjà l'URL associée à l'UAI ; si ce n'est pas le cas, fait une requête pour la récupérer
-    2) Effectue la requête avec l'url et le token, et si on obtient en retour un 401, autrement dit que le token
-    n'est plus valide, récupère un nouveau token et rejoue la requête
+    /**
+     * Se charge de préparer tout ce qui est nécéssaire pour faire un appel à l'API, puis fait l'appel.
+     * 1) Cherche si on a déjà la requête dans le cache, et la récupère si c'est le cas
+     * 2) Cherche si on a déjà l'URL associée à l'UAI ; si ce n'est pas le cas, fait une requête pour la récupérer
+     * 3) Effectue la requête avec l'url et le token
+     * 4) Si on obtient en retour un 401 (token problablement invalide), récupère un nouveau token et rejoue la requête
+     * 5) Stocke dans le bon cache la requête avant la retourner
+     * @param uai L'UAI de l'établissement recherché
+     * @param datemenu La date recherchée sous forme de String (YYYYMMJJ).
+     * @param service Un entier compris entre 1 et 4 inclus (petit déjeuner, déjeuner, gouter, diner)
+     * @return Un objet qui représente le résultat de l'appel sans aucune transformation
      */
     public ServiceDTO makeAuthenticatedApiCallGetMenu(String uai, String datemenu, int service) {
 
