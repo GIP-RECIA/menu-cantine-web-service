@@ -2,7 +2,10 @@ package fr.recia.menucantine;
 
 import fr.recia.menucantine.dto.ServiceDTO;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,12 +13,18 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 @Data
 public class APIClient {
+
+    @Autowired
+    private CacheManager cacheManager;
 
     private final WebClient webClient;
 
@@ -91,16 +100,42 @@ public class APIClient {
     2) Effectue la requête avec l'url et le token, et si on obtient en retour un 401, autrement dit que le token
     n'est plus valide, récupère un nouveau token et rejoue la requête
      */
-    @Cacheable("menu")
     public ServiceDTO makeAuthenticatedApiCallGetMenu(String uai, String datemenu, int service) {
-        // Première étape : regarder si on a l'URL associée à l'UAI
+
+        // Première étape : vérification du cache avant de faire la requête
+        final LocalDate today = LocalDate.now();
+        final LocalDate dateRequete = LocalDate.parse(datemenu, DateTimeFormatter.ofPattern("yyyyMMdd"));
+        final CacheKeyRequete cacheKeyRequete = new CacheKeyRequete(uai, datemenu, service);
+
+        // On va regarder dans un cache ou l'autre en fonction de la date actuelle par rapport à la date de la requête
+        // Cache permanent : requête sur une date passée
+        if(today.isAfter(dateRequete)){
+            ServiceDTO serviceDTO = cacheManager.getCache("permanent").get(cacheKeyRequete, ServiceDTO.class);
+            if(serviceDTO != null){
+                System.out.println("Récupération de la requête depuis le cache permanent");
+                return serviceDTO;
+            }
+        }
+        // Cache requetes : requête sur une date future
+        else{
+            ServiceDTO serviceDTO = cacheManager.getCache("requetes").get(cacheKeyRequete, ServiceDTO.class);
+            if(serviceDTO != null){
+                System.out.println("Récupération de la requête depuis le cache requetes");
+                return serviceDTO;
+            }
+        }
+
+        // Si on passe par là, c'est que la requête n'était pas dans le cache
+        System.out.println("Requête non stockée dans le cache. On va faire appel à l'API.");
+
+        // Deuxième étape : regarder si on a l'URL associée à l'UAI
         if(!dynamicURL.containsKey(uai)){
             System.out.println("Nouvel UAI, pas d'association connue");
             dynamicURL.put(uai, initializeAndGetDynamicEndpoint(uai).getContenu());
         }
         final String url = dynamicURL.get(uai);
 
-        //Deuxième étape : lancer la requête, et se réauthentifier si le token est expiré
+        //Troisième étape : lancer la requête, et se réauthentifier si le token est expiré
         ServiceDTO serviceDTO = null;
         try {
             serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
@@ -114,6 +149,15 @@ public class APIClient {
                 System.out.println("TOKEN : "+this.authToken);
                 serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
             }
+        }
+
+        //Avant de retourner la valeur on la place dans le bon cache
+        if(today.isAfter(dateRequete)){
+            System.out.println("Stockage de la requête dans le cache permanent");
+            cacheManager.getCache("permanent").put(cacheKeyRequete, serviceDTO);
+        }else{
+            System.out.println("Stockage de la requête dans le cache requetes");
+            cacheManager.getCache("requetes").put(cacheKeyRequete, serviceDTO);
         }
         return serviceDTO;
     }

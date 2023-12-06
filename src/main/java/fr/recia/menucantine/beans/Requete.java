@@ -15,11 +15,14 @@
  */
 package fr.recia.menucantine.beans;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.io.Serializable;
 
 
 @Data
-public class Requete {
+public class Requete implements Serializable {
 	Integer semaine;
 	Integer annee;
 	Integer jour;

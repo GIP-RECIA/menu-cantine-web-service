@@ -3,8 +3,10 @@ package fr.recia.menucantine.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class PlatDTO {
+public class PlatDTO implements Serializable {
 
     private String nom;
     private int id;

@@ -53,3 +53,7 @@ logging:
       recia:
         menucantine: info
 
+spring:
+  cache:
+    type: ehcache
+
