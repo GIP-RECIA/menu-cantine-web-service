@@ -41,7 +41,6 @@ public class MapperWebGerest implements Mapper {
         Semaine semaine = new Semaine();
         semaine.setDebut(RequeteHelper.localeDateToCompleteString(lundi));
         semaine.setFin(RequeteHelper.localeDateToCompleteString(vendredi));
-        semaine.setNbJours(5);
         semaine.setPreviousWeek(lundi.minusDays(3));
         semaine.setNextWeek(lundi.plusDays(7));
         semaine.setAllGemRcn(new ArrayList<>()); // pas de gemrcn dans cette API
@@ -71,14 +70,19 @@ public class MapperWebGerest implements Mapper {
     public Journee buildJournee(JourneeDTO journeeDTO){
         Journee journee = new Journee();
         journee.setJour(journeeDTO.getDate().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.FRENCH));
-        journee.setDate(journeeDTO.getDate());
-        journee.setTypeVide(false); // TODO ???
         List<Service> destinations = new ArrayList<>();
+        boolean isVide = true;
         for(EnumTypeService enumTypeService: journeeDTO.getMapTypeServiceToService().keySet()){
             // On n'intègre pas directement le type du service dans le ServiceDTO car on ne l'a pas par le JSON, mais par l'URL
-            destinations.add(this.buildService(journeeDTO.getMapTypeServiceToService().get(enumTypeService), enumTypeService));
+            Service service =  this.buildService(journeeDTO.getMapTypeServiceToService().get(enumTypeService), enumTypeService);
+            // Pour vérifier si une journée est vide, on regarde si tous ses services sont aussi vides
+            if(!service.getTypeVide()){
+                isVide = false;
+            }
+            destinations.add(service);
         }
         journee.setDestinations(destinations);
+        journee.setTypeVide(isVide);
         return journee;
     }
 

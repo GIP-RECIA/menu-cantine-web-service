@@ -104,9 +104,20 @@ public class Semaine {
 	 * @return
 	 */
 	public void clean() {
-		for(Journee journee: this.getJours()){
-			journee.newclean();
+		// Enlever les jours vide et nettoyer les jours avec du contenu
+		for (Iterator<Journee> iterator = jours.iterator(); iterator.hasNext();) {
+			Journee journee = (Journee) iterator.next();
+			if (journee != null) {
+				if (journee.isVide()) {
+					iterator.remove();
+				} else {
+					journee.newclean();
+				}
+			}
 		}
+
+		//Mettre à jour le nombre de jours une fois les jours vides enlevés
+		this.nbJours = jours.size();
 	}
 
 	public void complete(){
