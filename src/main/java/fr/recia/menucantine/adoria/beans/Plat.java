@@ -25,8 +25,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
 
-
-
 @Data
 public class Plat implements Serializable, Cloneable {
 
@@ -50,7 +48,7 @@ public class Plat implements Serializable, Cloneable {
 	@JsonInclude(Include.NON_NULL)
 	List<Labels> labelsInfo;
 	
-	Integer familyRank; // donne peut-être le rang dans le menu la place()
+	Integer familyRank;
 
 	public static Plat platVide() {
 		Plat p = new Plat();
@@ -59,11 +57,11 @@ public class Plat implements Serializable, Cloneable {
 	}
 
 	boolean isVide() {
-		return typeVide == true;
+		return typeVide;
 	}
 
 	/**
-	 * Netoyage d'un plat:
+	 * Nettoyage d'un plat:
 	 * annule les liste des allergens vide.
 	 * remplace les gemrcn par leurs code.
 	 * remplace les labels par leurs info.

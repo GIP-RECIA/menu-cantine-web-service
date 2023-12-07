@@ -42,8 +42,7 @@ public class Labels implements Serializable, Cloneable {
 			log.info("load labels nomenclature file {}",  fileName );
 			
 			scannerFile.nextLine();
-			
-			
+
 			while (scannerFile.hasNextLine()) {
 				try (Scanner scannerLine = new Scanner(scannerFile.nextLine())){
 				//	System.out.print(scannerLine);

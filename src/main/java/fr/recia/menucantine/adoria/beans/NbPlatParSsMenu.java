@@ -18,16 +18,12 @@ package fr.recia.menucantine.adoria.beans;
 import java.util.Hashtable;
 
 /**
- * Donne le nombre de plats pour chaque sous-menu d'un service d'jour.
+ * Donne le nombre de plats pour chaque sous-menu d'un service d'un jour.
  * int sous-menu => int nbPlats
  * @author legay
- *
  */
 public class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 2971745506304642901L;
 	private int maxKey = 0;
 
@@ -38,19 +34,15 @@ public class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
 	 */
 	void calculMax(NbPlatParSsMenu platParSsMenu){
 		if (this.isEmpty()) {
-			
 			this.putAll(platParSsMenu);
-		
 		} else {
-			
 			platParSsMenu.forEach(
-					(cle, val) -> { 
-						Integer valMax = this.get(cle);
-						if (valMax == null || valMax < val) {
-							this.put(cle, val);
-						}
-						
-					});		
+				(cle, val) -> {
+					Integer valMax = this.get(cle);
+					if (valMax == null || valMax < val) {
+						this.put(cle, val);
+				}
+			});
 		}
 	}
 
@@ -61,9 +53,7 @@ public class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
 	 */
 	public synchronized Integer get(Object key) {
 		Integer i = super.get(key);
-		
 		if (i == null) return 0;
-		
 		return i;
 	}
 	

@@ -39,10 +39,15 @@ public class Journee implements Serializable, Cloneable {
 	
 	@JsonInclude(Include.NON_NULL)
 	String jour;
-	
-	
+
 	LocalDate date;
-	
+	List<Service> destinations;
+	Boolean typeVide = false;
+	NbPlatParSsMenuParService serviceChoixNbPlats = new NbPlatParSsMenuParService();
+
+	public boolean isVide(){
+		return typeVide;
+	}
 
 	@JsonFormat(pattern = "dd/MM/YYYY")
 	public LocalDate getDate() {
@@ -54,68 +59,28 @@ public class Journee implements Serializable, Cloneable {
 		this.date = date;
 	}
 
-	List<Service> destinations;
-	
-	Boolean typeVide = false;
-	
-	public boolean isVide(){
-		return typeVide;
-	}
-	
-//	@JsonIgnore 
-	NbPlatParSsMenuParService serviceChoixNbPlats = new NbPlatParSsMenuParService();
-	
+
 	/**
-	 * Netoyage de chaque service de la journée, suppression des service vide.
-	 * Calcul du nombre de plat proposé dans chaque sous-menu de chaque service.
-	 * 
-	 * Les services sont ordonnés suivant leurs rank
+	 * Nettoyage de chaque service de la journée, suppression des services vide.
+	 * Calcul du nombre de plats proposé dans chaque sous-menu de chaque service.
+	 * Les services sont ordonnés suivant leurs rank.
 	 * @return
 	 */
-	public NbPlatParSsMenuParService clean(){
-		if (jour == null && date != null) {
-			
-			jour = date.format(formatJour);
+	public void clean(){
 
-			for (Iterator<Service> iterator = destinations.iterator(); iterator.hasNext();) {
-				
-				Service service = (Service) iterator.next();
-				
-				if (service != null) {
-					if (service.getRecipes().isEmpty()) {
-						iterator.remove();
-					} else {
-						serviceChoixNbPlats.put(service.name, service.clean());
-					}
-				}
-			}
-			destinations.sort((s1, s2) -> {
-					if (s1.rank != null) {
-						return s1.rank.compareTo(s2.rank);
-					}
-					if (s2.rank != null) {
-						return s2.rank.compareTo(s1.rank);
-					}
-				return 0;
-			});
-		}
-		return serviceChoixNbPlats;
-	}
-
-	public void newclean(){
-
+		// Nettoyage des services et suppression des services vides
 		for (Iterator<Service> iterator = destinations.iterator(); iterator.hasNext();) {
-
 			Service service = (Service) iterator.next();
-
 			if (service != null) {
 				if (service.getTypeVide()) {
 					iterator.remove();
 				} else {
-					serviceChoixNbPlats.put(service.name, service.newclean());
+					serviceChoixNbPlats.put(service.name, service.clean());
 				}
 			}
 		}
+
+		// Tri des services selon leur rank
 		destinations.sort((s1, s2) -> {
 			if (s1.rank != null) {
 				return s1.rank.compareTo(s2.rank);

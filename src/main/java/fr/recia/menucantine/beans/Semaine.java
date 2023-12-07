@@ -30,14 +30,11 @@ import lombok.Data;
 public class Semaine {
 	@JsonIgnore 
 	static public DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
-//	static public DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM");
 
 	Integer nbJours;
 	String debut;
 	String fin;
-	
 	Requete requete;
-	
 	List<GemRcn> allGemRcn = GemRcn.getList();
 	
 	@JsonFormat(pattern = "dd/MM/YYYY")
@@ -47,7 +44,6 @@ public class Semaine {
 	LocalDate nextWeek;
 	
 	List<Journee> jours;
-
 	NbPlatParSsMenuParService nbPlatMaxParService;
 
 	public Semaine(){
@@ -63,7 +59,7 @@ public class Semaine {
 	}
 
 	/**
-	 * Le netoyage consiste a netoyer chaque jour et a supprimer les jours vide.
+	 * Le netoyage consiste à nettoyer chaque jour et à supprimer les jours vide.
 	 * @return
 	 */
 	public void clean() {
@@ -74,7 +70,7 @@ public class Semaine {
 				if (journee.isVide()) {
 					iterator.remove();
 				} else {
-					journee.newclean();
+					journee.clean();
 				}
 			}
 		}
