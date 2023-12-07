@@ -18,7 +18,6 @@
 -->
 
 
-
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd"
          updateCheck="true" monitoring="autodetect" dynamicConfig="true">
     <!--   <diskStore path="java.io.tmpdir" /> -->
@@ -26,17 +25,17 @@
 
     <defaultCache eternal="false" maxElementsInMemory="1000" overflowToDisk="false" overflowToOffHeap="false" diskPersistent="false"/>
 
-    <!-- Les réponses valides de la semaine courante et des semaines suivantes (réactualisées au bout de )-->
+    <!-- Les réponses valides de la semaine courante et des semaines suivantes (réactualisées au bout de 6 heures) -->
     <cache name="requetes"
            eternal="false"
            maxEntriesLocalHeap="1000"
            diskPersistent="true"
-           timeToIdleSeconds="7200"
-           timeToLiveSeconds="14400"
+           timeToIdleSeconds="21600"
+           timeToLiveSeconds="21600"
            memoryStoreEvictionPolicy="LFU">
     </cache>
 
-    <!--  Pour les menus des semaines passées ils ne devraient plus changer, on les gardes tant qu'il y de la place  -->
+    <!--  Pour les menus des semaines passées ils ne devraient plus changer, on les garde tant qu'il y de la place  -->
     <cache name="permanent"
            eternal="true"
            maxEntriesLocalHeap="1000"
@@ -45,13 +44,13 @@
            memoryStoreEvictionPolicy="FIFO">
     </cache>
 
-    <!--  pour les réponses en erreur peut-être avec une période courte -->
+    <!--  pour les réponses en erreur, on les garde 10 min -->
     <cache name="erreur"
            eternal="false"
            maxEntriesLocalHeap="1000"
            diskPersistent="false"
-           timeToIdleSeconds="3600"
-           timeToLiveSeconds="3600"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="600"
            memoryStoreEvictionPolicy="LRU">
     </cache>
 </ehcache>

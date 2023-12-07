@@ -140,10 +140,17 @@ public class APIClient {
         final LocalDate dateRequete = LocalDate.parse(datemenu, DateTimeFormatter.ofPattern("yyyyMMdd"));
         final CacheKeyRequete cacheKeyRequete = new CacheKeyRequete(uai, datemenu, service);
 
+        // Au préalable, on regarde si la requête n'est pas dans le cache d'erreur
+        ServiceDTO serviceDTO = cacheManager.getCache("erreur").get(cacheKeyRequete, ServiceDTO.class);
+        if(serviceDTO != null){
+            log.debug("Récupération de la réponse de la requête depuis le cache erreur");
+            return serviceDTO;
+        }
+
         // On va regarder dans un cache ou l'autre en fonction de la date actuelle par rapport à la date de la requête
         // Cache permanent : requête sur une date passée
         if(today.isAfter(dateRequete)){
-            ServiceDTO serviceDTO = cacheManager.getCache("permanent").get(cacheKeyRequete, ServiceDTO.class);
+            serviceDTO = cacheManager.getCache("permanent").get(cacheKeyRequete, ServiceDTO.class);
             if(serviceDTO != null){
                 log.debug("Récupération de la réponse de la requête depuis le cache permanent");
                 return serviceDTO;
@@ -151,7 +158,7 @@ public class APIClient {
         }
         // Cache requetes : requête sur une date future
         else{
-            ServiceDTO serviceDTO = cacheManager.getCache("requetes").get(cacheKeyRequete, ServiceDTO.class);
+            serviceDTO = cacheManager.getCache("requetes").get(cacheKeyRequete, ServiceDTO.class);
             if(serviceDTO != null){
                 log.debug("Récupération de la réponse de la requête depuis le cache requetes");
                 return serviceDTO;
@@ -174,7 +181,6 @@ public class APIClient {
         final String url = dynamicURL.get(uai);
 
         //Troisième étape : lancer la requête, et se réauthentifier si le token est expiré
-        ServiceDTO serviceDTO = null;
         try {
             serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
         }catch(WebClientResponseException webClientResponseException){
@@ -188,6 +194,7 @@ public class APIClient {
                 serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
             }
             else{
+                cacheManager.getCache("erreur").put(cacheKeyRequete, serviceDTO);
                 throw new WebgerestRequestException("Erreur innatendue lors de la requête "
                         + webClientResponseException.getRequest() + "\nCode erreur retourné : "
                         + webClientResponseException.getStatusCode().value());
