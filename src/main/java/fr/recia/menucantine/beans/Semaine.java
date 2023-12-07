@@ -54,43 +54,6 @@ public class Semaine {
 		super();
 	}
 	
-	public Semaine(ReponseAdoria menuSemaine, Requete requete) {
-		super();
-		setMenuSemaine(menuSemaine);
-		setRequete(requete);
-	}
-	
-	
-	public void setMenuSemaine(ReponseAdoria menuSemaine) {
-	
-		if (menuSemaine == null) {
-			nbJours = null;
-			debut = null;
-			fin = null;
-			jours = null;
-		} else {
-			menuSemaine.clean(); // devrait déjà être clean
-			menuSemaine.complete();
-			nbJours = menuSemaine.getNbJours();
-			jours = menuSemaine.getDates();
-			
-			if (nbJours > 0 ) {
-				debut = formatDate(0);
-				if (nbJours > 1 ) {
-					fin = formatDate(nbJours-1);
-				}
-			}
-			
-			if (menuSemaine.getPreviousWeekExportable()) {
-				previousWeek = RequeteHelper.jourMemeSemaine(dateJour(0), 5).minusDays(7);
-			};
-			if (menuSemaine.getNextWeekExportable()) {
-				nextWeek = RequeteHelper.jourMemeSemaine(dateJour(0), 1).plusDays(7);
-			}
-			 
-		}
-	}
-	
 	private LocalDate dateJour(Integer jour) {
 		return jours.get(jour).getDate();
 	}

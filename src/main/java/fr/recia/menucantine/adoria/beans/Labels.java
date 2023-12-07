@@ -21,19 +21,11 @@ import lombok.Data;
 @Data
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public class Labels implements Serializable, Cloneable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 4037048636409313674L;
 	private static final String DEFAULT_FILE = "classpath:labels.csv";
-	
-	
 	private static final Pattern PV = Pattern.compile("\\s*;\\s*");
-	
 	private static final Logger log = LoggerFactory.getLogger(Labels.class);
-	//private static List<Labels> allLabels = new ArrayList<>();
-	
-	
 	private static final Map<String, Labels> labelByName = new HashMap<String, Labels>();
 	
 	int ordre;

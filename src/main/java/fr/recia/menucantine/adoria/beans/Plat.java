@@ -29,9 +29,7 @@ import lombok.Data;
 
 @Data
 public class Plat implements Serializable, Cloneable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 6660011102902753149L;
 	String name = " ";
 	String family = " "; // ce sont des blancs insécables

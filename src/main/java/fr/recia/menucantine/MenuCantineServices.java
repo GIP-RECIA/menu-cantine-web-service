@@ -38,13 +38,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 
-import fr.recia.menucantine.adoria.AdoriaHelper;
-import fr.recia.menucantine.adoria.IRestAdoriaClient;
-import fr.recia.menucantine.adoria.RestAdoriaClientException;
 import fr.recia.menucantine.adoria.beans.GemRcn;
 import fr.recia.menucantine.adoria.beans.Labels;
 import fr.recia.menucantine.beans.Requete;
@@ -55,17 +50,7 @@ import fr.recia.menucantine.beans.Semaine;
 @ManagedBean
 public class MenuCantineServices {
 	
-	private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);	
-
-	@Autowired
-	@Lazy
-	private AdoriaHelper adoriaHelper ;
-	
-	@Autowired
-	IRestAdoriaClient adoriaWeb;
-	
-	@Autowired
-	IRestAdoriaClient adoriaTest;
+	private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);
 	
 	@Value("${adoria.test.no-web-service}")
 	Boolean noWebService;
@@ -75,14 +60,6 @@ public class MenuCantineServices {
 
 	@Autowired
 	MapperWebGerest mapper;
-	
-	@Bean
-	IRestAdoriaClient adoriaClient () {
-		if (noWebService) {
-			return adoriaTest;
-		} 
-		return adoriaWeb;
-	}
 	
 	@Value("${adoria.gemrcn-csv}")
 	String gemrcnFilename;
@@ -94,15 +71,6 @@ public class MenuCantineServices {
 	public void postConstructInit(){
 		GemRcn.loadFile(gemrcnFilename);
 		Labels.loadFile(labelsFilename);
-	}
-	
-	
-	public List<String> loadAllSemaine() {
-		RequeteHelper rh = new RequeteHelper();
-		Requete requete = new Requete();
-		LocalDate date = rh.dateSemaine(requete);
-		rh.dateJour(requete, date);
-		return adoriaHelper.callTest(adoriaWeb, requete.getSemaine() -1 , requete.getAnnee());
 	}
 
 	public Semaine newFindSemaine(Requete requete) throws UnknownUAIException, WebgerestRequestException, NoMenuException {
@@ -153,77 +121,5 @@ public class MenuCantineServices {
 
 		return semaine;
 	}
-	
-	
-	public Semaine findSemaine(Requete requete) throws RestAdoriaClientException{
-		
-		if (requete == null || requete.getUai() == null){
-			throw new NullPointerException("requete ou uai null: " + requete);
-		}
-		RequeteHelper rh = new RequeteHelper();
-		
-		
-		LocalDate date = rh.dateJour(requete);
-		
-		if (date == null) { 
-				// on a pas de date la requette est basé sur la semaine 
-			date = rh.dateSemaine(requete);
-		}
-			// pour normalisé la requete
-		rh.dateJour(requete, date);
-		
-		try {
-			
-			return new Semaine(	adoriaHelper.call(
-									requete.getUai(), 
-									requete.getSemaine(), 
-									requete.getAnnee()), 
-								requete);
-		
-		} catch (RestAdoriaClientException e) {
-			
-			LocalDate lundi = rh.dateFromYearWeekDay(requete.getAnnee(), requete.getSemaine(), 1);
-			
-			LocalDate vendredi = lundi.plusDays(4);
-			
-			e.getMap().put("debut", lundi.format(Semaine.formatter));
-			
-			e.getMap().put("fin", vendredi.format(Semaine.formatter));
-			
-			vendredi = lundi.minusDays(3);
-			
-			Requete rPrev = new Requete();
-			
-			rh.dateJour(rPrev, vendredi);
-			
-			LocalDate aux = vendredi;
-			
-		/*	
-			try {
-				int nbIterBack = 5;
-				ReponseAdoria res = null;
-				while (res == null && nbIterBack -- > 0){
-						rh.dateJour(rPrev, aux);
-						
-						res = adoriaHelper.call(requete.getUai(), rPrev.getSemaine(), rPrev.getAnnee());
-						
-						aux = aux.minusDays(7);
-				}
-				
-				if (res != null) {
-					e.getMap().put("previousWeek", vendredi.format(RequeteHelper.dateFormatter));
-				}
-				
-			} catch (Exception catched) {
-				log.debug("requette semaine precedante : " +  catched.getMessage());
-			}
-		*/	
-			lundi = lundi.plusDays(7);
-			e.getMap().put("previousWeek", vendredi.format(RequeteHelper.dateFormatter));
-			e.getMap().put("nextWeek", lundi.format(RequeteHelper.dateFormatter));
-			throw e;
-		}
-	}
-	
-	
+
 }

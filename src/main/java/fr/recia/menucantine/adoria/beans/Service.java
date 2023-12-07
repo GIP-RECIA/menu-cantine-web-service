@@ -29,11 +29,7 @@ import lombok.NonNull;
 
 @Data
 public class Service implements Serializable, Cloneable {
-	
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2763451889039709686L;
 	
 	String name;
@@ -44,13 +40,12 @@ public class Service implements Serializable, Cloneable {
 	
 	@JsonInclude(Include.NON_NULL)
 	List<SousMenu> menu;
-	
-	
+
 	Integer rank;
 	
 	@JsonInclude(Include.NON_NULL)
 	Boolean typeVide;
-	
+
 	@JsonIgnore
 	NbPlatParSsMenu rankCompte = new NbPlatParSsMenu();
 	

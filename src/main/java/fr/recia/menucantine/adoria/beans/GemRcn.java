@@ -32,6 +32,7 @@ import lombok.Getter;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public class GemRcn {
+
 	private static final String DEFAULT_FILE = "classpath:GemRcn.csv";
 	private static final Pattern P_INT = Pattern.compile("\\s*,\\s*\"");
 	private static final Pattern P_STR = Pattern.compile("\"?\\s*,\\s*\"");

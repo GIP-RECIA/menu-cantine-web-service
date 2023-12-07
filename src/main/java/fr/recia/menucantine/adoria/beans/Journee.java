@@ -32,10 +32,6 @@ import lombok.Data;
 @Data
 public class Journee implements Serializable, Cloneable {
 	
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 440359812635582065L;
 
 	@JsonIgnore 
