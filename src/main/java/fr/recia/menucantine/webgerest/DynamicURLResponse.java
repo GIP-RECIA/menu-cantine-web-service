@@ -13,26 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.recia.menucantine.dto;
+package fr.recia.menucantine.webgerest;
 
-import fr.recia.menucantine.enums.EnumTypeService;
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-
 @Data
-public class JourneeDTO {
+public class DynamicURLResponse {
 
-    private Map<EnumTypeService,ServiceDTO> mapTypeServiceToService;
-    private LocalDate date;
+    private String contenu;
+    private int error;
 
-    public JourneeDTO(){
-        this.mapTypeServiceToService = new HashMap<>();
-    }
-
-    public void addService(EnumTypeService enumTypeService, ServiceDTO serviceDTO){
-        this.getMapTypeServiceToService().put(enumTypeService, serviceDTO);
-    }
 }
