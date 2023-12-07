@@ -15,8 +15,10 @@
  */
 package fr.recia.menucantine;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,7 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
 import fr.recia.menucantine.enums.EnumTypeService;
+import fr.recia.menucantine.exception.NoMenuException;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
 import fr.recia.menucantine.mapper.MapperWebGerest;
@@ -102,7 +105,7 @@ public class MenuCantineServices {
 		return adoriaHelper.callTest(adoriaWeb, requete.getSemaine() -1 , requete.getAnnee());
 	}
 
-	public Semaine newFindSemaine(Requete requete) throws UnknownUAIException, WebgerestRequestException {
+	public Semaine newFindSemaine(Requete requete) throws UnknownUAIException, WebgerestRequestException, NoMenuException {
 
 		log.trace("Dans la méthode newFindSemaine");
 
@@ -140,7 +143,15 @@ public class MenuCantineServices {
 
 		// A partir de la liste des journées, on peut alors reconstituer une semaine
 		// On map la semaine sur l'ancien model pour l'envoyer au front, en donnant aussi la date de la requête et l'uai
-		return mapper.buildSemaine(journeeDTOList, today, uai);
+		final Semaine semaine = mapper.buildSemaine(journeeDTOList, today, uai);
+
+		// Si le nombre de jours vaut 0, cela veut dire qu'on a pas de menu, on renvoie une exception
+		if(semaine.getNbJours() == 0){
+			throw new NoMenuException("Aucun menu trouvé pour l'UAI " + uai + " pour la semaine du "
+					+ semaine.getDebut()+ " au " + semaine.getFin());
+		}
+
+		return semaine;
 	}
 	
 	

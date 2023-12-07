@@ -24,6 +24,7 @@ import fr.recia.menucantine.beans.Semaine;
 import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
+import fr.recia.menucantine.exception.NoMenuException;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -39,6 +40,7 @@ public class MapperWebGerest implements Mapper {
         final LocalDate lundi = RequeteHelper.jourMemeSemaine(requestDate, 1);
         final LocalDate vendredi = RequeteHelper.jourMemeSemaine(requestDate, 5);
         Semaine semaine = new Semaine();
+        semaine.setNbJours(0);
         semaine.setDebut(RequeteHelper.localeDateToCompleteString(lundi));
         semaine.setFin(RequeteHelper.localeDateToCompleteString(vendredi));
         semaine.setPreviousWeek(lundi.minusDays(3));
