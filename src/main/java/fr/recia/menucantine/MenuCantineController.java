@@ -15,6 +15,8 @@
  */
 package fr.recia.menucantine;
 
+import fr.recia.menucantine.exception.UnknownUAIException;
+import fr.recia.menucantine.exception.WebgerestRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +83,8 @@ public class MenuCantineController {
 			consumes = "application/json", 
 			produces = "application/json"
 		)
-	public ResponseEntity<Object> postDemo( @RequestBody Requete requete) {
+	public ResponseEntity<Object> postDemo( @RequestBody Requete requete) throws UnknownUAIException, WebgerestRequestException {
+		System.out.println(requete.getSemaine());
 		Semaine semaine = services.newFindSemaine(requete);
 		return new ResponseEntity<Object>(semaine, HttpStatus.OK);
 	}
@@ -91,7 +94,7 @@ public class MenuCantineController {
 			path="/menu",
 			produces = "application/json"
 	)
-	public ResponseEntity<Object> getTest() {
+	public ResponseEntity<Object> getTest() throws UnknownUAIException, WebgerestRequestException {
 		log.trace("Requête sur la path /menu");
 		Semaine semaine = services.newFindSemaine(new Requete());
 		return new ResponseEntity<Object>(semaine, HttpStatus.OK);

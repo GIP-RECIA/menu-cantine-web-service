@@ -16,6 +16,8 @@
 package fr.recia.menucantine.webgerest;
 
 import fr.recia.menucantine.dto.ServiceDTO;
+import fr.recia.menucantine.exception.UnknownUAIException;
+import fr.recia.menucantine.exception.WebgerestRequestException;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,7 +130,7 @@ public class APIClient {
      * @param service Un entier compris entre 1 et 4 inclus (petit déjeuner, déjeuner, gouter, diner)
      * @return Un objet qui représente le résultat de l'appel sans aucune transformation
      */
-    public ServiceDTO makeAuthenticatedApiCallGetMenu(String uai, String datemenu, int service) {
+    public ServiceDTO makeAuthenticatedApiCallGetMenu(String uai, String datemenu, int service) throws UnknownUAIException, WebgerestRequestException {
 
         log.trace("Dans la méthode makeAuthenticatedApiCallGetMenu");
         log.debug("Recherche de la réponse de la requête dans le cache");
@@ -162,7 +164,12 @@ public class APIClient {
         // Deuxième étape : regarder si on a l'URL associée à l'UAI
         if(!dynamicURL.containsKey(uai)){
             log.debug("Nouvel UAI, pas d'association connue");
-            dynamicURL.put(uai, initializeAndGetDynamicEndpoint(uai).getContenu());
+            final DynamicURLResponse dynamicURLResponse = initializeAndGetDynamicEndpoint(uai);
+            if(dynamicURLResponse.getError() == 0){
+                dynamicURL.put(uai, dynamicURLResponse.getContenu());
+            }else{
+                throw new UnknownUAIException("Pas d'URL connue pour l'UAI " + uai);
+            }
         }
         final String url = dynamicURL.get(uai);
 
@@ -172,7 +179,7 @@ public class APIClient {
             serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
         }catch(WebClientResponseException webClientResponseException){
             log.debug("Erreur dans la requête : code erreur "+webClientResponseException.getStatusCode().value());
-            // Si erreur 401 on recupère un nouveau token et on rééssaye une fois
+            // Si erreur 401 on récupère un nouveau token et on réessaye une fois
             if(webClientResponseException.getStatusCode().value() == 401){
                 log.debug("Récupération d'un nouveau token");
                 authToken.put(url, authenticateAndGetToken(url).getToken());
@@ -180,19 +187,23 @@ public class APIClient {
                 log.debug("Nouvelle requête avec le nouveau token");
                 serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
             }
-            // TODO : que faire dans le cas ou on a une autre erreur ?
             else{
-                log.error("Erreur innatendue lors de la requête");
+                throw new WebgerestRequestException("Erreur innatendue lors de la requête "
+                        + webClientResponseException.getRequest() + "\nCode erreur retourné : "
+                        + webClientResponseException.getStatusCode().value());
             }
         }
 
-        //Avant de retourner la valeur on la place dans le bon cache
-        if(today.isAfter(dateRequete)){
-            log.debug("Stockage de la réponse de la requête dans le cache permanent");
-            cacheManager.getCache("permanent").put(cacheKeyRequete, serviceDTO);
-        }else{
-            log.debug("Stockage de la réponse de la requête dans le cache requetes");
-            cacheManager.getCache("requetes").put(cacheKeyRequete, serviceDTO);
+        // On vérifie qu'on a pas reçu une réponse en erreur, si c'est le cas on ne la place pas dans le cache
+        if(serviceDTO.getError() == 0){
+            //Avant de retourner la valeur on la place dans le bon cache
+            if(today.isAfter(dateRequete)){
+                log.debug("Stockage de la réponse de la requête dans le cache permanent");
+                cacheManager.getCache("permanent").put(cacheKeyRequete, serviceDTO);
+            }else{
+                log.debug("Stockage de la réponse de la requête dans le cache requetes");
+                cacheManager.getCache("requetes").put(cacheKeyRequete, serviceDTO);
+            }
         }
 
         log.debug("Retour de la réponse récupérée depuis l'API");

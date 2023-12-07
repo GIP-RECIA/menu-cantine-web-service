@@ -25,6 +25,8 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
 import fr.recia.menucantine.enums.EnumTypeService;
+import fr.recia.menucantine.exception.UnknownUAIException;
+import fr.recia.menucantine.exception.WebgerestRequestException;
 import fr.recia.menucantine.mapper.MapperWebGerest;
 import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
@@ -100,7 +102,7 @@ public class MenuCantineServices {
 		return adoriaHelper.callTest(adoriaWeb, requete.getSemaine() -1 , requete.getAnnee());
 	}
 
-	public Semaine newFindSemaine(Requete requete){
+	public Semaine newFindSemaine(Requete requete) throws UnknownUAIException, WebgerestRequestException {
 
 		log.trace("Dans la méthode newFindSemaine");
 
@@ -123,9 +125,15 @@ public class MenuCantineServices {
 			String menuDayString = RequeteHelper.localeDateToString(menuDay);
 			// On doit aussi faire une requête par service pour reconstituer une journée (numService=2=déjeuner, ...)
 			for(int numService=1; numService<=4; numService++){
-				log.debug("Requête avec les paramètres uai={}, date={}, service={}",uai, menuDayString, numService);
+				log.debug("Requête avec les paramètres uai={}, date={}, service={}", uai, menuDayString, numService);
 				ServiceDTO serviceDTO = apiClient.makeAuthenticatedApiCallGetMenu(uai, menuDayString, numService);
-				journeeDTO.addService(EnumTypeService.serviceNumber(numService), serviceDTO);
+				// Si on a une erreur ca ne sert a rien d'ajouter le service à la journée
+				if(serviceDTO.getError() == 0){
+					journeeDTO.addService(EnumTypeService.serviceNumber(numService), serviceDTO);
+				}else{
+					log.warn("Erreur sur le retour de la requête avec les paramètres uai={}, date={}, service={}", uai, menuDayString, numService);
+				}
+
 			}
 			journeeDTOList.add(journeeDTO);
 		}
