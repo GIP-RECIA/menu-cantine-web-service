@@ -58,7 +58,7 @@ public class Service implements Serializable, Cloneable {
 	 * Regroupe les plats par sous menu triés et supprime les plats vide
 	 * @return Le nombre de plats par sous-menu
 	 */
-	NbPlatParSsMenu clean(){
+	public NbPlatParSsMenu clean(){
 		NbPlatParSsMenu nbPlatParSsMenu = new NbPlatParSsMenu();
 		for (SousMenu sousMenu : menu) {
 			int nbPlats = sousMenu.getChoix().size();
