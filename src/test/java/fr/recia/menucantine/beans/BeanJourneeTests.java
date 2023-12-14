@@ -30,7 +30,6 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -42,86 +41,41 @@ public class BeanJourneeTests {
 
     @Before
     public void setup(){
-        service1 = new Service();
-        Plat plat1 = new Plat();
-        plat1.setName("plat1");
-        plat1.setFamily("entree");
+        Plat plat1 = new Plat("plat1", "entree");
         SousMenu entree = new SousMenu(Collections.singletonList(plat1), 1);
-        Plat plat2 = new Plat();
-        plat1.setName("plat2");
-        plat1.setFamily("plat");
-        Plat plat21 = new Plat();
-        plat1.setName("plat21");
-        plat1.setFamily("plat");
+        Plat plat2 = new Plat("plat2","plat");
+        Plat plat21 = new Plat("plat21","plat");
         SousMenu plat = new SousMenu(Arrays.asList(plat2, plat21), 2);
-        Plat plat3 = new Plat();
-        plat1.setName("plat3");
-        plat1.setFamily("accompagnement");
+        Plat plat3 = new Plat("plat3", "accompagnement");
         SousMenu accompagnement = new SousMenu(Collections.singletonList(plat3), 3);
-        Plat plat4 = new Plat();
-        plat1.setName("plat4");
-        plat1.setFamily("fromage");
-        Plat plat41 = new Plat();
-        plat1.setName("plat41");
-        plat1.setFamily("fromage");
-        Plat plat42 = new Plat();
-        plat1.setName("plat42");
-        plat1.setFamily("fromage");
+        Plat plat4 = new Plat("plat4", "fromage");
+        Plat plat41 = new Plat("plat41", "fromage");
+        Plat plat42 = new Plat("plat42", "fromage");
         SousMenu fromage = new SousMenu(Arrays.asList(plat4, plat41, plat42), 4);
-        Plat plat5 = new Plat();
-        plat1.setName("plat5");
-        plat1.setFamily("dessert");
+        Plat plat5 = new Plat("plat5", "dessert");
         SousMenu dessert = new SousMenu(Collections.singletonList(plat5), 5);
-        Plat plat6 = new Plat();
-        plat1.setName("plat6");
-        plat1.setFamily("autre");
+        Plat plat6 = new Plat("plat6", "autre");
         SousMenu autre = new SousMenu(Collections.singletonList(plat6), 6);
+        service1 = new Service("Déjeuner", 2, false);
         service1.setMenu(Arrays.asList(entree, plat, accompagnement, fromage, dessert, autre));
-        service1.setTypeVide(false);
-        service1.setName("Déjeuner");
-        service1.setRank(2);
-        service2 = new Service();
-        Plat plat1s2 = new Plat();
-        plat1.setName("plat1");
-        plat1.setFamily("entree");
+        Plat plat1s2 = new Plat("plat1s2", "entree");
         SousMenu entrees2 = new SousMenu(Collections.singletonList(plat1s2), 1);
-        Plat plat2s2 = new Plat();
-        plat1.setName("plat2");
-        plat1.setFamily("plat");
-        Plat plat21s2 = new Plat();
-        plat1.setName("plat21");
-        plat1.setFamily("plat");
+        Plat plat2s2 = new Plat("plat2s2","plat");
+        Plat plat21s2 = new Plat("plat21s2","plat");
         SousMenu plats2 = new SousMenu(Arrays.asList(plat2s2, plat21s2), 2);
-        Plat plat3s2 = new Plat();
-        plat1.setName("plat3");
-        plat1.setFamily("accompagnement");
-        SousMenu accompagnements2 = new SousMenu(Collections.singletonList(plat3), 3);
-        Plat plat4s2 = new Plat();
-        plat1.setName("plat4");
-        plat1.setFamily("fromage");
-        Plat plat41s2 = new Plat();
-        plat1.setName("plat41");
-        plat1.setFamily("fromage");
+        Plat plat3s2 = new Plat("plat3s2", "accompagnement");
+        SousMenu accompagnements2 = new SousMenu(Collections.singletonList(plat3s2), 3);
+        Plat plat4s2 = new Plat("plat4s2", "fromage");
+        Plat plat41s2 = new Plat("plat41s2", "fromage");
         SousMenu fromages2 = new SousMenu(Arrays.asList(plat4s2, plat41s2), 4);
-        Plat plat5s2 = new Plat();
-        plat1.setName("plat5s2");
-        plat1.setFamily("dessert");
-        Plat plat52s2 = new Plat();
-        plat1.setName("plat52s2");
-        plat1.setFamily("dessert");
-        SousMenu desserts2 = new SousMenu(Arrays.asList(plat5s2, plat52s2), 5);
-        Plat plat6s2 = new Plat();
-        plat1.setName("plat6s2");
-        plat1.setFamily("autre");
+        Plat plat5s2 = new Plat("plat5s2", "dessert");
+        Plat plat51s2 = new Plat("plat51s2", "dessert");
+        SousMenu desserts2 = new SousMenu(Arrays.asList(plat5s2, plat51s2), 5);
+        Plat plat6s2 = new Plat("plat6s2", "autre");
         SousMenu autres2 = new SousMenu(Collections.singletonList(plat6s2), 6);
+        service2 = new Service("Diner", 3, false);
         service2.setMenu(Arrays.asList(entrees2, plats2, accompagnements2, fromages2, desserts2, autres2));
-        service2.setTypeVide(false);
-        service2.setRank(3);
-        service2.setName("Diner");
-        service3 = new Service();
-        service3.setTypeVide(true);
-        service3.setName("Petit déjeuner");
-        service3.setRank(1);
+        service3 = new Service("Petit déjeuner", 1, true);
     }
 
     @Test
