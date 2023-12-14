@@ -50,6 +50,12 @@ public class Plat implements Serializable, Cloneable {
 	
 	Integer familyRank;
 
+	public Plat(){}
+	public Plat(String name, String family){
+		this.name = name;
+		this.family = family;
+	}
+
 	public static Plat platVide() {
 		Plat p = new Plat();
 		p.typeVide = true;

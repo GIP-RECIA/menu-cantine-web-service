@@ -47,6 +47,14 @@ public class Service implements Serializable, Cloneable {
 
 	@JsonIgnore
 	NbPlatParSsMenu rankCompte = new NbPlatParSsMenu();
+
+	public Service(){}
+
+	public Service(String name, int rank, Boolean typeVide){
+		this.name = name;
+		this.rank = rank;
+		this.typeVide = typeVide;
+	}
 	
 	public SousMenu makeSousMenu(Integer rank, Boolean typeVide){
 		SousMenu sm =  new SousMenu(new ArrayList<>(), rank);
