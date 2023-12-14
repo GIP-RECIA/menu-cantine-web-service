@@ -99,7 +99,11 @@ public class Semaine {
 		}
 	}
 
-	// ajout de plat vide au un sous-menu pour en obtenir le nombre max donnée
+	/**
+	 * Complète un sous-menu en ajoutant des plats vides jusqu'au nombre voulu
+	 * @param ssMenu Le sous-menu auquel on veut ajouter un plat
+	 * @param max Le nombre de plats que doit contenir le sous-menu au final
+	 */
 	private void ajoutPlatVide(SousMenu ssMenu, Integer max){
 		List<Plat> plats = ssMenu.getChoix();
 
@@ -110,7 +114,7 @@ public class Semaine {
 		}
 
 		for (int i= nbPlats;  i < max; i++ ) {
-			plats.add(Plat.platVide());
+			ssMenu.addChoix(Plat.platVide());
 		}
 	}
 
@@ -139,6 +143,7 @@ public class Semaine {
 			rankSsMenu = -1;
 		}
 
+		// TODO : à cause du front les plats vides ne fonctionne pas sur le premier sous-menu donc il faut en ajouter un vide
 		for (int rank = 0; rank <= nbSsMenu; rank++){
 			int nbMax = nbPlatMax.get(rank);
 			SousMenu newSousMenu;
