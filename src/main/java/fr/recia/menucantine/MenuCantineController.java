@@ -45,9 +45,15 @@ public class MenuCantineController {
 			consumes = "application/json", 
 			produces = "application/json"
 		)
-	public ResponseEntity<Object> postDemo( @RequestBody Requete requete) throws UnknownUAIException, WebgerestRequestException, NoMenuException {
-		Semaine semaine = services.newFindSemaine(requete);
-		return new ResponseEntity<Object>(semaine, HttpStatus.OK);
+	public ResponseEntity<Object> postDemo( @RequestBody Requete requete) {
+		log.trace("Requête sur la path /demomenu");
+		try{
+			Semaine semaine = services.newFindSemaine(requete);
+			return new ResponseEntity<Object>(semaine, HttpStatus.OK);
+		}catch (UnknownUAIException | WebgerestRequestException | NoMenuException exception){
+			log.error(exception.getMessage());
+		}
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
 
@@ -55,9 +61,14 @@ public class MenuCantineController {
 			path="/menu",
 			produces = "application/json"
 	)
-	public ResponseEntity<Object> getTest() throws UnknownUAIException, WebgerestRequestException, NoMenuException {
+	public ResponseEntity<Object> getMenu(){
 		log.trace("Requête sur la path /menu");
-		Semaine semaine = services.newFindSemaine(new Requete());
-		return new ResponseEntity<Object>(semaine, HttpStatus.OK);
+		try{
+			Semaine semaine = services.newFindSemaine(new Requete());
+			return new ResponseEntity<Object>(semaine, HttpStatus.OK);
+		}catch (UnknownUAIException | WebgerestRequestException | NoMenuException exception){
+			log.error(exception.getMessage());
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 }

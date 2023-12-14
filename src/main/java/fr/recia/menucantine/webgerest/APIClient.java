@@ -184,8 +184,9 @@ public class APIClient {
         try {
             serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
         }catch(WebClientResponseException webClientResponseException){
-            log.debug("Erreur dans la requête : code erreur "+webClientResponseException.getStatusCode().value());
+            log.debug("Erreur dans la requête : code erreur " + webClientResponseException.getStatusCode().value());
             // Si erreur 401 on récupère un nouveau token et on réessaye une fois
+            // TODO : quand on a 2 401 de suite pas de stockage en cache erreur ???
             if(webClientResponseException.getStatusCode().value() == 401){
                 log.debug("Récupération d'un nouveau token");
                 authToken.put(url, authenticateAndGetToken(url).getToken());

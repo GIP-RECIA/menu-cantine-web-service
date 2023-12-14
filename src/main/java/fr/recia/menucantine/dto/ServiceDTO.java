@@ -23,6 +23,7 @@ import java.util.List;
 @Data
 public class ServiceDTO implements Serializable {
 
+    private String message;
     private int error;
     private int nbObjet;
     private List<PlatDTO> contenu;

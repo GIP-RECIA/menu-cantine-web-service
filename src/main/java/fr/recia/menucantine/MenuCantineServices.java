@@ -51,9 +51,6 @@ import fr.recia.menucantine.beans.Semaine;
 public class MenuCantineServices {
 	
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);
-	
-	@Value("${adoria.test.no-web-service}")
-	Boolean noWebService;
 
 	@Autowired
 	APIClient apiClient;
@@ -102,7 +99,8 @@ public class MenuCantineServices {
 				if(serviceDTO.getError() == 0){
 					journeeDTO.addService(EnumTypeService.serviceNumber(numService), serviceDTO);
 				}else{
-					log.warn("Erreur sur le retour de la requête avec les paramètres uai={}, date={}, service={}", uai, menuDayString, numService);
+					log.error("Erreur sur le retour de la requête avec les paramètres uai={}, date={}, service={}." +
+							"\nMessage retourné : {}", uai, menuDayString, numService, serviceDTO.getMessage());
 				}
 
 			}
