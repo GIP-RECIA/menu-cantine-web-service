@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 /**
  * Permet de normaliser les requetes et de calculer les dates
@@ -31,7 +32,7 @@ public class RequeteHelper {
 	static public DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	public static DateTimeFormatter newDateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-	public static DateTimeFormatter completeDateFormatter = DateTimeFormatter.ofPattern("d MMMM yy");
+	public static DateTimeFormatter completeDateFormatter = DateTimeFormatter.ofPattern("d MMMM yy").withLocale(Locale.FRENCH);
 
 
 
