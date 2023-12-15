@@ -213,6 +213,10 @@ public class APIClient {
                 cacheManager.getCache("requetes").put(cacheKeyRequete, serviceDTO);
             }
         }
+        // Une requête qui n'est pas en erreur mais retourne une erreur doit aussi être placée dans le cache erreur
+        else{
+            cacheManager.getCache("erreur").put(cacheKeyRequete, serviceDTO);
+        }
 
         log.debug("Retour de la réponse récupérée depuis l'API");
         return serviceDTO;
