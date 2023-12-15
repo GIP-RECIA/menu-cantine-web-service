@@ -61,20 +61,17 @@ public class Journee implements Serializable, Cloneable {
 
 
 	/**
-	 * Nettoyage de chaque service de la journée, suppression des services vide.
+	 * Nettoyage de chaque service de la journée.
 	 * Calcul du nombre de plats proposé dans chaque sous-menu de chaque service.
 	 * Les services sont ordonnés suivant leurs rank.
-	 * @return
 	 */
 	public void clean(){
 
-		// Nettoyage des services et suppression des services vides
-		for (Iterator<Service> iterator = destinations.iterator(); iterator.hasNext();) {
+		// Nettoyage des services
+		for (Iterator<Service> iterator = destinations.iterator(); iterator.hasNext(); ) {
 			Service service = (Service) iterator.next();
 			if (service != null) {
-				if (service.getTypeVide()) {
-					iterator.remove();
-				} else {
+				if (!service.getTypeVide()) {
 					serviceChoixNbPlats.put(service.name, service.clean());
 				}
 			}

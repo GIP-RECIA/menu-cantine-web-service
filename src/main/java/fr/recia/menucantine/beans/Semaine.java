@@ -59,10 +59,38 @@ public class Semaine {
 	}
 
 	/**
-	 * Le netoyage consiste à nettoyer chaque jour et à supprimer les jours vide.
-	 * @return
+	 * Le nettoyage consiste à nettoyer chaque jour et à supprimer les jours vide.
+	 * Supprime les services qui sont vides pour tous les jours de la semaine
 	 */
 	public void clean() {
+
+		// Détecte si un même type de service est vide ou pas toute la semaine
+		Map<String, Boolean> servicesVides = new HashMap<>();
+		for(Journee journee: this.jours){
+			for(Service service: journee.getDestinations()){
+				if(!servicesVides.containsKey(service.getName())){
+					servicesVides.put(service.getName(), service.getTypeVide());
+				}
+				else{
+					servicesVides.put(service.getName(), servicesVides.get(service.getName()) && service.getTypeVide());
+				}
+			}
+		}
+
+		// Supprime les services qui sont vides seulement si ils sont vides pour tous les jours
+		for(String nomService : servicesVides.keySet()){
+			if(servicesVides.get(nomService)){
+				for(Journee journee : this.jours){
+					for (Iterator<Service> iterator = journee.getDestinations().iterator(); iterator.hasNext(); ) {
+						Service service = (Service) iterator.next();
+						if (service.getName().equals(nomService)) {
+							iterator.remove();
+						}
+					}
+				}
+			}
+		}
+
 		// Enlever les jours vide et nettoyer les jours avec du contenu
 		for (Iterator<Journee> iterator = jours.iterator(); iterator.hasNext();) {
 			Journee journee = (Journee) iterator.next();

@@ -59,6 +59,7 @@ public class Service implements Serializable, Cloneable {
 	public SousMenu makeSousMenu(Integer rank, Boolean typeVide){
 		SousMenu sm =  new SousMenu(new ArrayList<>(), rank);
 		sm.typeVide = typeVide;
+		sm.nbPlats = 0;
 		return sm;
 	}
 
