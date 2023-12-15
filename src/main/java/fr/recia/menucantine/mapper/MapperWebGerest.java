@@ -137,7 +137,7 @@ public class MapperWebGerest implements Mapper {
     public Plat buildPlat(PlatDTO platDTO){
         Plat plat = new Plat();
         String nomPlatCleaned = platDTO.getNom();
-        nomPlatCleaned = nomPlatCleaned.replace("*","");
+        nomPlatCleaned = nomPlatCleaned.replace("*","").replace("#","");
         plat.setName(Character.toUpperCase(nomPlatCleaned.charAt(0)) + nomPlatCleaned.toLowerCase().substring(1));
         plat.setAllergens(buildAllergens(platDTO));
         // La family du plat permet de changer l'intitulé du sous-menu auquel appartient le plat
