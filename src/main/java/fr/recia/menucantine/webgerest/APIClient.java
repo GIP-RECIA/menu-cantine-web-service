@@ -179,10 +179,14 @@ public class APIClient {
             if(dynamicURLResponse.getError() == 0){
                 dynamicURL.put(uai, dynamicURLResponse.getContenu());
             }else{
+                dynamicURL.put(uai, null);
                 throw new UnknownUAIException("Pas d'URL connue pour l'UAI " + uai);
             }
         }
         final String url = dynamicURL.get(uai);
+        if(url == null){
+            throw new UnknownUAIException("Pas d'URL connue pour l'UAI " + uai);
+        }
 
         //Troisième étape : lancer la requête, et se réauthentifier si le token est expiré
         try {
@@ -196,7 +200,15 @@ public class APIClient {
                 authToken.put(url, authenticateAndGetToken(url).getToken());
                 System.out.println("TOKEN : "+this.authToken);
                 log.debug("Nouvelle requête avec le nouveau token");
-                serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
+                try{
+                    serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
+                }catch(WebClientResponseException webClientInternalResponseException){
+                    log.debug("Nouvelle erreur, stockage de la requête dans le cache erreur");
+                    cacheManager.getCache("erreur").put(cacheKeyRequete, serviceDTO);
+                    throw new WebgerestRequestException("Erreur innatendue lors de la requête "
+                            + webClientInternalResponseException.getRequest() + "\nCode erreur retourné : "
+                            + webClientInternalResponseException.getStatusCode().value());
+                }
             }
             else{
                 cacheManager.getCache("erreur").put(cacheKeyRequete, serviceDTO);
