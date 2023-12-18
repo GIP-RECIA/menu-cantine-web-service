@@ -74,8 +74,10 @@ public class BeanSemaineTests {
         SousMenu autres2 = new SousMenu(new ArrayList<>(Collections.singletonList(plat6s2)), 6);
         Service service2 = new Service("Diner", 3, false);
         service2.setMenu(Arrays.asList(entrees2, plats2, accompagnements2, fromages2, desserts2, autres2));
+        service2.setMenu(Arrays.asList(entrees2, plats2, accompagnements2, fromages2, desserts2, autres2));
+        Service service3 = new Service("Service vide", 4, true);
         journee1 = new Journee();
-        journee1.setDestinations(new ArrayList<>(Arrays.asList(service1, service2)));
+        journee1.setDestinations(new ArrayList<>(Arrays.asList(service1, service2, service3)));
         Plat j2plat1 = new Plat("j2plat1", "entree");
         SousMenu j2entree = new SousMenu(new ArrayList<>(Collections.singletonList(j2plat1)), 1);
         Plat j2plat2 = new Plat("j2plat2","plat");
@@ -110,8 +112,9 @@ public class BeanSemaineTests {
         SousMenu j2autres2 = new SousMenu(new ArrayList<>(Collections.singletonList(j2plat6s2)), 6);
         Service j2service2 = new Service("Diner", 3, false);
         j2service2.setMenu(Arrays.asList(j2entrees2, j2plats2, j2accompagnements2, j2fromages2, j2desserts2, j2autres2));
+        Service j2service3 = new Service("Service vide", 4, true);
         journee2 = new Journee();
-        journee2.setDestinations(new ArrayList<>(Arrays.asList(j2service1, j2service2)));
+        journee2.setDestinations(new ArrayList<>(Arrays.asList(j2service1, j2service2, j2service3)));
     }
 
     @Test
