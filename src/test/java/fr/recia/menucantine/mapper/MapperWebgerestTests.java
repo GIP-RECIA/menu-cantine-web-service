@@ -220,8 +220,8 @@ public class MapperWebgerestTests {
 		List<JourneeDTO> journeeDTOList = Arrays.asList(journeeDTO1, journeeDTO2);
 		Semaine semaine = mapperWebGerest.buildSemaine(journeeDTOList, now1, "000000F");
 		assertEquals("Le nombre de jours de la semaine doit valoir 2", 2, semaine.getNbJours(), 0);
-		assertEquals("Le début de la semaine est le 4 décembre 23", "4 December 23", semaine.getDebut()); // TODO : anglais -> français
-		assertEquals("Le début de la semaine est le 8 décembre 23", "8 December 23", semaine.getFin()); // TODO : anglais -> français
+		assertEquals("Le début de la semaine est le 4 décembre 23", "4 décembre 23", semaine.getDebut());
+		assertEquals("Le début de la semaine est le 8 décembre 23", "8 décembre 23", semaine.getFin());
 		assertNotNull("La requête ne doit pas être nulle", semaine.getRequete());
 		assertEquals("La liste des allGemRcn doit être vide", 0, semaine.getAllGemRcn().size(), 0);
 		assertEquals("La semaine précédente doit être 2023-12-01", LocalDate.of(2023, 12, 1), semaine.getPreviousWeek());

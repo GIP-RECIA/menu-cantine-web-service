@@ -83,9 +83,9 @@ public class BeanJourneeTests {
         Journee journee = new Journee();
         journee.setDestinations(new ArrayList<>(Arrays.asList(service1, service2, service3)));
         journee.clean();
-        assertEquals("La journée doit contenir 2 services", 2, journee.getDestinations().size());
-        assertEquals("Le premier service doit être celui avec le plus petit rank", 2, journee.getDestinations().get(0).getRank(), 0);
-        assertEquals("Le dernier service doit être celui avec le plus grand rank", 3, journee.getDestinations().get(1).getRank(), 0);
+        assertEquals("La journée doit contenir 3 services", 3, journee.getDestinations().size());
+        assertEquals("Le premier service doit être celui avec le plus petit rank", 1, journee.getDestinations().get(0).getRank(), 0);
+        assertEquals("Le dernier service doit être celui avec le plus grand rank", 3, journee.getDestinations().get(2).getRank(), 0);
         assertEquals("On doit avoir un serviceChoixNbPlats pour le Déjeuner", journee.getServiceChoixNbPlats().get("Déjeuner").size(), 6);
         assertEquals("On doit avoir un serviceChoixNbPlats pour le Diner", journee.getServiceChoixNbPlats().get("Diner").size(), 6);
         assertEquals("On ne doit avoir que 2 services dans serviceChoixNbPlats", journee.getServiceChoixNbPlats().keySet().size(), 2);
