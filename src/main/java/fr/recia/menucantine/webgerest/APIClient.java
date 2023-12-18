@@ -28,6 +28,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -79,6 +80,7 @@ public class APIClient {
                 .uri(initialQueryURL+"?rne={uai}", uai)
                 .retrieve()
                 .bodyToMono(DynamicURLResponse.class)
+                .timeout(Duration.ofSeconds(5))
                 .block();
     }
 
@@ -95,6 +97,7 @@ public class APIClient {
                         client_id, client_secret)
                 .retrieve()
                 .bodyToMono(AuthResponse.class)
+                .timeout(Duration.ofSeconds(5))
                 .block();
     }
 
@@ -115,6 +118,7 @@ public class APIClient {
                 .header("Authorization", authToken.get(url))
                 .retrieve()
                 .bodyToMono(ServiceDTO.class)
+                .timeout(Duration.ofSeconds(5))
                 .block();
     }
 
