@@ -45,7 +45,7 @@ public class MenuCantineController {
 			consumes = "application/json", 
 			produces = "application/json"
 		)
-	public ResponseEntity<Object> postDemo( @RequestBody Requete requete) {
+	public ResponseEntity<Object> postDemo(@RequestBody Requete requete) {
 		log.trace("Requête sur la path /demomenu");
 		try{
 			Semaine semaine = services.newFindSemaine(requete);
@@ -57,14 +57,15 @@ public class MenuCantineController {
 	}
 
 
-	@GetMapping(
+	@PostMapping(
 			path="/menu",
+			consumes = "application/json",
 			produces = "application/json"
 	)
-	public ResponseEntity<Object> getMenu(){
+	public ResponseEntity<Object> getMenu(@RequestBody Requete requete){
 		log.trace("Requête sur la path /menu");
 		try{
-			Semaine semaine = services.newFindSemaine(new Requete());
+			Semaine semaine = services.newFindSemaine(requete);
 			return new ResponseEntity<Object>(semaine, HttpStatus.OK);
 		}catch (UnknownUAIException | WebgerestRequestException | NoMenuException exception){
 			log.error(exception.getMessage());

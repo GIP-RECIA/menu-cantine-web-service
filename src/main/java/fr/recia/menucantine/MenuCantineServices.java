@@ -82,6 +82,16 @@ public class MenuCantineServices {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             today = LocalDate.parse(requete.getDateJour(), formatter);
         }
+
+		if(requete.getSemaine() != null){
+			final int numeroSemaine = requete.getSemaine();
+			final int annee = today.getYear();
+			final int numeroJourDansSemaine = 1;
+			LocalDate premiereDate = LocalDate.of(annee, 1, 1);
+			LocalDate premierJourSemaine = premiereDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+			today = premierJourSemaine.plusWeeks(numeroSemaine - 1).plusDays(numeroJourDansSemaine - 1);
+		}
+
 		log.debug("Date demandée par la requête : " + today);
 
         // On doit faire une requête par jour de la semaine pour reconstituer la semaine (numJour=1=lundi, ...)
