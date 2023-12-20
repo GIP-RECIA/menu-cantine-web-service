@@ -24,7 +24,6 @@ import fr.recia.menucantine.beans.Semaine;
 import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
-import fr.recia.menucantine.exception.NoMenuException;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -33,7 +32,7 @@ import java.util.*;
 
 
 @Component
-public class MapperWebGerest implements Mapper {
+public class MapperWebGerest implements IMapper {
 
     public Semaine buildSemaine(List<JourneeDTO> journeeDTOList, LocalDate requestDate, String uai){
         // Première étape : constuire la Semaine

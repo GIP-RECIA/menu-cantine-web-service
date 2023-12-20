@@ -26,7 +26,7 @@ import fr.recia.menucantine.dto.ServiceDTO;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface Mapper {
+public interface IMapper {
 
     /**
      * Construit une semaine de type Semaine à envoyer au front tel quel

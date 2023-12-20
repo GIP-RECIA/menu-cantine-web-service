@@ -54,7 +54,7 @@ import static org.junit.Assert.*;
 public class MapperWebgerestTests {
 
 	@Autowired
-	private Mapper mapperWebGerest;
+	private IMapper mapperWebGerest;
 
 	@Test
 	public void testMapPlatDTOToPlat(){
