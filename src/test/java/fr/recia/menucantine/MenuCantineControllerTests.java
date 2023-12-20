@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
+@ActiveProfiles({ "test" })
 public class MenuCantineControllerTests {
 
     @Autowired
@@ -57,13 +59,13 @@ public class MenuCantineControllerTests {
         mockMvc.perform(post("/api/menu")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ \"dateJour\": \"11/12/2023\", \"uai\": \"0000000A\" }"))
-                .andDo(print()).andExpect(status().isNotFound());
+                .andExpect(status().isNotFound());
 
         // Test bonne méthode bon UAI
         mockMvc.perform(post("/api/menu")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ \"dateJour\": \"11/12/2023\", \"uai\": \"0000000B\" }"))
-                .andDo(print()).andExpect(status().isOk());
+                .andExpect(status().isOk());
 
     }
 
