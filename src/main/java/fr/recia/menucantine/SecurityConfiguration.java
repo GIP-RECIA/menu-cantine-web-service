@@ -55,13 +55,7 @@ public class SecurityConfiguration{
 
 	@Value("${soffit.jwt.signatureKey:Changeme}")
     private String signatureKey;
-	
-	@Value("${soffit.anonymous.getacces}")
-	private String forTestGet;
-	
-	@Value("${soffit.anonymous.postacces}")
-	private String forTestPost;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);	
 	@Bean
     public WebSecurityCustomizer webSecurityCustomizer() throws Exception {
@@ -99,8 +93,6 @@ public class SecurityConfiguration{
             .addFilter(filter)
             .authorizeRequests()
             	.antMatchers(HttpMethod.GET, "/health-check").anonymous()
-           		.antMatchers(HttpMethod.GET, forTestGet).anonymous()
-            	.antMatchers(HttpMethod.POST, forTestPost).anonymous()
                 .antMatchers(HttpMethod.GET,"/api/**").authenticated()
                 .antMatchers(HttpMethod.POST,"/api/menu").authenticated()
             //   .antMatchers(HttpMethod.DELETE,"/api/**").denyAll()

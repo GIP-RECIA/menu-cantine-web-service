@@ -15,45 +15,38 @@
 #
 
 server:
-  address: 192.168.45.196
   port: 8443
   ssl:
-    enabled: false
-    key-alias: tomcat-localhost
-    # key-password: 
-    key-store: classpath:menucantine.jks
-    key-store-provider: SUN
-    key-store-type: JKS
-    # key-store-password: 
+    key-store: KEYSTORE
+    key-store-password: PASSWORD
+    key-store-type: KEYSTORETYPE
+    key-alias: KEYALIAS
+    key-password: PASSWORD
   servlet:
-    contextPath: /menuCantine
-    
+    context-path: /menuCantine
+
 soffit:
-  # jwt.signatureKey: 
-  anonymous:
-    getacces: /api/lastmenu
-    postacces: /api/demomenu
+# jwt.signatureKey:
 
 adoria:
-  url: https://api.adoria.com/Api/EProduction/CycleMenu/GetCycleMenusForEnt
-  # client-key: 
-  # guid: 
   gemrcn-csv: classpath:GemRcn.csv
   labels-csv: classpath:labels.csv
-  test:
-    no-web-service: false
-    format-fileName: classpath:static/test/menuTest%d.json
- 
+
+api:
+  initial-query-url: https://api.webgerest.fr/url
+  auth-endpoint: /auth
+  menu-endpoint: /menus
+  client_id: CLIENTID
+  client_secret: CLIENTSECRET
+
 logging:
-  file: /home/esco/logs/menucantine
-  level: 
+  level:
     web: info
     web.servlet.DispatcherServlet: info
     fr:
       recia:
-        menucantine: info
+        menucantine: debug
 
 spring:
   cache:
     type: ehcache
-
