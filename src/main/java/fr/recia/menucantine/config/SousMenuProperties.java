@@ -13,25 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.recia.menucantine.dto;
+package fr.recia.menucantine.config;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+@Getter
+@Setter
+public class SousMenuProperties {
 
-@Data
-public class JourneeDTO {
+    private String nom;
+    private int numero;
 
-    private Map<String,ServiceDTO> mapTypeServiceToService;
-    private LocalDate date;
-
-    public JourneeDTO(){
-        this.mapTypeServiceToService = new HashMap<>();
-    }
-
-    public void addService(String typeService, ServiceDTO serviceDTO){
-        this.getMapTypeServiceToService().put(typeService, serviceDTO);
-    }
 }

@@ -17,8 +17,8 @@ package fr.recia.menucantine;
 
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
+import fr.recia.menucantine.config.MapperConfig;
 import fr.recia.menucantine.dto.ServiceDTO;
-import fr.recia.menucantine.exception.NoMenuException;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
 import fr.recia.menucantine.mapper.MapperWebGerest;
@@ -51,6 +51,9 @@ public class MenuCantineServiceTests {
 
     @Mock
     private MapperWebGerest mapperWebGerest;
+
+    @Mock
+    private MapperConfig mapperConfig;
 
     @InjectMocks
     private MenuCantineServices menuCantineServices;
@@ -98,6 +101,10 @@ public class MenuCantineServiceTests {
             when(mapperWebGerest.buildSemaine(anyList(), any(LocalDate.class), anyString()))
                     .thenReturn(expectedResponseBuildSemaine);
 
+            // Comportement sur l'appel à mapperConfig.serviceKeyFromValue
+            when(mapperConfig.serviceKeyFromValue(anyInt()))
+                    .thenReturn("Test Service");
+
             // 2. Appel de la méthode newFindSemaine à tester
             Requete requete =  new Requete();
             requete.setDateJour(dateJour);
@@ -128,7 +135,7 @@ public class MenuCantineServiceTests {
             // Vérification de l'appel à buildSemaine
             verify(mapperWebGerest).buildSemaine(anyList(), any(LocalDate.class), anyString());
 
-        } catch (UnknownUAIException | WebgerestRequestException | NoMenuException e) {
+        } catch (UnknownUAIException | WebgerestRequestException e) {
             throw new RuntimeException(e);
         }
     }

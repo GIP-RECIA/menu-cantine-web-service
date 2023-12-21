@@ -15,8 +15,7 @@
  */
 package fr.recia.menucantine.mapper;
 
-import fr.recia.menucantine.enums.EnumTypeService;
-import fr.recia.menucantine.enums.EnumTypeSousMenu;
+import fr.recia.menucantine.config.MapperConfig;
 import fr.recia.menucantine.adoria.beans.*;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.RequeteHelper;
@@ -24,6 +23,7 @@ import fr.recia.menucantine.beans.Semaine;
 import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -33,6 +33,9 @@ import java.util.*;
 
 @Component
 public class MapperWebGerest implements IMapper {
+
+    @Autowired
+    private MapperConfig mapperConfig;
 
     public Semaine buildSemaine(List<JourneeDTO> journeeDTOList, LocalDate requestDate, String uai){
         // Première étape : constuire la Semaine
@@ -73,9 +76,9 @@ public class MapperWebGerest implements IMapper {
         journee.setJour(journeeDTO.getDate().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.FRENCH));
         List<Service> destinations = new ArrayList<>();
         boolean isVide = true;
-        for(EnumTypeService enumTypeService: journeeDTO.getMapTypeServiceToService().keySet()){
+        for(String typeService: journeeDTO.getMapTypeServiceToService().keySet()){
             // On n'intègre pas directement le type du service dans le ServiceDTO car on ne l'a pas par le JSON, mais par l'URL
-            Service service =  this.buildService(journeeDTO.getMapTypeServiceToService().get(enumTypeService), enumTypeService);
+            Service service =  this.buildService(journeeDTO.getMapTypeServiceToService().get(typeService), typeService);
             // Pour vérifier si une journée est vide, on regarde si tous ses services sont aussi vides
             if(!service.getTypeVide()){
                 isVide = false;
@@ -87,11 +90,11 @@ public class MapperWebGerest implements IMapper {
         return journee;
     }
 
-    public Service buildService(ServiceDTO serviceDTO, EnumTypeService typeService){
+    public Service buildService(ServiceDTO serviceDTO, String typeService){
         Service service = new Service();
-        service.setName(typeService.getNomService());
-        service.setServiceName(typeService.getNomService());
-        service.setRank(typeService.getNumService()-1);
+        service.setName(typeService);
+        service.setServiceName(typeService);
+        service.setRank(mapperConfig.getNumService(typeService)-1);
         service.setTypeVide(false);
         // typeVide vaut true si jamais il n'y a pas de plat dans le service = il n'y a pas de service
         if(serviceDTO.getContenu().isEmpty()){
@@ -107,7 +110,7 @@ public class MapperWebGerest implements IMapper {
         for(PlatDTO platDTO: serviceDTO.getContenu()){
             if(!sousMenuMap.containsKey(platDTO.getType())){
                 // Tri des menus fait grâce à l'enum EnumTypeSousMenu, pas d'info dans l'API autre que le type
-                SousMenu sousMenu = new SousMenu(new ArrayList<>(), EnumTypeSousMenu.sousMenuRankFromName(platDTO.getType()));
+                SousMenu sousMenu = new SousMenu(new ArrayList<>(), mapperConfig.getSousMenuRank(platDTO.getType()));
                 sousMenu.setNbPlats(0);
                 sousMenu.addChoix(buildPlat(platDTO));
                 sousMenuMap.put(platDTO.getType(), sousMenu);
@@ -140,7 +143,7 @@ public class MapperWebGerest implements IMapper {
         plat.setName(Character.toUpperCase(nomPlatCleaned.charAt(0)) + nomPlatCleaned.toLowerCase().substring(1));
         plat.setAllergens(buildAllergens(platDTO));
         // La family du plat permet de changer l'intitulé du sous-menu auquel appartient le plat
-        plat.setFamily(EnumTypeSousMenu.sousMenuFromName(platDTO.getType()).getNomServiceFinal());
+        plat.setFamily(mapperConfig.getSousMenuFinalName(platDTO.getType()));
         plat.setLabels(new ArrayList<>()); // TODO : utilité ?
         plat.setLabelsInfo(buildLabels(platDTO));
         plat.setGemrcn(buildGemrcn(platDTO));

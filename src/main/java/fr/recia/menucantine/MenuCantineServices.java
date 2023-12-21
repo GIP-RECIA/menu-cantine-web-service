@@ -26,7 +26,7 @@ import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
-import fr.recia.menucantine.enums.EnumTypeService;
+import fr.recia.menucantine.config.MapperConfig;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
 import fr.recia.menucantine.mapper.MapperWebGerest;
@@ -56,6 +56,9 @@ public class MenuCantineServices {
 
 	@Autowired
 	MapperWebGerest mapper;
+
+	@Autowired
+	private MapperConfig mapperConfig;
 	
 	@Value("${adoria.gemrcn-csv}")
 	String gemrcnFilename;
@@ -106,7 +109,7 @@ public class MenuCantineServices {
 				ServiceDTO serviceDTO = apiClient.makeAuthenticatedApiCallGetMenu(uai, menuDayString, numService);
 				// Si on a une erreur ca ne sert a rien d'ajouter le service à la journée
 				if(serviceDTO.getError() == 0){
-					journeeDTO.addService(EnumTypeService.serviceNumber(numService), serviceDTO);
+					journeeDTO.addService(mapperConfig.serviceKeyFromValue(numService), serviceDTO);
 				}else{
 					log.error("Erreur sur le retour de la requête avec les paramètres uai={}, date={}, service={}." +
 							"\nMessage retourné : {}", uai, menuDayString, numService, serviceDTO.getMessage());

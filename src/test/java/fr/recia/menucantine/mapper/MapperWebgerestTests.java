@@ -21,11 +21,10 @@ import fr.recia.menucantine.adoria.beans.Service;
 import fr.recia.menucantine.adoria.beans.SousMenu;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
+import fr.recia.menucantine.config.MapperConfig;
 import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
-import fr.recia.menucantine.enums.EnumTypeService;
-import fr.recia.menucantine.enums.EnumTypeSousMenu;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +55,9 @@ public class MapperWebgerestTests {
 	@Autowired
 	private IMapper mapperWebGerest;
 
+	@Autowired
+	private MapperConfig mapperConfig;
+
 	@Test
 	public void testMapPlatDTOToPlat(){
 		PlatDTO platDTO = new PlatDTO("Plat test 1", 1, "entree", "Plat test 1", 1,
@@ -65,7 +67,7 @@ public class MapperWebgerestTests {
 				false, false, 1, false, false);
 		Plat old = mapperWebGerest.buildPlat(platDTO);
 		assertTrue("La liste des allergènes ne contient pas le Gluten", old.getAllergens().contains("Gluten"));
-		assertEquals("Le type du plat n'est pas le bon", old.getFamily(), EnumTypeSousMenu.sousMenuFromName("entree").getNomServiceFinal());
+		assertEquals("Le type du plat n'est pas le bon", old.getFamily(), mapperConfig.getSousMenuFinalName("entree"));
 		assertTrue("La liste labels doit être vide", old.getLabels().isEmpty());
         assertEquals("La liste labelsInfo doit contenir le label local", 1, old.getLabelsInfo().size());
 		assertNull("La liste gemrcn doit être null", old.getGemrcn());
@@ -140,7 +142,7 @@ public class MapperWebgerestTests {
 		List<PlatDTO> platDTOList = Collections.singletonList(platDTO);
 		ServiceDTO serviceDTO = new ServiceDTO();
 		serviceDTO.setContenu(platDTOList);
-		Service service = mapperWebGerest.buildService(serviceDTO, EnumTypeService.DEJEUNER);
+		Service service = mapperWebGerest.buildService(serviceDTO, "Déjeuner");
 		assertEquals("Le nom du service doit valoir Déjeuner", "Déjeuner", service.getName());
 		assertEquals("Le nom du service doit valoir Déjeuner", "Déjeuner", service.getServiceName());
 		assertEquals("Le rank du service doit valoir 1", 1, service.getRank(), 0);
@@ -169,8 +171,8 @@ public class MapperWebgerestTests {
 		ServiceDTO serviceDTO2 = new ServiceDTO();
 		serviceDTO2.setContenu(platDTOList2);
 		journeeDTO.setDate(now);
-		journeeDTO.addService(EnumTypeService.DEJEUNER, serviceDTO1);
-		journeeDTO.addService(EnumTypeService.DINER, serviceDTO2);
+		journeeDTO.addService("Déjeuner", serviceDTO1);
+		journeeDTO.addService("Dîner", serviceDTO2);
 		Journee journee = mapperWebGerest.buildJournee(journeeDTO);
 		assertEquals("Le jour de la journée est mardi", "mardi", journee.getJour());
 		assertFalse("La journée ne doit pas être vide", journee.isVide());
@@ -184,7 +186,7 @@ public class MapperWebgerestTests {
 		LocalDate now = LocalDate.of(2023, 12, 5);
 		serviceDTO3.setContenu(new ArrayList<>());
 		journeeDTO2.setDate(now);
-		journeeDTO2.addService(EnumTypeService.DEJEUNER, serviceDTO3);
+		journeeDTO2.addService("Déjeuner", serviceDTO3);
 		Journee journee2 = mapperWebGerest.buildJournee(journeeDTO2);
 		JourneeDTO journeeDTO3 = new JourneeDTO();
 		journeeDTO3.setDate(now);
@@ -216,9 +218,9 @@ public class MapperWebgerestTests {
 		ServiceDTO serviceDTO2 = new ServiceDTO();
 		serviceDTO2.setContenu(platDTOList2);
 		journeeDTO1.setDate(now1);
-		journeeDTO1.addService(EnumTypeService.DEJEUNER, serviceDTO1);
+		journeeDTO1.addService("Déjeuner", serviceDTO1);
 		journeeDTO2.setDate(now2);
-		journeeDTO2.addService(EnumTypeService.DEJEUNER, serviceDTO2);
+		journeeDTO2.addService("Déjeuner", serviceDTO2);
 		List<JourneeDTO> journeeDTOList = Arrays.asList(journeeDTO1, journeeDTO2);
 		Semaine semaine = mapperWebGerest.buildSemaine(journeeDTOList, now1, "000000F");
 		assertEquals("Le nombre de jours de la semaine doit valoir 2", 2, semaine.getNbJours(), 0);

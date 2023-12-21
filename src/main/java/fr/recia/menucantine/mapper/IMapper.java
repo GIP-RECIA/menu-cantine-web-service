@@ -15,7 +15,6 @@
  */
 package fr.recia.menucantine.mapper;
 
-import fr.recia.menucantine.enums.EnumTypeService;
 import fr.recia.menucantine.adoria.beans.*;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
@@ -58,7 +57,7 @@ public interface IMapper {
      * @param typeService le type de service (Déjeuner, Diner, ect..)
      * @return La service construit et prêt à être ajouté à la journée
      */
-    Service buildService(ServiceDTO serviceDTO, EnumTypeService typeService);
+    Service buildService(ServiceDTO serviceDTO, String typeService);
 
     /**
      * Construit une liste de SousMenu à partir d'un serviceDTO. On ne retourne pas un seul sous-menu car on fait
