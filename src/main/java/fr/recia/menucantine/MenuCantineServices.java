@@ -68,7 +68,8 @@ public class MenuCantineServices {
 	
 	@PostConstruct
 	public void postConstructInit(){
-		GemRcn.loadFile(gemrcnFilename);
+		// Pas besoin de charger les GemRcn car on ne les utilise pas dans cette version
+		// GemRcn.loadFile(gemrcnFilename);
 		Labels.loadFile(labelsFilename);
 	}
 
