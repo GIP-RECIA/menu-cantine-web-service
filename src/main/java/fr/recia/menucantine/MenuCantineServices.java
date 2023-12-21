@@ -27,7 +27,6 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
 import fr.recia.menucantine.enums.EnumTypeService;
-import fr.recia.menucantine.exception.NoMenuException;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
 import fr.recia.menucantine.mapper.MapperWebGerest;
@@ -70,7 +69,7 @@ public class MenuCantineServices {
 		Labels.loadFile(labelsFilename);
 	}
 
-	public Semaine newFindSemaine(Requete requete) throws UnknownUAIException, WebgerestRequestException, NoMenuException {
+	public Semaine newFindSemaine(Requete requete) throws UnknownUAIException, WebgerestRequestException {
 
 		log.trace("Dans la méthode newFindSemaine");
 
@@ -123,7 +122,7 @@ public class MenuCantineServices {
 
 		// Si le nombre de jours vaut 0, cela veut dire qu'on a pas de menu, on renvoie une exception
 		if(semaine.getNbJours() == 0){
-			throw new NoMenuException("Aucun menu trouvé pour l'UAI " + uai + " pour la semaine du "
+			log.warn("Aucun menu trouvé pour l'UAI " + uai + " pour la semaine du "
 					+ semaine.getDebut()+ " au " + semaine.getFin());
 		}
 
