@@ -20,6 +20,7 @@ La différents fichiers du projet sont structurés de la manière suivante :
 │   │   │   └── META-INF
 │   │   ├── resources                    # Contient les fichiers de config par défaut et de ressources
 │   │   │   ├── application.yml
+│   │   │   ├── application-test.yml
 │   │   │   ├── logback.xml
 │   │   │   ├── ehcache.xml
 │   │   │   ├── demo                    # Contient une version du front déjà compilée pour faire des tests en local
@@ -53,13 +54,14 @@ Le package `fr.recia.menucatine` est lui structuré de la manière suivante :
 │   ├── Requete.java                         # Objet requete envoyé depuis le front
 │   ├── RequeteHelper.java                   # Classe utilitaire, utilisée pour les convertions de dates par exemple
 │   └── Semaine.java                         # Objet semaine envoyé vers le front, consituté de adoria.beans
+│  
+├── config                                   # Définition des services et sous-menus  
+│   └── ...
 │
 ├── dto                                      # Classes mappées depuis le JSON récupéré de l'API
 │   ├── JourneeDTO.java                      # Objet construit à partir des deux classes ci-dessous
 │   ├── PlatDTO.java                         # Représente un plat selon l'API
 │   └── ServiceDTO.java                      # Représente un service selon l'API
-│
-├── enums
 │
 ├── exception                                # Les différentes exceptions personnalisées
 │   └── ...
@@ -130,22 +132,24 @@ A compléter
 
 La configuration se trouve dans le fichier `application.yml` dans les ressources. Elle doit **impérativement** être complétée avant de pouvoir lancer l'application, même en local. Il faut compléter au minimum les valeurs pour le ssl ainsi que les identifiants pour l'Api. Le reste des valeurs peuvent être laisssées par défaut dans un premier temps.
 
-| Propriété                          | Signification                                                            | Valeur par défaut            |
-|------------------------------------|--------------------------------------------------------------------------|------------------------------|
-| server.port                        | Port du serveur (ici en https)                                           | 8443                         |
-| servlet.ssl.key-store              | Nom de l'entrepôt stockant la clé                                        | *à compléter*                |
-| servlet.ssl.key-store-password     | Mot de passe de l'entrepôt stockant la clé                               | *à compléter*                |
-| servlet.ssl.key-store-type         | Type de clé                                                              | *à compléter*                |
-| servlet.ssl.key-alias              | Nom de la clé                                                            | *à compléter*                |
-| servlet.ssl.key-password           | Mot de passe de la clé                                                   | *à compléter*                |
-| server.servlet.context-path        | Path du servlet                                                          | /menuCantine                 |
-| soffit.jwt.signatureKey            | Clé pour le soffit                                                       | *à compléter*                |
-| adoria.gemrcn-csv                  | Chemin vers le fichier contenant les gemrcn à charger                    | classpath:GemRcn.csv         |
-| adoria.labels-csv                  | Chemin vers le fichier contenant les labels à charger                    | classpath:labels.csv         |
-| api.initial-query-url              | URL complète de l'API sur laquelle on récupère une URL dynamique par UAI | https://api.webgerest.fr/url |
-| api.auth-endpoint                  | Endpoint sur lequelle on doit faire une requête pour s'authentifier      | /auth                        |
-| api.menu-endpoint                  | Endpoint sur lequelle on doit faire une requête pour récupérer un menu   | /menus                       |
-| api.client_id                      | L'identifiant permettant de s'authentifier pour récupérer un token       | *à compléter*                |
-| api.menu-endpoint                  | Le mot de passe permettant de s'authentifier pour récupérer un token     | *à compléter*                |
-| logging.level.fr.recia.menucantine | Niveau de log en local                                                   | debug                        |
-| spring.cache.type                  | La librairie utilisée pour la gestion du cache                           | ehcache                      |
+| Propriété                          | Signification                                                                      | Valeur par défaut                 |
+|------------------------------------|------------------------------------------------------------------------------------|-----------------------------------|
+| server.port                        | Port du serveur (ici en https)                                                     | 8443                              |
+| servlet.ssl.key-store              | Nom de l'entrepôt stockant la clé                                                  | *à compléter*                     |
+| servlet.ssl.key-store-password     | Mot de passe de l'entrepôt stockant la clé                                         | *à compléter*                     |
+| servlet.ssl.key-store-type         | Type de clé                                                                        | *à compléter*                     |
+| servlet.ssl.key-alias              | Nom de la clé                                                                      | *à compléter*                     |
+| servlet.ssl.key-password           | Mot de passe de la clé                                                             | *à compléter*                     |
+| server.servlet.context-path        | Path du servlet                                                                    | /menuCantine                      |
+| soffit.jwt.signatureKey            | Clé pour le soffit                                                                 | *à compléter*                     |
+| adoria.gemrcn-csv                  | Chemin vers le fichier contenant les gemrcn à charger                              | classpath:GemRcn.csv              |
+| adoria.labels-csv                  | Chemin vers le fichier contenant les labels à charger                              | classpath:labels.csv              |
+| api.initial-query-url              | URL complète de l'API sur laquelle on récupère une URL dynamique par UAI           | https://api.webgerest.fr/url      |
+| api.auth-endpoint                  | Endpoint sur lequelle on doit faire une requête pour s'authentifier                | /auth                             |
+| api.menu-endpoint                  | Endpoint sur lequelle on doit faire une requête pour récupérer un menu             | /menus                            |
+| api.client_id                      | L'identifiant permettant de s'authentifier pour récupérer un token                 | *à compléter*                     |
+| api.menu-endpoint                  | Le mot de passe permettant de s'authentifier pour récupérer un token               | *à compléter*                     |
+| logging.level.fr.recia.menucantine | Niveau de log en local                                                             | debug                             |
+| spring.cache.type                  | La librairie utilisée pour la gestion du cache                                     | ehcache                           |
+| mapper.services                    | La liste des services avec le nom et le numéro de chaque service                   | *à voir directement dans la conf* |
+| mapper.sousmenus                   | La liste des sous-menus avec le nom, le nom final et le numéro de chaque sous-menu | *à voir directement dans la conf* |
