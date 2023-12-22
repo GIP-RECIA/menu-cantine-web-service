@@ -15,9 +15,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
-
-
-
 @Data
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public class Labels implements Serializable, Cloneable {

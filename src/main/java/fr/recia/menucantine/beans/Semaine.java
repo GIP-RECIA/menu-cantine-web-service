@@ -107,6 +107,9 @@ public class Semaine {
 		this.nbJours = jours.size();
 	}
 
+	/**
+	 * Lance la complétion des sous-menus de chaque journée avec des plats vides
+	 */
 	public void complete(){
 		initNbPlatMaxParService();
 		if (this.getJours() != null) {
@@ -118,6 +121,9 @@ public class Semaine {
 		}
 	}
 
+	/**
+	 * Calcule le nombre maximum de plats par sous-menu par service
+	 */
 	private void initNbPlatMaxParService(){
 		if (this.getJours() != null) {
 			nbPlatMaxParService = new NbPlatParSsMenuParService();
@@ -128,13 +134,12 @@ public class Semaine {
 	}
 
 	/**
-	 * Complète un sous-menu en ajoutant des plats vides jusqu'au nombre voulu
+	 * Ajoute des plats vides jusqu'au nombre voulu pour compléter les sous-menus
 	 * @param ssMenu Le sous-menu auquel on veut ajouter un plat
 	 * @param max Le nombre de plats que doit contenir le sous-menu au final
 	 */
 	private void ajoutPlatVide(SousMenu ssMenu, Integer max){
 		List<Plat> plats = ssMenu.getChoix();
-
 		int nbPlats = plats.size();
 
 		if (nbPlats == 0) {
@@ -146,7 +151,10 @@ public class Semaine {
 		}
 	}
 
-
+	/**
+	 * Complète les services avec des sous-menus vides pour l'alignement
+	 * @param service Le service concerné
+	 */
 	private void completeSsMenu(Service service) {
 		String serviceName = service.getName();
 
@@ -196,6 +204,10 @@ public class Semaine {
 		service.setMenu(menuComplet);
 	}
 
+	/**
+	 * Lance la complétion des sous-menus de chaque service d'une journée
+	 * @param journee La journée dont on va compléter les sous-menus
+	 */
 	private void completeSsMenu(Journee journee){
 		for (Service service : journee.getDestinations()) {
 			completeSsMenu(service);

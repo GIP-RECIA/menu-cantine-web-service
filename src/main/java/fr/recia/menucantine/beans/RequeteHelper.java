@@ -24,17 +24,13 @@ import java.util.Locale;
 /**
  * Permet de normaliser les requetes et de calculer les dates
  * @author legay
- *
  */
 public class RequeteHelper {
 	//static public  WeekFields WEEK_FIELDS = WeekFields.of(Locale.getDefault());
 	static public  WeekFields WEEK_FIELDS = WeekFields.ISO;
 	static public DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
 	public static DateTimeFormatter newDateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 	public static DateTimeFormatter completeDateFormatter = DateTimeFormatter.ofPattern("d MMMM yy").withLocale(Locale.FRENCH);
-
-
 
 	static public LocalDate jourMemeSemaine(LocalDate jour, int jourDemande) {
 		int j = jour.get(WEEK_FIELDS.dayOfWeek());

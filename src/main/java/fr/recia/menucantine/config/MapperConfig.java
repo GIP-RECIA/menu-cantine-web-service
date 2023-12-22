@@ -22,6 +22,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+/**
+ * Configuration du Mapper
+ * Charge depuis un fichier externalisé :
+ * - Les différents services avec leur numéro et leur nom
+ * - Les différents sous-menus avec leur numéro, leur nom dans l'API et leur nom à afficher
+ */
 @Component
 @ConfigurationProperties(prefix = "mapper")
 @Getter

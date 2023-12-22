@@ -73,6 +73,13 @@ public class MenuCantineServices {
 		Labels.loadFile(labelsFilename);
 	}
 
+	/**
+	 * Prends en entrée un objet Requête, fait les appels correspondants à l'API et retourne une Semaine
+	 * @param requete La requête avec la date et l'UAI demandé
+	 * @return Un objet de type Semaine à envoyer directement au front
+	 * @throws UnknownUAIException Dans le cas ou l'UAI n'a pas d'URL associé
+	 * @throws WebgerestRequestException Dans le cas ou on a une erreur innatendue sur une des requêtes
+	 */
 	public Semaine newFindSemaine(Requete requete) throws UnknownUAIException, WebgerestRequestException {
 
 		log.trace("Dans la méthode newFindSemaine");

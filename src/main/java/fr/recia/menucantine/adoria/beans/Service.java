@@ -55,7 +55,13 @@ public class Service implements Serializable, Cloneable {
 		this.rank = rank;
 		this.typeVide = typeVide;
 	}
-	
+
+	/**
+	 * Créé un nouveau sous-menu
+	 * @param rank Un entier donnant l'ordre du sous-menu parmi les sous-menus
+	 * @param typeVide Un booléen pour indiquer si le sous-menu est vide ou non
+	 * @return Le sous-menu créé
+	 */
 	public SousMenu makeSousMenu(Integer rank, Boolean typeVide){
 		SousMenu sm =  new SousMenu(new ArrayList<>(), rank);
 		sm.typeVide = typeVide;

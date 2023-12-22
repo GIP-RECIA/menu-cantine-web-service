@@ -15,12 +15,13 @@
  */
 package fr.recia.menucantine.beans;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
 
-
+/**
+ * Objet utilisé pour formaliser les requêtes entre le portail et l'appli
+ */
 @Data
 public class Requete implements Serializable {
 	Integer semaine;

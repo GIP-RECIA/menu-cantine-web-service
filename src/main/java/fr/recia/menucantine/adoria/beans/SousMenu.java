@@ -16,9 +16,7 @@ public class SousMenu implements Serializable, Cloneable {
     List<Plat> choix;
     @NonNull
     Integer rank;
-
     Integer nbPlats;
-
     Boolean typeVide = false;
 
     public void addChoix(Plat choix){

@@ -56,6 +56,10 @@ public class Plat implements Serializable, Cloneable {
 		this.family = family;
 	}
 
+	/**
+	 * Méthode statique permettant de créer un plat vide
+	 * @return Le plat créé
+	 */
 	public static Plat platVide() {
 		Plat p = new Plat();
 		p.typeVide = true;
@@ -67,21 +71,19 @@ public class Plat implements Serializable, Cloneable {
 	}
 
 	/**
-	 * Nettoyage d'un plat:
-	 * annule les liste des allergens vide.
-	 * remplace les gemrcn par leurs code.
-	 * remplace les labels par leurs info.
-	 * supprime les info de nutrition null.
+	 * Nettoyage d'un plat :
+	 * - Annule les liste des allergens vide.
+	 * - Remplace les gemrcn par leurs code.
+	 * - Remplace les labels par leurs info.
+	 * - Supprime les info de nutrition null.
+	 * N'est pas utilisé pour l'instant car on n'a pas de gemrcn ni d'infos nutrition
 	 */
 	void clean() {
 		if (allergens != null && allergens.isEmpty()) {
 			allergens = null;
 		}
 		if (gemrcn != null && gemrcn.size() > 0) {
-			
 			gemrcn.replaceAll(codeS -> String.valueOf(GemRcn.getGemRcn(codeS).getCodeI()) );
-			// gemrcn.stream().map(codeS ->
-			// GemRcn.getGemRcn(codeS).getColor()).collect(Collectors.toList());
 		}
 		if (labels != null) {
 			int s = labels.size();
