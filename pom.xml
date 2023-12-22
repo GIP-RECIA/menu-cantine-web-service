@@ -53,11 +53,11 @@
 	<distributionManagement>
 		<repository>
 			<id>esco-releases</id>
-			<url>https://nexus.recia.fr/content/repositories/releases/</url>
+			<url>https://nexus.recia.dev/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>esco-snapshots</id>
-			<url>https://nexus.recia.fr/content/repositories/snapshots/</url>
+			<url>https://nexus.recia.dev/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<scm>
@@ -127,6 +127,24 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
 	  
 
 
@@ -152,38 +170,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.lesscss</groupId>
-				<artifactId>lesscss-maven-plugin</artifactId>
-				<version>1.7.0.1.1</version>
-
-				<executions>
-					<execution>
-						<id>generate-resources</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<sourceDirectory>${project.basedir}/src/main/resources/static/less</sourceDirectory>
-							<outputDirectory>${project.basedir}/target/classes/static/css</outputDirectory>
-							<compress>false</compress>
-						</configuration>
-					</execution>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<sourceDirectory>${project.basedir}/src/main/resources/static/less</sourceDirectory>
-							<outputDirectory>${project.basedir}/src/main/resources/static/css</outputDirectory>
-							<compress>true</compress>
-						</configuration>
-
-
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.mycila</groupId>
