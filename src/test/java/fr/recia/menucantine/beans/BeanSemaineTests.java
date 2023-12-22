@@ -34,7 +34,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles({ "test" })
+@ActiveProfiles({ "unit" })
 public class BeanSemaineTests {
 
     private Journee journee1;

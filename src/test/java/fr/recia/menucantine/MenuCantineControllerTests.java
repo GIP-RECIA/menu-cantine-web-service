@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
-@ActiveProfiles({ "test" })
+@ActiveProfiles({ "unit" })
 public class MenuCantineControllerTests {
 
     @Autowired

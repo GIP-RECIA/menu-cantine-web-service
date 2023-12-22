@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles({ "test" })
+@ActiveProfiles({ "unit" })
 public class BeanPlatTests {
 
     @Test

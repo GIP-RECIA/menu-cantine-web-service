@@ -49,7 +49,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles({ "test" })
+@ActiveProfiles({ "unit" })
 public class MapperWebgerestTests {
 
 	@Autowired

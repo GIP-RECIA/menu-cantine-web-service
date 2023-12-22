@@ -43,7 +43,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles({ "test" })
+@ActiveProfiles({ "unit" })
 public class MenuCantineServiceTests {
 
     @Mock

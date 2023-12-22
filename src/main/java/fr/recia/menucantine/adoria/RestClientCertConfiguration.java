@@ -36,7 +36,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@Profile("!test")
+@Profile("!unit")
 public class RestClientCertConfiguration {
 
 	@Value("${server.ssl.key-store}")
