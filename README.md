@@ -122,7 +122,7 @@ Les tests unitaires selons lancés automatiquement, et le war sera disponible da
 
 ## Nexus test
 
-A compléter
+Pour push sur le nexus de test, il suffit de faire un `mvn clean package deploy` (attention à bien vérifier dans le `pom.xml` qu'on est bien sur une version de test).
 
 ## Nexus prod
 
@@ -132,24 +132,42 @@ A compléter
 
 La configuration se trouve dans le fichier `application.yml` dans les ressources. Elle doit **impérativement** être complétée avant de pouvoir lancer l'application, même en local. Il faut compléter au minimum les valeurs pour le ssl ainsi que les identifiants pour l'Api. Le reste des valeurs peuvent être laisssées par défaut dans un premier temps.
 
-| Propriété                          | Signification                                                                      | Valeur par défaut                 |
-|------------------------------------|------------------------------------------------------------------------------------|-----------------------------------|
-| server.port                        | Port du serveur (ici en https)                                                     | 8443                              |
-| servlet.ssl.key-store              | Nom de l'entrepôt stockant la clé                                                  | *à compléter*                     |
-| servlet.ssl.key-store-password     | Mot de passe de l'entrepôt stockant la clé                                         | *à compléter*                     |
-| servlet.ssl.key-store-type         | Type de clé                                                                        | *à compléter*                     |
-| servlet.ssl.key-alias              | Nom de la clé                                                                      | *à compléter*                     |
-| servlet.ssl.key-password           | Mot de passe de la clé                                                             | *à compléter*                     |
-| server.servlet.context-path        | Path du servlet                                                                    | /menuCantine                      |
-| soffit.jwt.signatureKey            | Clé pour le soffit                                                                 | *à compléter*                     |
-| adoria.gemrcn-csv                  | Chemin vers le fichier contenant les gemrcn à charger                              | classpath:GemRcn.csv              |
-| adoria.labels-csv                  | Chemin vers le fichier contenant les labels à charger                              | classpath:labels.csv              |
-| api.initial-query-url              | URL complète de l'API sur laquelle on récupère une URL dynamique par UAI           | https://api.webgerest.fr/url      |
-| api.auth-endpoint                  | Endpoint sur lequelle on doit faire une requête pour s'authentifier                | /auth                             |
-| api.menu-endpoint                  | Endpoint sur lequelle on doit faire une requête pour récupérer un menu             | /menus                            |
-| api.client_id                      | L'identifiant permettant de s'authentifier pour récupérer un token                 | *à compléter*                     |
-| api.menu-endpoint                  | Le mot de passe permettant de s'authentifier pour récupérer un token               | *à compléter*                     |
-| logging.level.fr.recia.menucantine | Niveau de log en local                                                             | debug                             |
-| spring.cache.type                  | La librairie utilisée pour la gestion du cache                                     | ehcache                           |
-| mapper.services                    | La liste des services avec le nom et le numéro de chaque service                   | *à voir directement dans la conf* |
-| mapper.sousmenus                   | La liste des sous-menus avec le nom, le nom final et le numéro de chaque sous-menu | *à voir directement dans la conf* |
+| Propriété                          | Signification                                                                             | Valeur par défaut                 |
+|------------------------------------|-------------------------------------------------------------------------------------------|-----------------------------------|
+| server.port                        | Port du serveur (ici en https)                                                            | 8443                              |
+| servlet.ssl.key-store              | Nom de l'entrepôt stockant la clé                                                         | *à compléter*                     |
+| servlet.ssl.key-store-password     | Mot de passe de l'entrepôt stockant la clé                                                | *à compléter*                     |
+| servlet.ssl.key-store-type         | Type de clé                                                                               | *à compléter*                     |
+| servlet.ssl.key-alias              | Nom de la clé                                                                             | *à compléter*                     |
+| servlet.ssl.key-password           | Mot de passe de la clé                                                                    | *à compléter*                     |
+| server.servlet.context-path        | Path du servlet                                                                           | /menuCantine                      |
+| soffit.jwt.signatureKey            | Clé pour le soffit                                                                        | *à compléter*                     |
+| adoria.gemrcn-csv                  | Chemin vers le fichier contenant les gemrcn à charger                                     | classpath:GemRcn.csv              |
+| adoria.labels-csv                  | Chemin vers le fichier contenant les labels à charger                                     | classpath:labels.csv              |
+| api.initial-query-url              | URL complète de l'API sur laquelle on récupère une URL dynamique par UAI                  | https://api.webgerest.fr/url      |
+| api.auth-endpoint                  | Endpoint sur lequelle on doit faire une requête pour s'authentifier                       | /auth                             |
+| api.menu-endpoint                  | Endpoint sur lequelle on doit faire une requête pour récupérer un menu                    | /menus                            |
+| api.client_id                      | L'identifiant permettant de s'authentifier pour récupérer un token                        | *à compléter*                     |
+| api.menu-endpoint                  | Le mot de passe permettant de s'authentifier pour récupérer un token                      | *à compléter*                     |
+| logging.level.fr.recia.menucantine | Niveau de log en local                                                                    | debug                             |
+| spring.cache.type                  | La librairie utilisée pour la gestion du cache                                            | ehcache                           |
+| mapper.services                    | Un dictionnaire des services avec le nom et le numéro de chaque service                   | *à voir directement dans la conf* |
+| mapper.sousmenus                   | Un dictionnaire des sous-menus avec le nom, le nom final et le numéro de chaque sous-menu | *à voir directement dans la conf* |
+
+# Tests unitaires
+Les tests unitaires sont lancés avec un profil `unit` qui utilise une configuration particulière `application-test.yml` qui désactive le cache. Certaines classes telles que `RestClientCertConfiguration` ne sont également pas chargées lorsqu'on utilise le profil de test afin de pouvoir passer la sécurité lorsqu'on veut tester le controlleur. Les différentes classes pour les tests sont les suivantes :
+```  
+test  
+├── java                                  
+│   ├── beans                                  # Tests sur les beans adoria (méthodes clean et complete)
+│   │   ├── BeanJourneeTests.java
+│   │   ├── BeanPlatTests.java
+│   │   ├── BeanSemaineTests.java
+│   │   └── BeanServiceTests.java
+│   └── mapper                                  # Tests de la transformation des DTO en beans adoria
+│   │   └── MapperWebgerestTests.java
+│   ├── MenuCantineApplicationTests.java
+│   ├── MenuCantineControllerTests.java
+│   └── MenuCantineServiceTests.java 
+```  
+On utilise `mockito` pour mocker les dépendances utiles lorsqu'on teste le service ou le controlleur. Dans le cadre du service, on mock les appels à l'API et au mapper, et dans le cas du controlleur, on map les appels au service.
