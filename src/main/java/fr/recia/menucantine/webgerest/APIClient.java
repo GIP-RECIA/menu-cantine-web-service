@@ -43,7 +43,8 @@ public class APIClient {
     @Autowired
     private CacheManager cacheManager;
 
-    private final WebClient webClient;
+    @Autowired
+    private WebClient webClient;
 
     @Value("${api.initial-query-url}")
     private String initialQueryURL;
@@ -66,7 +67,6 @@ public class APIClient {
     public APIClient(WebClient.Builder webClientBuilder) {
         this.dynamicURL = new HashMap<>();
         this.authToken = new HashMap<>();
-        this.webClient = webClientBuilder.build();
     }
 
     /**
