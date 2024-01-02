@@ -171,3 +171,5 @@ test
 │   └── MenuCantineServiceTests.java 
 ```  
 On utilise `mockito` pour mocker les dépendances utiles lorsqu'on teste le service ou le controlleur. Dans le cadre du service, on mock les appels à l'API et au mapper, et dans le cas du controlleur, on map les appels au service.
+
+Le rapport du coverage des tests unitaires est disponible sous `target/coverage-reports/jacoco-unit.exec`.
