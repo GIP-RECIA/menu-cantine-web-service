@@ -110,7 +110,7 @@ public class MenuCantineServices {
 			JourneeDTO journeeDTO = new JourneeDTO();
 			LocalDate menuDay = RequeteHelper.jourMemeSemaine(today, numJour);
 			journeeDTO.setDate(menuDay);
-			String menuDayString = RequeteHelper.localeDateToString(menuDay);
+			String menuDayString = RequeteHelper.localeDateToStringWithNoSlashes(menuDay);
 			// On doit aussi faire une requête par service pour reconstituer une journée (numService=2=déjeuner, ...)
 			for(int numService=1; numService<=4; numService++){
 				log.debug("Requête avec les paramètres uai={}, date={}, service={}", uai, menuDayString, numService);

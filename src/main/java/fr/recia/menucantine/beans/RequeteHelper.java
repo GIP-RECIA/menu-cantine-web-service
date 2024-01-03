@@ -17,7 +17,6 @@ package fr.recia.menucantine.beans;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.IsoFields;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
@@ -26,29 +25,38 @@ import java.util.Locale;
  * @author legay
  */
 public class RequeteHelper {
-	//static public  WeekFields WEEK_FIELDS = WeekFields.of(Locale.getDefault());
-	static public  WeekFields WEEK_FIELDS = WeekFields.ISO;
-	static public DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	public static DateTimeFormatter newDateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-	public static DateTimeFormatter completeDateFormatter = DateTimeFormatter.ofPattern("d MMMM yy").withLocale(Locale.FRENCH);
+	final static public WeekFields WEEK_FIELDS = WeekFields.ISO;
+	final static public DateTimeFormatter dateFormatterSlashes = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	final static public DateTimeFormatter dateFormatterNoSlashes = DateTimeFormatter.ofPattern("yyyyMMdd");
+	final static public DateTimeFormatter dateFormatterSpaces = DateTimeFormatter.ofPattern("d MMMM yy").withLocale(Locale.FRENCH);
 
+	/**
+	 * Donne la journée de la même semaine que la journée passée en paramètre en fonction du numéro demandé
+	 * @param jour La journée utilisée pour récupérer la semaine
+	 * @param jourDemande Le numéro de la journée dans la semaine
+	 * @return Un LocalDate de la même semaine que jour et qui est le numéro jourDemande de la semaine
+	 */
 	static public LocalDate jourMemeSemaine(LocalDate jour, int jourDemande) {
-		int j = jour.get(WEEK_FIELDS.dayOfWeek());
+		final int j = jour.get(WEEK_FIELDS.dayOfWeek());
 		if (j != jourDemande) {
 			return jour.plusDays(jourDemande - j);
 		}
 		return jour;
 	}
-	
+
+	/**
+	 * Donne le numéro de semaine associé à un jour
+	 * @param jour Le jour de la semaine recherchée
+	 * @return Le numéro de la semaine
+	 */
 	static public int semaine(LocalDate jour) {
 		return jour.get(WEEK_FIELDS.weekOfWeekBasedYear());
 	}
-	
-	private LocalDate now = LocalDate.now();
 
 	/**
 	 * Fixe tous les attributs de la requete en fonction de la date donnée
-	 * @param date
+	 * @param requete La requete dont on veut fixer les attributs
+	 * @param date La date à laquelle on veut fixer la requete
 	 */
 	public void dateJour(Requete requete, LocalDate date) {
 		LocalDate jeudi;
@@ -60,74 +68,38 @@ public class RequeteHelper {
 		}
 		requete.annee = jeudi.getYear();
 		requete.semaine = semaine(jeudi);
-		requete.dateJour = date.format(dateFormatter);
-		// dateJour = String.format("%td/%tm/%tY", date, date, date);
+		requete.dateJour = date.format(dateFormatterSlashes);
 	}
 
 	/**
-	 * Transforme un objet LocaleDate en un String utilisable dans la requête
+	 * Méthodes pour transformer un objet LocaleDate en un String utilisable dans la requête
+	 * de différentes manières en fonction du dateFormatter utilisé
 	 */
-	public static String localeDateToOldString(LocalDate date){
-		return date.format(dateFormatter);
+	public static String localeDateToStringWithSlashes(LocalDate date){
+		return date.format(dateFormatterSlashes);
 	}
 
-	public static String localeDateToString(LocalDate date){
-		return date.format(newDateFormatter);
+	public static String localeDateToStringWithNoSlashes(LocalDate date){
+		return date.format(dateFormatterNoSlashes);
 	}
 
-	public static String localeDateToCompleteString(LocalDate date){
-		return date.format(completeDateFormatter);
+	public static String localeDateToStringWithSpaces(LocalDate date){
+		return date.format(dateFormatterSpaces);
 	}
 	
 	/**
 	 * Parse la date du champ dateJour de la requete
-	 * @return
+	 * @param requete L'objet requête duquel on veut récupérer la date
+	 * @return La date de la requête sous forme d'une LocalDate
 	 */
 	public LocalDate dateJour(Requete requete) {
 		if (requete.dateJour != null && ! requete.dateJour.isEmpty()) {
 			try {
-				return LocalDate.parse(requete.dateJour, dateFormatter);
+				return LocalDate.parse(requete.dateJour, dateFormatterSlashes);
 			} catch (Exception e) {
 				requete.dateJour = null;
 			}
 		}
 		return null;
-	}
-	
-	
-	
-	public LocalDate dateSemaine(Requete requete) {
-		return dateFromYearWeekDay(requete.annee, requete.semaine, requete.jour);
-	}
-	
-
-	/**
-	 * Donne la date en fonction de l'annee, la semaine et le jour dans la semaine.
-	 * si une valeur est  0 ou null on prend celle  du jour courant  (now)
-	 * jour: 1 => lundi,..., 7 => dimanche
-	 * @param annee
-	 * @param semaine
-	 * @param jour
-	 * @return
-	 */
-	public LocalDate dateFromYearWeekDay(Integer annee, Integer semaine, Integer jour) {
-		LocalDate date;
-		
-		if (semaine == null || semaine == 0) {
-			semaine = semaine(now);
-		}
-		if (jour == null || jour == 0) {
-			jour = now.get(WEEK_FIELDS.dayOfWeek());
-		}
-		if (annee == null || annee == 0) {
-			date = now;
-		} else {
-			/* le 4 janvier donne toujours la 1er semaine de l'année (norme ISO)*/
-			date  = LocalDate.of(annee, 1, 4);
-		}
-		
-		date = date.with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, semaine);
-
-		return date.plusDays(jour - date.get(WEEK_FIELDS.dayOfWeek()));
 	}
 }

@@ -43,8 +43,8 @@ public class MapperWebGerest implements IMapper {
         final LocalDate vendredi = RequeteHelper.jourMemeSemaine(requestDate, 5);
         Semaine semaine = new Semaine();
         semaine.setNbJours(0);
-        semaine.setDebut(RequeteHelper.localeDateToCompleteString(lundi));
-        semaine.setFin(RequeteHelper.localeDateToCompleteString(vendredi));
+        semaine.setDebut(RequeteHelper.localeDateToStringWithSpaces(lundi));
+        semaine.setFin(RequeteHelper.localeDateToStringWithSpaces(vendredi));
         semaine.setPreviousWeek(lundi.minusDays(3));
         semaine.setNextWeek(lundi.plusDays(7));
         semaine.setAllGemRcn(new ArrayList<>()); // pas de gemrcn dans cette API
@@ -67,7 +67,7 @@ public class MapperWebGerest implements IMapper {
         requete.setJour(requestDate.getDayOfMonth());
         requete.setUai(uai);
         requete.setAnnee(requestDate.getYear());
-        requete.setDateJour(RequeteHelper.localeDateToOldString(requestDate));
+        requete.setDateJour(RequeteHelper.localeDateToStringWithSlashes(requestDate));
         return requete;
     }
 
