@@ -128,6 +128,12 @@ Pour push sur le nexus de test, il suffit de faire un `mvn clean package deploy`
 
 A compléter
 
+## Gestion des licenses
+
+Pour vérifier les entêtes de fichier : `mvn license:check`.
+Pour ajouter les entêtes de fichier : `mvn license:format`.
+Le template de la license ajoutée est dans `etc/header.template`.
+
 # Configuration
 
 La configuration se trouve dans le fichier `application.yml` dans les ressources. Elle doit **impérativement** être complétée avant de pouvoir lancer l'application, même en local. Il faut compléter au minimum les valeurs pour le ssl ainsi que les identifiants pour l'Api. Le reste des valeurs peuvent être laisssées par défaut dans un premier temps.

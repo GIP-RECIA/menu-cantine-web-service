@@ -1,6 +1,6 @@
 /**
- * Copyright (C) 2023 GIP-RECIA https://www.recia.fr/
- * @Author (C) 2023 Nathan Cailbourdin <nathan.cailbourdin@recia.fr>
+ * Copyright (C) 2024 GIP-RECIA https://www.recia.fr/
+ * @Author (C) 2024 GIP-RECIA
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
