@@ -120,13 +120,13 @@ L'application est alors accessible sur l'URL suivante : https://localhost:8443/m
 Pour constuire un war, il suffit de faire un simple `mvn clean package`.
 Les tests unitaires selons lancés automatiquement, et le war sera disponible dans `target`.
 
-## Nexus test
+## Pousser une snapshot
 
-Pour push sur le nexus de test, il suffit de faire un `mvn clean package deploy` (attention à bien vérifier dans le `pom.xml` qu'on est bien sur une version de test).
+Pour push une snapshot, il suffit de faire un `mvn clean package deploy` (attention à bien vérifier dans le `pom.xml` qu'on est bien sur une version de test).
 
-## Nexus prod
+## Pousser une release
 
-A compléter
+Pour push une release, on commence par un `mvn release:clean release:prepare` puis on fait un `mvn realease:perfrom`.
 
 ## Gestion des licenses
 
