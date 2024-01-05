@@ -10,7 +10,7 @@ Ce projet spring boot est la partie **back-end** du service Menu Cantine. Les te
 
 ## Structure générale
 
-La différents fichiers du projet sont structurés de la manière suivante :
+Les différents fichiers du projet sont structurés de la manière suivante :
 ```
 .
 ├── src                                  # Contient les sources java et les fichiers de ressources
@@ -112,8 +112,12 @@ La logique du cache est gérée directement dans le classe `APIClient`. C'est el
 
 ## En Local
 
-Avant tout, il faut commencer par compléter la configuration de l'application et notammement les informations relative au ssl et à l'API avec laquelle communiquer. Intellij est recommandé pour un lancement en local : il suffit d'ajoter une configuration d'application sur la classe `fr.recia.menucantine.MenuCantineApplication` après avoir ouvert le projet.
+Avant tout, il faut commencer par compléter la configuration de l'application et notamment les informations relatives au ssl et à l'API avec laquelle communiquer. Intellij est recommandé pour un lancement en local : il suffit d'ajouter une configuration d'application sur la classe `fr.recia.menucantine.MenuCantineApplication` après avoir ouvert le projet.
 L'application est alors accessible sur l'URL suivante : https://localhost:8443/menuCantine/demo/demo.html
+
+## Nouvelle version du front
+
+Pour tester une nouvelle version du front avec le back, il suffit de copier les fichiers `.js` compilés dans le dossier `ressources/static/demo` (attention à ne pas toucher le fichier `demo.html`).
 
 ## Constuire un war
 
