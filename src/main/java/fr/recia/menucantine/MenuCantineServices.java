@@ -22,6 +22,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
@@ -88,7 +89,7 @@ public class MenuCantineServices {
 		// alors on cherche par rapport à cette date en question
 		final String uai = requete.getUai();
 		LocalDate today = LocalDate.now();
-        if (requete.getDateJour() != null) {
+        if (!Objects.equals(requete.getDateJour(), "")) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             today = LocalDate.parse(requete.getDateJour(), formatter);
         }

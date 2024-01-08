@@ -29,5 +29,13 @@ public class Requete implements Serializable {
 	Integer jour;
 	String dateJour;	
 	String uai;
+
+	public Requete(){}
+
+	public Requete(String uai, String dateJour, Integer semaine){
+		this.uai = uai;
+		this.dateJour = dateJour;
+		this.semaine = semaine;
+	}
 }
 

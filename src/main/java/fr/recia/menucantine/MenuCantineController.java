@@ -22,13 +22,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
+
+import java.util.Objects;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -38,16 +37,16 @@ public class MenuCantineController {
 	@Autowired
 	private MenuCantineServices services;
 	
-	@PostMapping(
-			path="/demomenu", 
-			consumes = "application/json", 
+	@GetMapping(
+			path="/demomenu",
 			produces = "application/json"
 		)
-	public ResponseEntity<Object> postDemo(@RequestBody Requete requete) {
+	public ResponseEntity<Object> getDemo(@RequestParam String uai, @RequestParam(required = false) String dateJour, @RequestParam(required = false) Integer semaine) {
 		log.trace("Requête sur la path /demomenu");
+		Requete requete = new Requete(uai, dateJour, semaine);
 		try {
-			Semaine semaine = services.newFindSemaine(requete);
-			return new ResponseEntity<Object>(semaine, HttpStatus.OK);
+			Semaine menuSemaine = services.newFindSemaine(requete);
+			return new ResponseEntity<Object>(menuSemaine, HttpStatus.OK);
 		}catch (UnknownUAIException | WebgerestRequestException exception){
 			log.error(exception.getMessage());
 		}
@@ -55,16 +54,16 @@ public class MenuCantineController {
 	}
 
 
-	@PostMapping(
+	@GetMapping(
 			path="/menu",
-			consumes = "application/json",
 			produces = "application/json"
 	)
-	public ResponseEntity<Object> getMenu(@RequestBody Requete requete){
+	public ResponseEntity<Object> getMenu(@RequestParam String uai, @RequestParam(required = false) String dateJour, @RequestParam(required = false) Integer semaine) {
 		log.trace("Requête sur la path /menu");
+		Requete requete = new Requete(uai, dateJour, semaine);
 		try{
-			Semaine semaine = services.newFindSemaine(requete);
-			return new ResponseEntity<Object>(semaine, HttpStatus.OK);
+			Semaine menuSemaine = services.newFindSemaine(requete);
+			return new ResponseEntity<Object>(menuSemaine, HttpStatus.OK);
 		}catch (UnknownUAIException | WebgerestRequestException exception){
 			log.error(exception.getMessage());
 		}
