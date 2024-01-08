@@ -65,21 +65,17 @@ public class MenuCantineControllerTests {
         when(menuCantineServices.newFindSemaine(eq(requeteOK))).thenReturn(semaine);
 
         // Test mauvaise méthode
-        mockMvc.perform(get("/api/menu")).andExpect(status().isMethodNotAllowed());
+        mockMvc.perform(post("/api/menu")).andExpect(status().isMethodNotAllowed());
 
-        // Test bonne méthode pas de JSON dans le body
-        mockMvc.perform(post("/api/menu")).andExpect(status().isUnsupportedMediaType());
+        // Test bonne méthode pas d'UAI
+        mockMvc.perform(get("/api/menu")).andExpect(status().isBadRequest());
 
         // Test bonne méthode mauvais UAI
-        mockMvc.perform(post("/api/menu")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{ \"dateJour\": \"11/12/2023\", \"uai\": \"0000000A\" }"))
+        mockMvc.perform(get("/api/menu?uai=0000000A&dateJour=11/12/2023"))
                 .andExpect(status().isNotFound());
 
         // Test bonne méthode bon UAI
-        mockMvc.perform(post("/api/menu")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{ \"dateJour\": \"11/12/2023\", \"uai\": \"0000000B\" }"))
+        mockMvc.perform(get("/api/menu?uai=0000000B&dateJour=11/12/2023"))
                 .andExpect(status().isOk());
 
     }
