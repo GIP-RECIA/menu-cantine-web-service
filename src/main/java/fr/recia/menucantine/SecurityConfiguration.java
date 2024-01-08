@@ -46,6 +46,9 @@ public class SecurityConfiguration{
 	@Value("${soffit.jwt.signatureKey:Changeme}")
     private String signatureKey;
 
+	@Value("${menucantine.demo:false}")
+	private boolean isDemoLocale;
+
 	private static final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);
 
 	@Bean
@@ -60,30 +63,36 @@ public class SecurityConfiguration{
         
         filter.setAuthenticationManager(authenticationManager());
 
-        http.csrf().disable(); // attention le crsf().disable est pour les tests a partir de page static (sans csrf)
+		if(isDemoLocale){
+			log.warn("Mode DEMO LOCALE activé !");
+			http
+				.addFilter(filter)
+				.authorizeRequests()
+					.anyRequest().permitAll()
+				.and() // pour la dev en localhost autorisation du cross domaine
+					.cors()
+					.configurationSource(corsConfigurationSource());
+		}else{
+			http
+				.addFilter(filter)
+				.authorizeRequests()
+					.antMatchers(HttpMethod.GET, "/health-check").anonymous()
+					.antMatchers(HttpMethod.GET, "/api/menu").authenticated()
+					.anyRequest().denyAll()
+				.and() // pour la dev en localhost autorisation du cross domaine
+					.cors()
+					.configurationSource(corsConfigurationSource())
+				.and()
+				/*
+				 * Session fixation protection is provided by uPortal.  Since portlet tech requires
+				 * sessionCookiePath=/, we will make the portal unusable if other modules are changing
+				 * the sessionId as well.
+				 */
+				.sessionManagement()
+					.sessionFixation().none();
+		}
 
-        http
-            .addFilter(filter)
-            .authorizeRequests()
-            	.antMatchers(HttpMethod.GET, "/health-check").anonymous()
-                .antMatchers(HttpMethod.GET,"/api/**").authenticated()
-                .antMatchers(HttpMethod.POST,"/api/menu").authenticated()
-                .antMatchers(HttpMethod.DELETE,"/api/**").denyAll()
-                .antMatchers(HttpMethod.PUT,"/api/**").denyAll()
-                .anyRequest().permitAll() 
-            .and() // pour la dev en localhost autorisation du cross domaine
-            	.cors()
-            	.configurationSource(corsConfigurationSource())
-            .and()
-            /*
-             * Session fixation protection is provided by uPortal.  Since portlet tech requires
-             * sessionCookiePath=/, we will make the portal unusable if other modules are changing
-             * the sessionId as well.
-             */
-            .sessionManagement()
-                .sessionFixation().none();
-
-			return http.build();
+		return http.build();
 	}
 
 	@Bean
