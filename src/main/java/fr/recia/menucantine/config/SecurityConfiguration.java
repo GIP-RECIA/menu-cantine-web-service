@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.recia.menucantine;
+package fr.recia.menucantine.config;
 
 import java.util.Arrays;
 
@@ -23,6 +23,7 @@ import org.apereo.portal.soffit.security.SoffitApiAuthenticationManager;
 import org.apereo.portal.soffit.security.SoffitApiPreAuthenticatedProcessingFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.ErrorPageFilter;
@@ -49,6 +50,9 @@ public class SecurityConfiguration{
 	@Value("${menucantine.demo:false}")
 	private boolean isDemoLocale;
 
+	@Autowired
+	private CorsConfig corsConfig;
+
 	private static final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);
 
 	@Bean
@@ -68,10 +72,7 @@ public class SecurityConfiguration{
 			http
 				.addFilter(filter)
 				.authorizeRequests()
-					.anyRequest().permitAll()
-				.and() // pour la dev en localhost autorisation du cross domaine
-					.cors()
-					.configurationSource(corsConfigurationSource());
+					.anyRequest().permitAll();
 		}else{
 			http
 				.addFilter(filter)
@@ -79,9 +80,6 @@ public class SecurityConfiguration{
 					.antMatchers(HttpMethod.GET, "/health-check").anonymous()
 					.antMatchers(HttpMethod.GET, "/api/menu").authenticated()
 					.anyRequest().denyAll()
-				.and() // pour la dev en localhost autorisation du cross domaine
-					.cors()
-					.configurationSource(corsConfigurationSource())
 				.and()
 				/*
 				 * Session fixation protection is provided by uPortal.  Since portlet tech requires
@@ -90,6 +88,15 @@ public class SecurityConfiguration{
 				 */
 				.sessionManagement()
 					.sessionFixation().none();
+		}
+
+		if(corsConfig.isEnabled()) {
+			log.debug("CORS est autorisé !");
+			http.cors().configurationSource(corsConfigurationSource());
+		}
+		else{
+			log.debug("CORS désactivé.");
+			http.cors().disable();
 		}
 
 		return http.build();
@@ -120,37 +127,12 @@ public class SecurityConfiguration{
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-		boolean abilitaCors = true;
-		if( abilitaCors ) {
-			if( log.isWarnEnabled() ) {
-				log.warn("CORS ABILITATI! CORS est autorisé");
-			}
-			CorsConfiguration configuration = new CorsConfiguration();
-
-			configuration.setAllowedOrigins(Arrays.asList(
-				"http://localhost:8080",
-				"https://localhost:8443",
-				"http://192.168.45.196:8080",
-				"http://192.168.45.156:8080",
-				"http://192.168.3.13:8080",
-				"https://test-lycee.giprecia.net")
-			);
-
-			configuration.setAllowedMethods(Arrays.asList(
-				RequestMethod.GET.name(),
-				RequestMethod.POST.name(),
-				RequestMethod.OPTIONS.name(),
-				RequestMethod.DELETE.name(),
-				RequestMethod.PUT.name())
-			);
-
-			configuration.setExposedHeaders(Arrays.asList("x-auth-token", "x-requested-with", "x-xsrf-token"));
-			configuration.setAllowedHeaders(Arrays.asList("content-type", "authorization", "x-com-persist", "X-Auth-Token","x-auth-token", "x-requested-with", "x-xsrf-token"));
-			source.registerCorsConfiguration("/**", configuration);
-
-			}
-
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(corsConfig.getAllowedOrigins());
+		configuration.setAllowedMethods(corsConfig.getAllowedMethods());
+		configuration.setExposedHeaders(corsConfig.getExposedHeaders());
+		configuration.setAllowedHeaders(corsConfig.getAllowedHeaders());
+		source.registerCorsConfiguration("/**", configuration);
 		return source;
 
 	}
