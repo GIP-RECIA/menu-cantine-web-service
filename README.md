@@ -163,6 +163,12 @@ La configuration se trouve dans le fichier `application.yml` dans les ressources
 | spring.cache.type                  | La librairie utilisée pour la gestion du cache                                            | ehcache                           |
 | mapper.services                    | Un dictionnaire des services avec le nom et le numéro de chaque service                   | *à voir directement dans la conf* |
 | mapper.sousmenus                   | Un dictionnaire des sous-menus avec le nom, le nom final et le numéro de chaque sous-menu | *à voir directement dans la conf* |
+| menucantine.demo                   | Si le mode démo locale est actif (uniquement pour les tests en local)                     | false                             |
+| security.cors.enabled              | Si le CORS est activé                                                                     | true                              |
+| security.cors.allowedOrigins       | La liste des allowedOrigins pour la config du CORS                                        | *à compléter*                     |
+| security.cors.exposedHeaders       | La liste des exposedHeaders pour la config du CORS                                        | *à compléter*                     |
+| security.cors.allowedHeaders       | La liste des allowedHeaders pour la config du CORS                                        | *à compléter*                     |
+| security.cors.allowedMethods       | La liste des allowedMethods pour la config du CORS                                        | *à compléter*                     |
 
 # Tests unitaires
 Les tests unitaires sont lancés avec un profil `unit` qui utilise une configuration particulière `application-test.yml` qui désactive le cache. Certaines classes telles que `RestClientCertConfiguration` ne sont également pas chargées lorsqu'on utilise le profil de test afin de pouvoir passer la sécurité lorsqu'on veut tester le controlleur. Les différentes classes pour les tests sont les suivantes :
