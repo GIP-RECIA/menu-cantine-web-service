@@ -1,12 +1,17 @@
-<meta charset="utf-8">
+<meta charset="utf-8" xmlns="">
 <title>menu-cantine demo</title>
-<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
-
-<a href="/menuCantine/api/test" type="application/json" target="json">json</a>
+<script src="https://unpkg.com/vue@2.7.16/dist/vue.js"></script>
 
 <script src="/menuCantine/demo/menu-cantine.js"></script>
 
 <div id="app" style="font-size: 14px; line-height: 1.42857143 ;">
-<menu-cantine-menu-semaine is-demo></menu-cantine-menu-semaine >
+<menu-cantine-menu-semaine
+        is-demo
+        app-portal-context=""
+        app-user-info-uri=""
+        app-url-img="/menuCantine/img/"
+        app-url-rest-api=""
+        app-url-api-etab=""
+        app-url-rest-api-demo="/menuCantine/api/demomenu">
+</menu-cantine-menu-semaine>
 </div>
-<!--  menu-cantine-menu-semaine is-demo></menu-cantine-menu-semaine -->
