@@ -19,6 +19,8 @@ import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
 import fr.recia.menucantine.config.MapperConfig;
 import fr.recia.menucantine.dto.ServiceDTO;
+import fr.recia.menucantine.exception.CustomMenuCantineException;
+import fr.recia.menucantine.exception.NoDataExchangeException;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
 import fr.recia.menucantine.mapper.MapperWebGerest;
@@ -135,7 +137,7 @@ public class MenuCantineServiceTests {
             // Vérification de l'appel à buildSemaine
             verify(mapperWebGerest).buildSemaine(anyList(), any(LocalDate.class), anyString());
 
-        } catch (UnknownUAIException | WebgerestRequestException e) {
+        } catch (CustomMenuCantineException e) {
             throw new RuntimeException(e);
         }
     }

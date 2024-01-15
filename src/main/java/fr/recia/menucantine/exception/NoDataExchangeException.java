@@ -15,8 +15,10 @@
  */
 package fr.recia.menucantine.exception;
 
-public class UnknownUAIException extends CustomMenuCantineException {
-    public UnknownUAIException(String errorMessage) {
-        super(errorMessage, "Les menus de cantine de cet établissement ne sont pas connus.");
+public class NoDataExchangeException extends CustomMenuCantineException {
+
+    public NoDataExchangeException(String errorMessage) {
+        super(errorMessage, "L'établissement a désactivé le partage des menus de la cantine, ils ne peuvent donc pas être affichés.");
     }
+
 }

@@ -20,7 +20,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,6 +27,7 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
 import fr.recia.menucantine.config.MapperConfig;
+import fr.recia.menucantine.exception.NoDataExchangeException;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
 import fr.recia.menucantine.mapper.MapperWebGerest;
@@ -40,7 +40,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import fr.recia.menucantine.adoria.beans.GemRcn;
 import fr.recia.menucantine.adoria.beans.Labels;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.RequeteHelper;
@@ -81,7 +80,7 @@ public class MenuCantineServices {
 	 * @throws UnknownUAIException Dans le cas ou l'UAI n'a pas d'URL associé
 	 * @throws WebgerestRequestException Dans le cas ou on a une erreur innatendue sur une des requêtes
 	 */
-	public Semaine newFindSemaine(Requete requete) throws UnknownUAIException, WebgerestRequestException {
+	public Semaine newFindSemaine(Requete requete) throws UnknownUAIException, WebgerestRequestException, NoDataExchangeException {
 
 		log.trace("Dans la méthode newFindSemaine");
 
@@ -122,6 +121,9 @@ public class MenuCantineServices {
 				}else{
 					log.error("Erreur sur le retour de la requête avec les paramètres uai={}, date={}, service={}." +
 							"\nMessage retourné : {}", uai, menuDayString, numService, serviceDTO.getMessage());
+					if(serviceDTO.getMessage().equals("L'etablissement a bloqué l'echange de donnees.")) {
+						throw new NoDataExchangeException("L'établissement a bloqué l'échange de donnees.");
+					}
 				}
 
 			}

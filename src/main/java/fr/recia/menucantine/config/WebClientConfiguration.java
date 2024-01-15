@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.recia.menucantine.adoria;
+package fr.recia.menucantine.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-public class RestClientCertConfiguration {
+public class WebClientConfiguration {
 
 	 @Bean
 	 public WebClient webClient() throws Exception {

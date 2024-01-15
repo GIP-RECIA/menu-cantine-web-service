@@ -15,8 +15,7 @@
  */
 package fr.recia.menucantine;
 
-import fr.recia.menucantine.exception.UnknownUAIException;
-import fr.recia.menucantine.exception.WebgerestRequestException;
+import fr.recia.menucantine.exception.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,6 @@ import org.springframework.web.bind.annotation.*;
 
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
-
-import java.util.Objects;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -47,10 +44,10 @@ public class MenuCantineController {
 		try {
 			Semaine menuSemaine = services.newFindSemaine(requete);
 			return new ResponseEntity<Object>(menuSemaine, HttpStatus.OK);
-		}catch (UnknownUAIException | WebgerestRequestException exception){
+		}catch (CustomMenuCantineException exception){
 			log.error(exception.getMessage());
+			return new ResponseEntity<>(new ResponseExceptionData(exception.getDisplayMessage()), HttpStatus.NOT_FOUND);
 		}
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
 
@@ -61,12 +58,12 @@ public class MenuCantineController {
 	public ResponseEntity<Object> getMenu(@RequestParam String uai, @RequestParam(required = false) String dateJour, @RequestParam(required = false) Integer semaine) {
 		log.trace("Requête sur la path /menu");
 		Requete requete = new Requete(uai, dateJour, semaine);
-		try{
+		try {
 			Semaine menuSemaine = services.newFindSemaine(requete);
 			return new ResponseEntity<Object>(menuSemaine, HttpStatus.OK);
-		}catch (UnknownUAIException | WebgerestRequestException exception){
+		}catch (CustomMenuCantineException exception){
 			log.error(exception.getMessage());
+			return new ResponseEntity<>(new ResponseExceptionData(exception.getDisplayMessage()), HttpStatus.NOT_FOUND);
 		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 }

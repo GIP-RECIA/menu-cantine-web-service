@@ -15,8 +15,13 @@
  */
 package fr.recia.menucantine.exception;
 
-public class UnknownUAIException extends CustomMenuCantineException {
-    public UnknownUAIException(String errorMessage) {
-        super(errorMessage, "Les menus de cantine de cet établissement ne sont pas connus.");
-    }
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@AllArgsConstructor
+@Data
+public class ResponseExceptionData {
+
+    private String messageErreur;
+
 }
