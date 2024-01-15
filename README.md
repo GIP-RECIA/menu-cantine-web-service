@@ -48,14 +48,13 @@ Le package `fr.recia.menucatine` est lui structuré de la manière suivante :
 │   │   ├── Plat.java
 │   │   ├── Service.java  
 │   │   └── ...
-│   └── RestClientCertConfiguration.java     # Configuration relative au https
 │
 ├── beans
 │   ├── Requete.java                         # Objet requete envoyé depuis le front
 │   ├── RequeteHelper.java                   # Classe utilitaire, utilisée pour les convertions de dates par exemple
 │   └── Semaine.java                         # Objet semaine envoyé vers le front, consituté de adoria.beans
 │  
-├── config                                   # Définition des services et sous-menus  
+├── config                                   # Configuration de la sécurité, des services et des sous-menus  
 │   └── ...
 │
 ├── dto                                      # Classes mappées depuis le JSON récupéré de l'API
@@ -112,8 +111,8 @@ La logique du cache est gérée directement dans le classe `APIClient`. C'est el
 
 ## En Local
 
-Avant tout, il faut commencer par compléter la configuration de l'application et notamment les informations relatives au ssl et à l'API avec laquelle communiquer. Intellij est recommandé pour un lancement en local : il suffit d'ajouter une configuration d'application sur la classe `fr.recia.menucantine.MenuCantineApplication` après avoir ouvert le projet.
-L'application est alors accessible sur l'URL suivante : https://localhost:8443/menuCantine/demo/demo.html
+Avant tout, il faut commencer par compléter la configuration de l'application et notamment les informations relatives à l'API avec laquelle communiquer. Intellij est recommandé pour un lancement en local : il suffit d'ajouter une configuration d'application sur la classe `fr.recia.menucantine.MenuCantineApplication` après avoir ouvert le projet.
+L'application est alors accessible sur l'URL suivante : `https://localhost:PORT/menuCantine/demo/demo.html`
 
 ## Nouvelle version du front
 
@@ -144,12 +143,7 @@ La configuration se trouve dans le fichier `application.yml` dans les ressources
 
 | Propriété                          | Signification                                                                             | Valeur par défaut                 |
 |------------------------------------|-------------------------------------------------------------------------------------------|-----------------------------------|
-| server.port                        | Port du serveur (ici en https)                                                            | 8443                              |
-| servlet.ssl.key-store              | Nom de l'entrepôt stockant la clé                                                         | *à compléter*                     |
-| servlet.ssl.key-store-password     | Mot de passe de l'entrepôt stockant la clé                                                | *à compléter*                     |
-| servlet.ssl.key-store-type         | Type de clé                                                                               | *à compléter*                     |
-| servlet.ssl.key-alias              | Nom de la clé                                                                             | *à compléter*                     |
-| servlet.ssl.key-password           | Mot de passe de la clé                                                                    | *à compléter*                     |
+| server.port                        | Port du serveur                                                                           | 8081                              | 
 | server.servlet.context-path        | Path du servlet                                                                           | /menuCantine                      |
 | soffit.jwt.signatureKey            | Clé pour le soffit                                                                        | *à compléter*                     |
 | adoria.gemrcn-csv                  | Chemin vers le fichier contenant les gemrcn à charger                                     | classpath:GemRcn.csv              |
@@ -164,7 +158,7 @@ La configuration se trouve dans le fichier `application.yml` dans les ressources
 | mapper.services                    | Un dictionnaire des services avec le nom et le numéro de chaque service                   | *à voir directement dans la conf* |
 | mapper.sousmenus                   | Un dictionnaire des sous-menus avec le nom, le nom final et le numéro de chaque sous-menu | *à voir directement dans la conf* |
 | menucantine.demo                   | Si le mode démo locale est actif (uniquement pour les tests en local)                     | false                             |
-| security.cors.enabled              | Si le CORS est activé                                                                     | true                              |
+| security.cors.enabled              | Si le CORS est activé                                                                     | false                             |
 | security.cors.allowedOrigins       | La liste des allowedOrigins pour la config du CORS                                        | *à compléter*                     |
 | security.cors.exposedHeaders       | La liste des exposedHeaders pour la config du CORS                                        | *à compléter*                     |
 | security.cors.allowedHeaders       | La liste des allowedHeaders pour la config du CORS                                        | *à compléter*                     |
