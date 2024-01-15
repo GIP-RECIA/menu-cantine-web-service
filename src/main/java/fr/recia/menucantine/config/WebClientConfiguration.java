@@ -17,18 +17,16 @@ package fr.recia.menucantine.adoria;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@Profile("unit")
-public class RestClientTestConfiguration {
+public class RestClientCertConfiguration {
 
-    @Bean
-    public WebClient webClient() throws Exception {
-        reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create().secure();
-        return WebClient.builder().clientConnector(new ReactorClientHttpConnector(httpClient)).build();
-    }
+	 @Bean
+	 public WebClient webClient() throws Exception {
+		 reactor.netty.http.client.HttpClient httpClient = reactor.netty.http.client.HttpClient.create().secure();
+		 return WebClient.builder().clientConnector(new ReactorClientHttpConnector(httpClient)).build();
+	 }
 
 }
