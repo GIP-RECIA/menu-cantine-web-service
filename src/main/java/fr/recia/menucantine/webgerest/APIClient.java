@@ -123,11 +123,11 @@ public class APIClient {
     }
 
     /**
-     * Se charge de préparer tout ce qui est nécéssaire pour faire un appel à l'API, puis fait l'appel.
+     * Se charge de préparer tout ce qui est nécessaire pour faire un appel à l'API, puis fait l'appel.
      * 1) Cherche si on a déjà la requête dans le cache, et la récupère si c'est le cas
      * 2) Cherche si on a déjà l'URL associée à l'UAI ; si ce n'est pas le cas, fait une requête pour la récupérer
      * 3) Effectue la requête avec l'url et le token
-     * 4) Si on obtient en retour un 401 (token problablement invalide), récupère un nouveau token et rejoue la requête
+     * 4) Si on obtient en retour un 401 (token probablement invalide), récupère un nouveau token et rejoue la requête
      * 5) Stocke dans le bon cache la requête avant la retourner
      * @param uai L'UAI de l'établissement recherché
      * @param datemenu La date recherchée sous forme de String (YYYYMMJJ).
@@ -178,6 +178,7 @@ public class APIClient {
             final DynamicURLResponse dynamicURLResponse = initializeAndGetDynamicEndpoint(uai);
             if(dynamicURLResponse.getError() == 0){
                 dynamicURL.put(uai, dynamicURLResponse.getContenu());
+                log.debug("Association trouvée pour l'UAI " + uai);
             }else{
                 dynamicURL.put(uai, null);
                 throw new UnknownUAIException("Pas d'URL connue pour l'UAI " + uai);
@@ -188,30 +189,44 @@ public class APIClient {
             throw new UnknownUAIException("Pas d'URL connue pour l'UAI " + uai);
         }
 
+        // Si pour l'URL on a un token invalide on sort directement
+        if(cacheManager.getCache("token").get(url) != null){
+            log.debug("Requête pour retrouver le token stockée dans le cache erreur.");
+            throw new WebgerestRequestException("Erreur lors de l'authentification. Token invalide encore en cache.");
+        }
+
         //Troisième étape : lancer la requête, et se réauthentifier si le token est expiré
         try {
             serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
         }catch(WebClientResponseException webClientResponseException){
             log.debug("Erreur dans la requête : code erreur " + webClientResponseException.getStatusCode().value());
             // Si erreur 401 on récupère un nouveau token et on réessaye une fois
-            // TODO : quand on a 2 401 de suite pas de stockage en cache erreur ???
             if(webClientResponseException.getStatusCode().value() == 401){
                 log.debug("Récupération d'un nouveau token");
-                authToken.put(url, authenticateAndGetToken(url).getToken());
-                System.out.println("TOKEN : "+this.authToken);
+                AuthResponse authResponse = authenticateAndGetToken(url);
+                // Si on a une erreur sur l'authentification on retourne directement et on passe le token en cache erreur
+                if(authResponse.getError() == 1){
+                    log.debug("Mise en cache erreur de la requête pour récupérer le token. Authentification échouée.");
+                    cacheManager.getCache("token").put(url, "erreur");
+                    throw new WebgerestRequestException("Erreur lors de l'authentification. Message retourné : "
+                            + authResponse.getMessage());
+                }
+                // Sinon on réessaye
+                authToken.put(url, authResponse.getToken());
                 log.debug("Nouvelle requête avec le nouveau token");
                 try{
                     serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
                 }catch(WebClientResponseException webClientInternalResponseException){
                     log.debug("Nouvelle erreur, stockage de la requête dans le cache erreur");
-                    cacheManager.getCache("erreur").put(cacheKeyRequete, serviceDTO);
+                    // On passe volontairement un service non null au cache pour indiquer qu'on a un service en erreur associé à cette requête
+                    cacheManager.getCache("erreur").put(cacheKeyRequete, new ServiceDTO(null, 1, 0, null));
                     throw new WebgerestRequestException("Erreur innatendue lors de la requête "
                             + webClientInternalResponseException.getRequest() + "\nCode erreur retourné : "
                             + webClientInternalResponseException.getStatusCode().value());
                 }
             }
             else{
-                cacheManager.getCache("erreur").put(cacheKeyRequete, serviceDTO);
+                cacheManager.getCache("erreur").put(cacheKeyRequete, new ServiceDTO(null, 1, 0, null));
                 throw new WebgerestRequestException("Erreur innatendue lors de la requête "
                         + webClientResponseException.getRequest() + "\nCode erreur retourné : "
                         + webClientResponseException.getStatusCode().value());

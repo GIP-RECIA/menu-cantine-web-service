@@ -42,8 +42,18 @@
            memoryStoreEvictionPolicy="FIFO">
     </cache>
 
-    <!--  pour les réponses en erreur, on les garde 10 min -->
+    <!--  pour les réponses en erreur, on les garde 30 min -->
     <cache name="erreur"
+           eternal="false"
+           maxEntriesLocalHeap="1000"
+           diskPersistent="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="1800"
+           memoryStoreEvictionPolicy="LRU">
+    </cache>
+
+    <!--  cache spécial sur les erreurs de demande de token renouvelé toutes les 10 minutes -->
+    <cache name="token"
            eternal="false"
            maxEntriesLocalHeap="1000"
            diskPersistent="false"
