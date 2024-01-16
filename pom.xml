@@ -172,6 +172,16 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<packagingExcludes>
+						WEB-INF/classes/static/demo,
+						WEB-INF/classes/application-dev.yml, <!-- config locale de dev -->
+						WEB-INF/classes/application-unit.yml <!-- config des tests unitaires -->
+					</packagingExcludes>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>com.mycila</groupId>
 				<artifactId>license-maven-plugin</artifactId>
 				<version>3.0</version>
