@@ -169,9 +169,6 @@ public class APIClient {
             }
         }
 
-        // Si on passe par là, c'est que la requête n'était pas dans le cache
-        log.debug("Requête non stockée dans le cache. On va faire appel à l'API.");
-
         // Deuxième étape : regarder si on a l'URL associée à l'UAI
         if(!dynamicURL.containsKey(uai)){
             log.debug("Nouvel UAI, pas d'association connue");
@@ -194,6 +191,9 @@ public class APIClient {
             log.debug("Requête pour retrouver le token stockée dans le cache erreur.");
             throw new WebgerestRequestException("Erreur lors de l'authentification. Token invalide encore en cache.");
         }
+
+        // Si on passe par là, c'est que la requête n'était pas dans le cache
+        log.debug("Requête non stockée dans le cache. On va faire appel à l'API.");
 
         //Troisième étape : lancer la requête, et se réauthentifier si le token est expiré
         try {
