@@ -179,7 +179,7 @@ public class Semaine {
 			rankSsMenu = -1;
 		}
 
-		// TODO : à cause du front les plats vides ne fonctionne pas sur le premier sous-menu donc il faut en ajouter un vide
+		// A cause du front les plats vides ne fonctionne pas sur le premier sous-menu donc il faut en ajouter un vide
 		for (int rank = 0; rank <= nbSsMenu; rank++){
 			int nbMax = nbPlatMax.get(rank);
 			SousMenu newSousMenu;

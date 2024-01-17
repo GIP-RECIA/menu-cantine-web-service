@@ -144,7 +144,7 @@ public class MapperWebGerest implements IMapper {
         plat.setAllergens(buildAllergens(platDTO));
         // La family du plat permet de changer l'intitulé du sous-menu auquel appartient le plat
         plat.setFamily(mapperConfig.getSousMenuFinalName(platDTO.getType()));
-        plat.setLabels(new ArrayList<>()); // TODO : utilité ?
+        plat.setLabels(new ArrayList<>());
         plat.setLabelsInfo(buildLabels(platDTO));
         plat.setGemrcn(buildGemrcn(platDTO));
         plat.setNutritions(buildNutritions(platDTO));

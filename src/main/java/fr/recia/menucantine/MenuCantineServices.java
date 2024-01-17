@@ -30,6 +30,7 @@ import fr.recia.menucantine.config.MapperConfig;
 import fr.recia.menucantine.exception.NoDataExchangeException;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
+import fr.recia.menucantine.mapper.IMapper;
 import fr.recia.menucantine.mapper.MapperWebGerest;
 import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
@@ -55,7 +56,7 @@ public class MenuCantineServices {
 	APIClient apiClient;
 
 	@Autowired
-	MapperWebGerest mapper;
+	IMapper mapperWebGerest;
 
 	@Autowired
 	private MapperConfig mapperConfig;
@@ -132,7 +133,7 @@ public class MenuCantineServices {
 
 		// A partir de la liste des journées, on peut alors reconstituer une semaine
 		// On map la semaine sur l'ancien model pour l'envoyer au front, en donnant aussi la date de la requête et l'uai
-		final Semaine semaine = mapper.buildSemaine(journeeDTOList, today, uai);
+		final Semaine semaine = mapperWebGerest.buildSemaine(journeeDTOList, today, uai);
 
 		// Si le nombre de jours vaut 0, cela veut dire qu'on a pas de menu, on renvoie une exception
 		if(semaine.getNbJours() == 0){
