@@ -35,7 +35,6 @@ public class GemRcn {
 
 	private static final Logger log = LoggerFactory.getLogger(GemRcn.class);
 
-	private static final String DEFAULT_FILE = "classpath:GemRcn.csv";
 	private static final Pattern P_INT = Pattern.compile("\\s*,\\s*\"");
 	private static final Pattern P_STR = Pattern.compile("\"?\\s*,\\s*\"");
 	private static final Pattern P_END = Pattern.compile("\"(\\s*,\\s*\")?");
@@ -54,10 +53,6 @@ public class GemRcn {
 	
 	@Getter
 	String color;
-	
-	static {
-		GemRcn.loadFile(DEFAULT_FILE);
-	}
 	
 	public static void loadFile (String fileName)  {
 		try (Scanner scannerFile = new Scanner(ResourceUtils.getFile(fileName))) {

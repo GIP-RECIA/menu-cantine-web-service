@@ -175,7 +175,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<packagingExcludes>
-						WEB-INF/classes/static/demo,
+						WEB-INF/classes/static/demo/,
 						WEB-INF/classes/application-dev.yml, <!-- config locale de dev -->
 						WEB-INF/classes/application-unit.yml <!-- config des tests unitaires -->
 					</packagingExcludes>
