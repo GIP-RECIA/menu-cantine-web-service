@@ -20,18 +20,20 @@ Les différents fichiers du projet sont structurés de la manière suivante :
 │   │   │   └── META-INF
 │   │   ├── resources                    # Contient les fichiers de config par défaut et de ressources
 │   │   │   ├── application.yml
-│   │   │   ├── application-test.yml
+│   │   │   ├── application-unit.yml
 │   │   │   ├── logback.xml
 │   │   │   ├── ehcache.xml
-│   │   │   ├── demo                    # Contient une version du front déjà compilée pour faire des tests en local
+│   │   │   ├── demo                     # Contient une version du front déjà compilée pour faire des tests en local
 │   │   │   │   ├── demo.html
 │   │   │   │   ├── menu-cantine.js
 │   │   │   │   └── ...
-│   │   │   └── ...
-│   └── test                            # Contient les fichiers java pour les tests unitaires
+│   │   │   ├── img                      # Contient les images (pour les logos des labels) à afficher
+│   │   │   │   └── ...
+│   │   │   └── ...                      # Autres fichiers de ressources
+│   └── test                             # Contient les fichiers java pour les tests unitaires
 │       └── ...            
-├── target                              # Contient les classes compilées
-├── pom.xml                             # Pom du projet
+├── target                               # Contient les classes compilées
+├── pom.xml                              # Pom du projet
 └── README.md
 └── ...
 ```
@@ -54,8 +56,12 @@ Le package `fr.recia.menucatine` est lui structuré de la manière suivante :
 │   ├── RequeteHelper.java                   # Classe utilitaire, utilisée pour les convertions de dates par exemple
 │   └── Semaine.java                         # Objet semaine envoyé vers le front, consituté de adoria.beans
 │  
-├── config                                   # Configuration de la sécurité, des services et des sous-menus  
-│   └── ...
+├── config                                   # Configuration de la sécurité, du webclient, des services et des sous-menus  
+│   ├── CorsConfig.java
+│   ├── MapperConfig.java
+│   ├── SecurityConfiguration.java
+│   ├── SousMenuProperties.java
+│   └── WebClientConfiguration.java
 │
 ├── dto                                      # Classes mappées depuis le JSON récupéré de l'API
 │   ├── JourneeDTO.java                      # Objet construit à partir des deux classes ci-dessous
@@ -63,7 +69,11 @@ Le package `fr.recia.menucatine` est lui structuré de la manière suivante :
 │   └── ServiceDTO.java                      # Représente un service selon l'API
 │
 ├── exception                                # Les différentes exceptions personnalisées
-│   └── ...
+│   ├── ResponseExceptionData.java           # Représente les données envoyées au front lors de la levée d'une exception
+│   ├── CustomMenuCantineException.java      # Représente une exception custom levée par le programme
+│   ├── NoDataExchangeException.java         # Exception dans le cas ou le partage des données est désactivée
+│   ├── UnknownUAIException.java             # Exception dans le cas ou l'UAI est inconnu
+│   └── WebgerestRequestException.java       # Exception autre lors de la communication avec l'API
 │
 ├── mapper                                   # Permet de transformer les objets de la nouvelle API en objets de l'ancienne API
 │   ├── IMapper.java
@@ -90,9 +100,9 @@ Le package `adoria.beans` définit les différents objets qui vont constituer un
 
 Le **controlleur** commence par récupérer la requête faite depuis l'application. Celle-ci contient dans son `body` un objet `Requete` qui contient notamment la date et l'UAI du menu demandé. Le controlleur appelle alors le **service** pour qu'il construise un objet `Semaine`. Pour constuire cet objet, le service va faire appel à l'API.
 
-Afin de faire une requête à l'API, plusieurs **opérations préalables** sont nécéssaires :
+Afin de faire une requête à l'API, plusieurs **opérations préalables** sont nécessaires :
 - Récupérer **l'URL** sur laquelle on va faire la requête. Pour cela on doit faire une première requête sur une URL particulière avec l'UAI de l'établissement donc on veut récupérer le menu. Un **dictionnaire** associe les UAI déjà demandés à leur URL afin de ne pas avoir à refaire une requête à chaque fois.
-- Récupérer le **token** pour s'authentifier lorsqu'on effectue la requête. Ce token est demandé sur une l'URL récupérée ci-dessus avec un `client_secret` et un `client_id`. De la même manière, un **dictionnaire** associe les URL déjà demandés à leur token afin de ne pas avoir à refaire une requête à chaque fois.
+- Récupérer le **token** pour s'authentifier lorsqu'on effectue la requête. Ce token est demandé sur l'URL récupérée ci-dessus avec un `client_secret` et un `client_id`. De la même manière, un **dictionnaire** associe les URL déjà demandés à leur token afin de ne pas avoir à refaire une requête à chaque fois.
 
 Une fois ces deux éléments récupérés, on peut faire la requête à l'API. Pour cela on effectue un appel sur l'URL associée avec l'UAI avec le token dans le champ `Authorization`, et comme paramètres la `date`, `l'UAI` et le `numéro de service`. Pour récupérer une semaine entière, on doit donc faire **20 requêtes** (4 services pour 5 jours).
 
@@ -104,8 +114,9 @@ L'application dispose d'un système de cache afin de ne pas trop solliciter l'AP
 - Le cache `requetes` qui stocke les réponses de l'API pour les dates futures. Ce cache est renouvellé de temps en temps.
 - Le cache `permanant` qui stocke les réponses de l'API pour les dates passées. Ce cache n'est pas renouvellé.
 - Le cache `erreur` qui stocke les réponses en erreur de l'API. Ce cache est renouvellé très régulièrement.
+- Le cache `token` qui stocke les échecs d'obtention d'un token pour une url donnée. Ce cache est renouvellé très régulièrement.
 
-La logique du cache est gérée directement dans le classe `APIClient`. C'est elle qui va regarder si les objets sont dans le cache avant de faire les requêtes, et stocker les réponses de l'API dans le cache correspondant.
+La logique du cache est gérée directement dans la classe `APIClient`. C'est elle qui va regarder si les objets sont dans le cache avant de faire les requêtes, et stocker les réponses de l'API dans le cache correspondant.
 
 # Déploiement
 
@@ -113,15 +124,16 @@ La logique du cache est gérée directement dans le classe `APIClient`. C'est el
 
 Avant tout, il faut commencer par compléter la configuration de l'application et notamment les informations relatives à l'API avec laquelle communiquer. Intellij est recommandé pour un lancement en local : il suffit d'ajouter une configuration d'application sur la classe `fr.recia.menucantine.MenuCantineApplication` après avoir ouvert le projet.
 L'application est alors accessible sur l'URL suivante : `https://localhost:PORT/menuCantine/demo/demo.html`
+Attention si on change la classe `ServiceDTO` ou `PlatDTO` il faut bien penser à supprimer le cache avant de relancer l'application.
 
 ## Nouvelle version du front
 
-Pour tester une nouvelle version du front avec le back, il suffit de copier les fichiers `.js` compilés dans le dossier `ressources/static/demo` (attention à ne pas toucher le fichier `demo.html`).
+Pour tester une nouvelle version du front avec le back, il suffit de copier les fichiers `.js` compilés dans le dossier `ressources/static/demo` (attention à ne pas toucher le fichier `demo.html` sauf si nécessaire).
 
 ## Constuire un war
 
-Pour constuire un war, il suffit de faire un simple `mvn clean package`.
-Les tests unitaires selons lancés automatiquement, et le war sera disponible dans `target`.
+Pour construire un war, il suffit de faire un simple `mvn clean package`.
+Les tests unitaires seront lancés automatiquement, et le war sera disponible dans `target`.
 
 ## Pousser une snapshot
 
@@ -129,7 +141,7 @@ Pour push une snapshot, il suffit de faire un `mvn clean package deploy` (attent
 
 ## Pousser une release
 
-Pour push une release, on commence par un `mvn release:clean release:prepare` puis on fait un `mvn realease:perfrom`.
+Pour push une release, on commence par un `mvn release:clean release:prepare`, puis on fait un `mvn realease:perfrom`.
 
 ## Gestion des licenses
 
@@ -139,18 +151,18 @@ Le template de la license ajoutée est dans `etc/header.template`.
 
 # Configuration
 
-La configuration se trouve dans le fichier `application.yml` dans les ressources. Elle doit **impérativement** être complétée avant de pouvoir lancer l'application, même en local. Il faut compléter au minimum les valeurs pour le ssl ainsi que les identifiants pour l'Api. Le reste des valeurs peuvent être laisssées par défaut dans un premier temps.
+La configuration par défaut se trouve dans le fichier `application.yml` dans les ressources. Elle doit **impérativement** être complétée avant de pouvoir lancer l'application, même en local. Il faut compléter au minimum les identifiants pour l'API.
 
 | Propriété                          | Signification                                                                             | Valeur par défaut                 |
 |------------------------------------|-------------------------------------------------------------------------------------------|-----------------------------------|
-| server.port                        | Port du serveur                                                                           | 8081                              | 
+| server.port                        | Port du serveur                                                                           | 80                                | 
 | server.servlet.context-path        | Path du servlet                                                                           | /menuCantine                      |
 | soffit.jwt.signatureKey            | Clé pour le soffit                                                                        | *à compléter*                     |
 | adoria.gemrcn-csv                  | Chemin vers le fichier contenant les gemrcn à charger                                     | classpath:GemRcn.csv              |
 | adoria.labels-csv                  | Chemin vers le fichier contenant les labels à charger                                     | classpath:labels.csv              |
 | api.initial-query-url              | URL complète de l'API sur laquelle on récupère une URL dynamique par UAI                  | https://api.webgerest.fr/url      |
-| api.auth-endpoint                  | Endpoint sur lequelle on doit faire une requête pour s'authentifier                       | /auth                             |
-| api.menu-endpoint                  | Endpoint sur lequelle on doit faire une requête pour récupérer un menu                    | /menus                            |
+| api.auth-endpoint                  | Endpoint sur lequel on doit faire une requête pour s'authentifier                         | /auth                             |
+| api.menu-endpoint                  | Endpoint sur lequel on doit faire une requête pour récupérer un menu                      | /menus                            |
 | api.client_id                      | L'identifiant permettant de s'authentifier pour récupérer un token                        | *à compléter*                     |
 | api.menu-endpoint                  | Le mot de passe permettant de s'authentifier pour récupérer un token                      | *à compléter*                     |
 | logging.level.fr.recia.menucantine | Niveau de log en local                                                                    | debug                             |
@@ -165,7 +177,7 @@ La configuration se trouve dans le fichier `application.yml` dans les ressources
 | security.cors.allowedMethods       | La liste des allowedMethods pour la config du CORS                                        | *à compléter*                     |
 
 # Tests unitaires
-Les tests unitaires sont lancés avec un profil `unit` qui utilise une configuration particulière `application-test.yml` qui désactive le cache. Certaines classes telles que `RestClientCertConfiguration` ne sont également pas chargées lorsqu'on utilise le profil de test afin de pouvoir passer la sécurité lorsqu'on veut tester le controlleur. Les différentes classes pour les tests sont les suivantes :
+Les tests unitaires sont lancés avec un profil `unit` qui utilise une configuration particulière `application-unit.yml` qui désactive le cache. Les différentes classes pour les tests sont les suivantes :
 ```  
 test  
 ├── java                                  
