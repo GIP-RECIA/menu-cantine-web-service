@@ -30,3 +30,5 @@ mvnw*
 *.log
 *.org
 /src/main/resources/config/application.yml
+/src/main/resources/application-dev.yml
+ehcache.disk.store.dir/
