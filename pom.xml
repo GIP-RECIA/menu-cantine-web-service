@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<login.ent>pierre.legay</login.ent>
+		<login.ent>nathan.cailbourdin</login.ent>
 	</properties>
 	<repositories>
 		<repository>
