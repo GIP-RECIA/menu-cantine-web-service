@@ -78,6 +78,7 @@ public class SecurityConfiguration{
 				.addFilter(filter)
 				.authorizeRequests()
 					.antMatchers(HttpMethod.GET, "/health-check").anonymous()
+					.antMatchers(HttpMethod.HEAD, "/health-check").anonymous()
 					.antMatchers(HttpMethod.GET, "/api/menu").authenticated()
 					.antMatchers(HttpMethod.GET, "/img/*").permitAll()
 					.anyRequest().denyAll()
