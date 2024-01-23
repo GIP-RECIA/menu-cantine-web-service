@@ -47,6 +47,10 @@ public class MenuCantineController {
 		}catch (CustomMenuCantineException exception){
 			log.error(exception.getMessage());
 			return new ResponseEntity<>(new ResponseExceptionData(exception.getDisplayMessage()), HttpStatus.NOT_FOUND);
+		}catch (Exception other){
+			log.error(other.getMessage());
+			return new ResponseEntity<>(new ResponseExceptionData("Une erreur est survenue. Les menus de cantine sont indisponibles pour le moment"),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -64,6 +68,10 @@ public class MenuCantineController {
 		}catch (CustomMenuCantineException exception){
 			log.error(exception.getMessage());
 			return new ResponseEntity<>(new ResponseExceptionData(exception.getDisplayMessage()), HttpStatus.NOT_FOUND);
+		}catch (Exception other){
+			log.error(other.getMessage());
+			return new ResponseEntity<>(new ResponseExceptionData("Une erreur est survenue. Les menus de cantine sont indisponibles pour le moment"),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

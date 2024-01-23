@@ -45,6 +45,7 @@ import fr.recia.menucantine.adoria.beans.Labels;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.RequeteHelper;
 import fr.recia.menucantine.beans.Semaine;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @Configuration
 @ManagedBean
@@ -136,9 +137,9 @@ public class MenuCantineServices {
 		final Semaine semaine = mapperWebGerest.buildSemaine(journeeDTOList, today, uai);
 
 		// Si le nombre de jours vaut 0, cela veut dire qu'on a pas de menu, on renvoie une exception
-		if(semaine.getNbJours() == 0){
+		if(semaine.getNbJours() == 0) {
 			log.warn("Aucun menu trouvé pour l'UAI " + uai + " pour la semaine du "
-					+ semaine.getDebut()+ " au " + semaine.getFin());
+					+ semaine.getDebut() + " au " + semaine.getFin());
 		}
 
 		return semaine;
