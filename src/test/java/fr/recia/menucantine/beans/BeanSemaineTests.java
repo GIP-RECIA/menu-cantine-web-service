@@ -19,10 +19,12 @@ import fr.recia.menucantine.adoria.beans.Journee;
 import fr.recia.menucantine.adoria.beans.Plat;
 import fr.recia.menucantine.adoria.beans.Service;
 import fr.recia.menucantine.adoria.beans.SousMenu;
+import net.sf.ehcache.CacheManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -39,6 +41,9 @@ public class BeanSemaineTests {
 
     private Journee journee1;
     private Journee journee2;
+
+    @MockBean
+    private CacheManager cacheManager;
 
     @Before
     public void setup(){

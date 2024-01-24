@@ -19,11 +19,13 @@ import fr.recia.menucantine.dto.ServiceDTO;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
 import lombok.Data;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -145,8 +147,10 @@ public class APIClient {
         final CacheKeyRequete cacheKeyRequete = new CacheKeyRequete(uai, datemenu, service);
 
         // Au préalable, on regarde si la requête n'est pas dans le cache d'erreur
-        ServiceDTO serviceDTO = cacheManager.getCache("erreur").get(cacheKeyRequete, ServiceDTO.class);
-        if(serviceDTO != null){
+        ServiceDTO serviceDTO = null;
+        Element element = cacheManager.getCache("erreur").get(cacheKeyRequete);
+        if(element != null){
+            serviceDTO = (ServiceDTO) element.getObjectValue();
             log.debug("Récupération de la réponse de la requête depuis le cache erreur");
             return serviceDTO;
         }
@@ -154,16 +158,18 @@ public class APIClient {
         // On va regarder dans un cache ou l'autre en fonction de la date actuelle par rapport à la date de la requête
         // Cache permanent : requête sur une date passée
         if(today.isAfter(dateRequete)){
-            serviceDTO = cacheManager.getCache("permanent").get(cacheKeyRequete, ServiceDTO.class);
-            if(serviceDTO != null){
+            element = cacheManager.getCache("permanent").get(cacheKeyRequete);
+            if(element != null){
+                serviceDTO = (ServiceDTO) element.getObjectValue();
                 log.debug("Récupération de la réponse de la requête depuis le cache permanent");
                 return serviceDTO;
             }
         }
         // Cache requetes : requête sur une date future
         else{
-            serviceDTO = cacheManager.getCache("requetes").get(cacheKeyRequete, ServiceDTO.class);
-            if(serviceDTO != null){
+            element = cacheManager.getCache("requetes").get(cacheKeyRequete);
+            if(element != null){
+                serviceDTO = (ServiceDTO) element.getObjectValue();
                 log.debug("Récupération de la réponse de la requête depuis le cache requetes");
                 return serviceDTO;
             }
@@ -207,7 +213,7 @@ public class APIClient {
                 // Si on a une erreur sur l'authentification on retourne directement et on passe le token en cache erreur
                 if(authResponse.getError() == 1){
                     log.debug("Mise en cache erreur de la requête pour récupérer le token. Authentification échouée.");
-                    cacheManager.getCache("token").put(url, "erreur");
+                    cacheManager.getCache("token").put(new Element(url, "erreur"));
                     throw new WebgerestRequestException("Erreur lors de l'authentification. Message retourné : "
                             + authResponse.getMessage());
                 }
@@ -219,14 +225,14 @@ public class APIClient {
                 }catch(WebClientResponseException webClientInternalResponseException){
                     log.debug("Nouvelle erreur, stockage de la requête dans le cache erreur");
                     // On passe volontairement un service non null au cache pour indiquer qu'on a un service en erreur associé à cette requête
-                    cacheManager.getCache("erreur").put(cacheKeyRequete, new ServiceDTO(null, 1, 0, null));
+                    cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, new ServiceDTO(null, 1, 0, null)));
                     throw new WebgerestRequestException("Erreur innatendue lors de la requête "
                             + webClientInternalResponseException.getRequest() + "\nCode erreur retourné : "
                             + webClientInternalResponseException.getStatusCode().value());
                 }
             }
             else{
-                cacheManager.getCache("erreur").put(cacheKeyRequete, new ServiceDTO(null, 1, 0, null));
+                cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, new ServiceDTO(null, 1, 0, null)));
                 throw new WebgerestRequestException("Erreur innatendue lors de la requête "
                         + webClientResponseException.getRequest() + "\nCode erreur retourné : "
                         + webClientResponseException.getStatusCode().value());
@@ -238,15 +244,15 @@ public class APIClient {
             //Avant de retourner la valeur on la place dans le bon cache
             if(today.isAfter(dateRequete)){
                 log.debug("Stockage de la réponse de la requête dans le cache permanent");
-                cacheManager.getCache("permanent").put(cacheKeyRequete, serviceDTO);
+                cacheManager.getCache("permanent").put(new Element(cacheKeyRequete, serviceDTO));
             }else{
                 log.debug("Stockage de la réponse de la requête dans le cache requetes");
-                cacheManager.getCache("requetes").put(cacheKeyRequete, serviceDTO);
+                cacheManager.getCache("requetes").put(new Element(cacheKeyRequete, serviceDTO));
             }
         }
         // Une requête qui n'est pas en erreur mais retourne une erreur doit aussi être placée dans le cache erreur
         else{
-            cacheManager.getCache("erreur").put(cacheKeyRequete, serviceDTO);
+            cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, serviceDTO));
         }
 
         log.debug("Retour de la réponse récupérée depuis l'API");

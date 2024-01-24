@@ -25,10 +25,12 @@ import fr.recia.menucantine.config.MapperConfig;
 import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
+import net.sf.ehcache.CacheManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -57,6 +59,9 @@ public class MapperWebgerestTests {
 
 	@Autowired
 	private MapperConfig mapperConfig;
+
+	@MockBean
+	private CacheManager cacheManager;
 
 	@Test
 	public void testMapPlatDTOToPlat(){

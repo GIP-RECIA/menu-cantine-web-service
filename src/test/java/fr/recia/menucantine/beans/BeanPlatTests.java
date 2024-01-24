@@ -16,9 +16,11 @@
 package fr.recia.menucantine.beans;
 
 import fr.recia.menucantine.adoria.beans.Plat;
+import net.sf.ehcache.CacheManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -28,6 +30,9 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 @ActiveProfiles({ "unit" })
 public class BeanPlatTests {
+
+    @MockBean
+    private CacheManager cacheManager;
 
     @Test
     public void testCreationPlatVide(){
