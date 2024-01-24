@@ -17,51 +17,61 @@ under the License.
 
 This project includes:
   Apache Commons Codec under Apache License, Version 2.0
-  Apache Commons IO under Apache License, Version 2.0
   Apache Commons Lang under Apache License, Version 2.0
   Apache HttpClient under Apache License, Version 2.0
   Apache HttpCore under Apache License, Version 2.0
   Apache Log4j API under Apache License, Version 2.0
   Apache Log4j to SLF4J Adapter under Apache License, Version 2.0
+  asm under BSD-3-Clause
   ASM based accessors helper used by json-smart under The Apache Software License, Version 2.0
-  ASM Core under BSD
   AssertJ fluent assertions under Apache License, Version 2.0
-  Bean Validation API under Apache License 2.0
   Byte Buddy (without dependencies) under Apache License, Version 2.0
-  Byte Buddy Java agent under Apache License, Version 2.0
-  ClassMate under The Apache Software License, Version 2.0
+  Byte Buddy agent under Apache License, Version 2.0
+  Core functionality for the Reactor Netty library under The Apache Software License, Version 2.0
   ehcache under The Apache Software License, Version 2.0
-  Expression Language 3.0 under CDDL + GPLv2 with classpath exception
-  Extended StAX API under Dual license consisting of the CDDL v1.1 and GPL v2
-  Hamcrest Core under New BSD License
-  Hamcrest library under New BSD License
-  Hibernate Validator Engine under Apache License 2.0
+  Extended StAX API under Eclipse Distribution License - v 1.0
+  Hamcrest under BSD License 3
+  Hamcrest Core under BSD License 3
+  HTTP functionality for the Reactor Netty library under The Apache Software License, Version 2.0
   Jackson datatype: jdk8 under The Apache Software License, Version 2.0
   Jackson datatype: JSR310 under The Apache Software License, Version 2.0
   Jackson-annotations under The Apache Software License, Version 2.0
   Jackson-core under The Apache Software License, Version 2.0
   jackson-databind under The Apache Software License, Version 2.0
   Jackson-module-parameter-names under The Apache Software License, Version 2.0
+  Jakarta Activation under EDL 1.0
+  Jakarta Annotations API under EPL 2.0 or GPL2 w/ CPE
+  Jakarta SOAP Implementation under Eclipse Distribution License - v 1.0
+  Jakarta SOAP with Attachments API under Eclipse Distribution License - v 1.0
+  Jakarta Web Services Metadata API under Eclipse Distribution License - v 1.0
+  Jakarta XML Binding API under Eclipse Distribution License - v 1.0
+  Jakarta XML Web Services API under Eclipse Distribution License - v 1.0
   JASYPT: Java Simplified Encryption under The Apache Software License, Version 2.0
-  JavaBeans Activation Framework API jar under CDDL/GPLv2+CE
   javax.annotation API under CDDL + GPLv2 with classpath exception
-  javax.xml.soap API under CDDL + GPLv2 with classpath exception
-  JAX-WS API under CDDL + GPLv2 with classpath exception
-  jaxb-api under CDDL 1.1 or GPL2 w/ CPE
-  JBoss Logging 3 under Apache License, version 2.0
+  JJWT :: API under Apache License, Version 2.0
+  JJWT :: Extensions :: Jackson under Apache License, Version 2.0
+  JJWT :: Impl under Apache License, Version 2.0
   JSON library from Android SDK under Apache License 2.0
   JSON Small and Fast Parser under The Apache Software License, Version 2.0
-  JSON Web Token support for the JVM under Apache License, Version 2.0
   JSONassert under The Apache Software License, Version 2.0
+  JSR107 API and SPI under Apache License, Version 2.0
   JUL to SLF4J bridge under MIT License
   JUnit under Eclipse Public License 1.0
+  JUnit Jupiter (Aggregator) under Eclipse Public License v2.0
+  JUnit Jupiter API under Eclipse Public License v2.0
+  JUnit Jupiter Engine under Eclipse Public License v2.0
+  JUnit Jupiter Params under Eclipse Public License v2.0
+  JUnit Platform Commons under Eclipse Public License v2.0
+  JUnit Platform Engine API under Eclipse Public License v2.0
+  JUnit Vintage Engine under Eclipse Public License v2.0
   Logback Classic Module under Eclipse Public License - v 1.0 or GNU Lesser General Public License
   Logback Core Module under Eclipse Public License - v 1.0 or GNU Lesser General Public License
   menu-cantine under Apache License, Version 2.0
-  MIME streaming extension under Eclipse Distribution License - v 1.0
   mockito-core under The MIT License
+  mockito-junit-jupiter under The MIT License
   Netty/Buffer under Apache License, Version 2.0
   Netty/Codec under Apache License, Version 2.0
+  Netty/Codec/DNS under Apache License, Version 2.0
   Netty/Codec/HTTP under Apache License, Version 2.0
   Netty/Codec/HTTP2 under Apache License, Version 2.0
   Netty/Codec/Socks under Apache License, Version 2.0
@@ -69,38 +79,25 @@ This project includes:
   Netty/Handler under Apache License, Version 2.0
   Netty/Handler/Proxy under Apache License, Version 2.0
   Netty/Resolver under Apache License, Version 2.0
+  Netty/Resolver/DNS under Apache License, Version 2.0
+  Netty/Resolver/DNS/Classes/MacOS under Apache License, Version 2.0
+  Netty/Resolver/DNS/Native/MacOS under Apache License, Version 2.0
   Netty/Transport under Apache License, Version 2.0
+  Netty/Transport/Classes/Epoll under Apache License, Version 2.0
   Netty/Transport/Native/Epoll under Apache License, Version 2.0
   Netty/Transport/Native/Unix/Common under Apache License, Version 2.0
-  nio-multipart-parser under The Apache Software License, Version 2.0
   Non-Blocking Reactive Foundation for the JVM under Apache License, Version 2.0
-  Objenesis under Apache 2
-  org.synchronoss.cloud:nio-stream-storage under The Apache Software License, Version 2.0
+  Objenesis under Apache License, Version 2.0
+  org.apiguardian:apiguardian-api under The Apache License, Version 2.0
+  org.opentest4j:opentest4j under The Apache License, Version 2.0
   org.xmlunit:xmlunit-core under The Apache Software License, Version 2.0
   project ':json-path' under The Apache Software License, Version 2.0
   Project Lombok under The MIT License
-  Reactive Streams Netty driver under The Apache Software License, Version 2.0
-  reactive-streams under CC0
-  saaj-impl under CDDL + GPLv2 with classpath exception
+  reactive-streams under MIT-0
   SLF4J API Module under MIT License
   SnakeYAML under Apache License, Version 2.0
   Spring AOP under Apache License, Version 2.0
   Spring Beans under Apache License, Version 2.0
-  Spring Boot under Apache License, Version 2.0
-  Spring Boot AutoConfigure under Apache License, Version 2.0
-  Spring Boot Cache Starter under Apache License, Version 2.0
-  Spring Boot Json Starter under Apache License, Version 2.0
-  Spring Boot Logging Starter under Apache License, Version 2.0
-  Spring Boot Reactor Netty Starter under Apache License, Version 2.0
-  Spring Boot Security Starter under Apache License, Version 2.0
-  Spring Boot Starter under Apache License, Version 2.0
-  Spring Boot Test under Apache License, Version 2.0
-  Spring Boot Test Auto-Configure under Apache License, Version 2.0
-  Spring Boot Test Starter under Apache License, Version 2.0
-  Spring Boot Tomcat Starter under Apache License, Version 2.0
-  Spring Boot Web Services Starter under Apache License, Version 2.0
-  Spring Boot Web Starter under Apache License, Version 2.0
-  Spring Boot WebFlux Starter under Apache License, Version 2.0
   Spring Commons Logging Bridge under Apache License, Version 2.0
   Spring Context under Apache License, Version 2.0
   Spring Context Support under Apache License, Version 2.0
@@ -111,9 +108,25 @@ This project includes:
   Spring Web under Apache License, Version 2.0
   Spring Web MVC under Apache License, Version 2.0
   Spring WebFlux under Apache License, Version 2.0
-  spring-security-config under The Apache Software License, Version 2.0
-  spring-security-core under The Apache Software License, Version 2.0
-  spring-security-web under The Apache Software License, Version 2.0
+  spring-boot under Apache License, Version 2.0
+  spring-boot-autoconfigure under Apache License, Version 2.0
+  spring-boot-starter under Apache License, Version 2.0
+  spring-boot-starter-cache under Apache License, Version 2.0
+  spring-boot-starter-json under Apache License, Version 2.0
+  spring-boot-starter-logging under Apache License, Version 2.0
+  spring-boot-starter-reactor-netty under Apache License, Version 2.0
+  spring-boot-starter-security under Apache License, Version 2.0
+  spring-boot-starter-test under Apache License, Version 2.0
+  spring-boot-starter-tomcat under Apache License, Version 2.0
+  spring-boot-starter-web under Apache License, Version 2.0
+  spring-boot-starter-web-services under Apache License, Version 2.0
+  spring-boot-starter-webflux under Apache License, Version 2.0
+  spring-boot-test under Apache License, Version 2.0
+  spring-boot-test-autoconfigure under Apache License, Version 2.0
+  spring-security-config under Apache License, Version 2.0
+  spring-security-core under Apache License, Version 2.0
+  spring-security-crypto under Apache License, Version 2.0
+  spring-security-web under Apache License, Version 2.0
   spring-ws-core under Apache License, Version 2.0
   spring-xml under Apache License, Version 2.0
   tomcat-embed-core under Apache License, Version 2.0
