@@ -18,6 +18,7 @@ package fr.recia.menucantine;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
 import fr.recia.menucantine.config.MapperConfig;
+import fr.recia.menucantine.config.UAIConfig;
 import fr.recia.menucantine.dto.ServiceDTO;
 import fr.recia.menucantine.exception.CustomMenuCantineException;
 import fr.recia.menucantine.exception.NoDataExchangeException;
@@ -61,6 +62,9 @@ public class MenuCantineServiceTests {
 
     @Mock
     private MapperConfig mapperConfig;
+
+    @Mock
+    private UAIConfig uaiConfig;
 
     @InjectMocks
     private MenuCantineServices menuCantineServices;
