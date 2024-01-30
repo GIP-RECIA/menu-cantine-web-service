@@ -24,6 +24,8 @@ import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.LabelDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +36,8 @@ import java.util.*;
 
 @Component
 public class MapperWebGerest implements IMapper {
+
+    private static final Logger log = LoggerFactory.getLogger(MapperWebGerest.class);
 
     @Autowired
     private MapperConfig mapperConfig;
@@ -111,10 +115,14 @@ public class MapperWebGerest implements IMapper {
         for(PlatDTO platDTO: serviceDTO.getContenu()){
             if(!sousMenuMap.containsKey(platDTO.getType())){
                 // Tri des menus fait grâce à l'enum EnumTypeSousMenu, pas d'info dans l'API autre que le type
-                SousMenu sousMenu = new SousMenu(new ArrayList<>(), mapperConfig.getSousMenuRank(platDTO.getType()));
-                sousMenu.setNbPlats(0);
-                sousMenu.addChoix(buildPlat(platDTO));
-                sousMenuMap.put(platDTO.getType(), sousMenu);
+                if(mapperConfig.getSousmenus().containsKey(platDTO.getType())) {
+                    SousMenu sousMenu = new SousMenu(new ArrayList<>(), mapperConfig.getSousMenuRank(platDTO.getType()));
+                    sousMenu.setNbPlats(0);
+                    sousMenu.addChoix(buildPlat(platDTO));
+                    sousMenuMap.put(platDTO.getType(), sousMenu);
+                }else{
+                    log.error("Nom de sous-menu "+platDTO.getType()+" inconnu.");
+                }
             }
             else{
                 SousMenu sousMenu = sousMenuMap.get(platDTO.getType());
