@@ -3,14 +3,14 @@ ordre; nom; logo; comment
 2; IGP; logoIGP.png;
 3; STG; logoSTG.png;
 4; AOP; logoAOP.png;
-5; AOC; aoc.png; ??? OK
-6; HVE; logoHVE.png;
-7; CE 2 - CERTIF ENV NIV2; logoHVE.png; ??
+5; AOC; aoc.png;
+6; Haute Valeur Environnementale; logoHVE.png;
+7; Certification Environnementale - Niveau 2; logoHVE.png;
 8; Pêche Durable; LogoPecheDurable.png.png;
 9; RUP; logoRUP.png;
 10; Commerce Equitable; logoCommerceEquitable.png;
 11; Mention Fermier; logoFermier.png;
-12; Bleu Blanc Coeur; bleublanccoeur.png; ?? OK
+12; Bleu Blanc Coeur; bleublanccoeur.png;
 13; Extern Environnementale; logoExternalite.png;
 1000; BIO; ab-transp.png;
 1001; Fait Maison; maison.png;

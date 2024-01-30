@@ -153,28 +153,29 @@ Le template de la license ajoutée est dans `etc/header.template`.
 
 La configuration par défaut se trouve dans le fichier `application.yml` dans les ressources. Elle doit **impérativement** être complétée avant de pouvoir lancer l'application, même en local. Il faut compléter au minimum les identifiants pour l'API.
 
-| Propriété                          | Signification                                                                             | Valeur par défaut                 |
-|------------------------------------|-------------------------------------------------------------------------------------------|-----------------------------------|
-| server.port                        | Port du serveur                                                                           | 80                                | 
-| server.servlet.context-path        | Path du servlet                                                                           | /menuCantine                      |
-| soffit.jwt.signatureKey            | Clé pour le soffit                                                                        | *à compléter*                     |
-| adoria.gemrcn-csv                  | Chemin vers le fichier contenant les gemrcn à charger                                     | classpath:GemRcn.csv              |
-| adoria.labels-csv                  | Chemin vers le fichier contenant les labels à charger                                     | classpath:labels.csv              |
-| api.initial-query-url              | URL complète de l'API sur laquelle on récupère une URL dynamique par UAI                  | https://api.webgerest.fr/url      |
-| api.auth-endpoint                  | Endpoint sur lequel on doit faire une requête pour s'authentifier                         | /auth                             |
-| api.menu-endpoint                  | Endpoint sur lequel on doit faire une requête pour récupérer un menu                      | /menus                            |
-| api.client_id                      | L'identifiant permettant de s'authentifier pour récupérer un token                        | *à compléter*                     |
-| api.menu-endpoint                  | Le mot de passe permettant de s'authentifier pour récupérer un token                      | *à compléter*                     |
-| logging.level.fr.recia.menucantine | Niveau de log en local                                                                    | debug                             |
-| spring.cache.type                  | La librairie utilisée pour la gestion du cache                                            | ehcache                           |
-| mapper.services                    | Un dictionnaire des services avec le nom et le numéro de chaque service                   | *à voir directement dans la conf* |
-| mapper.sousmenus                   | Un dictionnaire des sous-menus avec le nom, le nom final et le numéro de chaque sous-menu | *à voir directement dans la conf* |
-| menucantine.demo                   | Si le mode démo locale est actif (uniquement pour les tests en local)                     | false                             |
-| security.cors.enabled              | Si le CORS est activé                                                                     | false                             |
-| security.cors.allowedOrigins       | La liste des allowedOrigins pour la config du CORS                                        | *à compléter*                     |
-| security.cors.exposedHeaders       | La liste des exposedHeaders pour la config du CORS                                        | *à compléter*                     |
-| security.cors.allowedHeaders       | La liste des allowedHeaders pour la config du CORS                                        | *à compléter*                     |
-| security.cors.allowedMethods       | La liste des allowedMethods pour la config du CORS                                        | *à compléter*                     |
+| Propriété                          | Signification                                                                                               | Valeur par défaut                 |
+|------------------------------------|-------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| server.port                        | Port du serveur                                                                                             | 80                                | 
+| server.servlet.context-path        | Path du servlet                                                                                             | /menuCantine                      |
+| soffit.jwt.signatureKey            | Clé pour le soffit                                                                                          | *à compléter*                     |
+| adoria.gemrcn-csv                  | Chemin vers le fichier contenant les gemrcn à charger                                                       | classpath:GemRcn.csv              |
+| adoria.labels-csv                  | Chemin vers le fichier contenant les labels à charger                                                       | classpath:labels.csv              |
+| api.initial-query-url              | URL complète de l'API sur laquelle on récupère une URL dynamique par UAI                                    | https://api.webgerest.fr/url      |
+| api.auth-endpoint                  | Endpoint sur lequel on doit faire une requête pour s'authentifier                                           | /auth                             |
+| api.menu-endpoint                  | Endpoint sur lequel on doit faire une requête pour récupérer un menu                                        | /menus                            |
+| api.client_id                      | L'identifiant permettant de s'authentifier pour récupérer un token                                          | *à compléter*                     |
+| api.menu-endpoint                  | Le mot de passe permettant de s'authentifier pour récupérer un token                                        | *à compléter*                     |
+| logging.level.fr.recia.menucantine | Niveau de log en local                                                                                      | debug                             |
+| spring.cache.type                  | La librairie utilisée pour la gestion du cache                                                              | ehcache                           |
+| mapper.services                    | Un dictionnaire des services avec le nom et le numéro de chaque service                                     | *à voir directement dans la conf* |
+| mapper.sousmenus                   | Un dictionnaire des sous-menus avec le nom, le nom final et le numéro de chaque sous-menu                   | *à voir directement dans la conf* |
+| uais.regroupement                  | Un dictionnaire associant un UAI à un autre (lorsque la clé est demandée, c'est la valeur qui sera utlisée) | *à voir directement dans la conf* |
+| menucantine.demo                   | Si le mode démo locale est actif (uniquement pour les tests en local)                                       | false                             |
+| security.cors.enabled              | Si le CORS est activé                                                                                       | false                             |
+| security.cors.allowedOrigins       | La liste des allowedOrigins pour la config du CORS                                                          | *à compléter*                     |
+| security.cors.exposedHeaders       | La liste des exposedHeaders pour la config du CORS                                                          | *à compléter*                     |
+| security.cors.allowedHeaders       | La liste des allowedHeaders pour la config du CORS                                                          | *à compléter*                     |
+| security.cors.allowedMethods       | La liste des allowedMethods pour la config du CORS                                                          | *à compléter*                     |
 
 # Tests unitaires
 Les tests unitaires sont lancés avec un profil `unit` qui utilise une configuration particulière `application-unit.yml` qui désactive le cache. Les différentes classes pour les tests sont les suivantes :

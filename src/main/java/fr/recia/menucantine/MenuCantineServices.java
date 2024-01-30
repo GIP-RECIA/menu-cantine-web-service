@@ -27,6 +27,7 @@ import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
 import fr.recia.menucantine.config.MapperConfig;
+import fr.recia.menucantine.config.UAIConfig;
 import fr.recia.menucantine.exception.NoDataExchangeException;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
@@ -61,6 +62,9 @@ public class MenuCantineServices {
 
 	@Autowired
 	private MapperConfig mapperConfig;
+
+	@Autowired
+	private UAIConfig uaiConfig;
 	
 	@Value("${adoria.gemrcn-csv}")
 	String gemrcnFilename;
@@ -86,9 +90,17 @@ public class MenuCantineServices {
 
 		log.trace("Dans la méthode newFindSemaine");
 
+		// Première étape, on regarde si l'UAI demandé est mappé par un autre UAI
+		String uai = requete.getUai();
+		if(uaiConfig.getRegroupements() != null){
+			if(uaiConfig.isMapped(requete.getUai())){
+				uai = uaiConfig.getNewUAI(uai);
+				log.debug("Mapping de l'UAI {} par l'UAI {}", requete.getUai(), uai);
+			}
+		}
+
 		// Par défaut on cherche par rapport au jour d'aujourd'hui, mais si jamais on spécifie la date dans la requête
 		// alors on cherche par rapport à cette date en question
-		final String uai = requete.getUai();
 		LocalDate today = LocalDate.now();
         if (!Objects.equals(requete.getDateJour(), "")) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
