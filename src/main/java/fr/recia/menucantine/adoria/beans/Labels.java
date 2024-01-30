@@ -37,7 +37,8 @@ public class Labels implements Serializable, Cloneable {
 	private static final long serialVersionUID = 4037048636409313674L;
 	private static final Pattern PV = Pattern.compile("\\s*;\\s*");
 	private static final Logger log = LoggerFactory.getLogger(Labels.class);
-	private static final Map<String, Labels> labelByName = new HashMap<String, Labels>();
+	private static final Map<String, Labels> labelByName = new HashMap<>();
+	private static final Map<Integer, Labels> labelById = new HashMap<>();
 	
 	int ordre;
 	String nom;
@@ -51,7 +52,6 @@ public class Labels implements Serializable, Cloneable {
 
 			while (scannerFile.hasNextLine()) {
 				try (Scanner scannerLine = new Scanner(scannerFile.nextLine())){
-				//	System.out.print(scannerLine);
 					scannerLine.useDelimiter(PV);
 					if (scannerLine.hasNext()) {
 						Labels label = new Labels();
@@ -59,7 +59,7 @@ public class Labels implements Serializable, Cloneable {
 						label.nom = scannerLine.next();
 						label.logo =  scannerLine.next();
 						labelByName.put(label.nom , label);
-						
+						labelById.put(label.ordre, label);
 					}
 				}
 			}
@@ -77,6 +77,14 @@ public class Labels implements Serializable, Cloneable {
 			l.nom = name;
 			l.ordre = labelByName.size() + 1;
 			labelByName.put(name, l);
+		}
+		return l;
+	}
+
+	static public Labels getLabelFromId(int id){
+		Labels l = labelById.get(id);
+		if (l == null) {
+			log.warn("Label inexistant {}", id);
 		}
 		return l;
 	}

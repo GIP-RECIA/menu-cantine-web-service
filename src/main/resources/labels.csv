@@ -1,17 +1,18 @@
 ordre; nom; logo; comment
-1; BIO; ab-transp.png;
-2; Fait Maison; maison.png;
-3; Végetarien; Vege3.png;
-4; AOC; AOC-transp.png;
-5; AOP; AOP-transp.png;
-6; Label Rouge; rouge.png;
-7; Produit Fermier; fermier.png;
-8; VdF; VdF.png;
-9; Pêche durable; MSC.png;
-10; Bleu Blanc Coeur; bbc.png;
-11; HVE; HVE.png;
-12; IGP; IGP-transp.png;
-13; STG; STG-transp.png;
-14; CQC; CQC.png;
-15; Local; local.png;
-
+1; Label Rouge; logoLabelRouge.png;
+2; IGP; logoIGP.png;
+3; STG; logoSTG.png;
+4; AOP; logoAOP.png;
+5; AOC; aoc.png; ??? OK
+6; HVE; logoHVE.png;
+7; CE 2 - CERTIF ENV NIV2; logoHVE.png; ??
+8; Pêche Durable; LogoPecheDurable.png.png;
+9; RUP; logoRUP.png;
+10; Commerce Equitable; logoCommerceEquitable.png;
+11; Mention Fermier; logoFermier.png;
+12; Bleu Blanc Coeur; bleublanccoeur.png; ?? OK
+13; Extern Environnementale; logoExternalite.png;
+1000; BIO; ab-transp.png;
+1001; Fait Maison; maison.png;
+1002; Végetarien; Vege3.png;
+1003; Local; local.png;

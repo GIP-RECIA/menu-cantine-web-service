@@ -21,6 +21,7 @@ import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.RequeteHelper;
 import fr.recia.menucantine.beans.Semaine;
 import fr.recia.menucantine.dto.JourneeDTO;
+import fr.recia.menucantine.dto.LabelDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,6 +165,7 @@ public class MapperWebGerest implements IMapper {
 
     public List<Labels> buildLabels(PlatDTO platDTO) {
         List<Labels> labelsList = new ArrayList<>();
+        // Labels sous forme d'attributs booléens dans l'API
         if(platDTO.isBio()){
             labelsList.add(Labels.getLabel("BIO"));
         }
@@ -173,12 +175,26 @@ public class MapperWebGerest implements IMapper {
         if(platDTO.isLocal()){
             labelsList.add(Labels.getLabel("Local"));
         }
-        if(platDTO.isVegetarien()){
+        if(platDTO.isVegetarien()) {
             labelsList.add(Labels.getLabel("Végetarien"));
         }
+
+        // Labels sous forme d'une liste de code dans l'API (attention l'attribut labels peut ne pas être défini dans le JSON)
+        if(platDTO.getLabels() != null){
+            for(LabelDTO labelDTO: platDTO.getLabels()){
+                Labels label = Labels.getLabelFromId(Integer.parseInt(labelDTO.getCode()));
+                // Si le label est null alors on ne l'ajoute pas
+                if(label != null){
+                    labelsList.add(label);
+                }
+            }
+        }
+
+        // Si la liste est vide retourner null, sinon retourner la liste des labels
         if(labelsList.isEmpty()){
             return null;
         }
+
         return labelsList;
     }
 

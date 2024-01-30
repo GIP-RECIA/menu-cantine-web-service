@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -53,6 +54,8 @@ public class PlatDTO implements Serializable {
     private boolean conseille;
     @JsonProperty("aNoter")
     private boolean a_noter;
+    @JsonProperty("labels")
+    private List<LabelDTO> labels;
 
     public PlatDTO(){}
 
