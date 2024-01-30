@@ -16,7 +16,6 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<login.ent>nathan.cailbourdin</login.ent>
 	</properties>
 	<repositories>
 		<repository>
@@ -61,9 +60,10 @@
 		</snapshotRepository>
 	</distributionManagement>
 	<scm>
-		<connection>scm:git:ssh://${login.ent}@git.recia.fr/srv/git/shared/menu-cantine-web-service.git</connection>
-		<developerConnection>scm:git:ssh://${login.ent}@git.recia.fr/srv/git/shared/menu-cantine-web-service.git</developerConnection>
+		<connection>scm:git:ssh://git@github.com/GIP-RECIA/menu-cantine-web-service.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/menu-cantine-web-service.git</developerConnection>
 		<tag>HEAD</tag>
+		<url>https://github.com/GIP-RECIA/menu-cantine-web-service.git</url>
 	</scm>
 	<dependencies>
 		<dependency>
