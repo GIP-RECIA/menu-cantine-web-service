@@ -27,10 +27,6 @@ spring:
   cache:
     type: ehcache
 
-uais:
-  regroupements:
-    "0450822X": "0281197Z"
-
 mapper:
   services:
     '[Petit déjeuner]': 1
@@ -47,7 +43,7 @@ mapper:
     accompagnement:
       nom: "Accompagnement"
       numero: 3
-    fromage:
+    laitage:
       nom: "Laitage"
       numero: 4
     dessert:
