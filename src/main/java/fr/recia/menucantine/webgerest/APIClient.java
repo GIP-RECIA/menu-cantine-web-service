@@ -227,14 +227,14 @@ public class APIClient {
                     // On passe volontairement un service non null au cache pour indiquer qu'on a un service en erreur associé à cette requête
                     cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, new ServiceDTO(null, 1, 0, null)));
                     throw new WebgerestRequestException("Erreur innatendue lors de la requête "
-                            + webClientInternalResponseException.getRequest() + "\nCode erreur retourné : "
+                            + webClientInternalResponseException.getRequest().getURI() + "\nCode erreur retourné : "
                             + webClientInternalResponseException.getStatusCode().value());
                 }
             }
             else{
                 cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, new ServiceDTO(null, 1, 0, null)));
                 throw new WebgerestRequestException("Erreur innatendue lors de la requête "
-                        + webClientResponseException.getRequest() + "\nCode erreur retourné : "
+                        + webClientResponseException.getRequest().getURI() + "\nCode erreur retourné : "
                         + webClientResponseException.getStatusCode().value());
             }
         }
