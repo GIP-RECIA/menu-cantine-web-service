@@ -108,7 +108,7 @@ public class MapperWebgerestTests {
 				false, false, false, false, false,
 				false, false, false, false, false,
 				false, false, 1, false, false, null);
-		PlatDTO platDTO5 = new PlatDTO("Plat test 5", 5, "fromage", "Plat test 5", 5,
+		PlatDTO platDTO5 = new PlatDTO("Plat test 5", 5, "laitage", "Plat test 5", 5,
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
