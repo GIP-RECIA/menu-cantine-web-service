@@ -33,6 +33,7 @@ Les différents fichiers du projet sont structurés de la manière suivante :
 │   └── test                             # Contient les fichiers java pour les tests unitaires
 │       └── ...            
 ├── target                               # Contient les classes compilées
+│   └── ..
 ├── pom.xml                              # Pom du projet
 └── README.md
 └── ...
@@ -58,15 +59,19 @@ Le package `fr.recia.menucatine` est lui structuré de la manière suivante :
 │  
 ├── config                                   # Configuration de la sécurité, du webclient, des services et des sous-menus  
 │   ├── CorsConfig.java
+│   ├── EhCacheJmxConfiguration.java
 │   ├── MapperConfig.java
 │   ├── SecurityConfiguration.java
 │   ├── SousMenuProperties.java
+│   ├── UAIConfig.java
 │   └── WebClientConfiguration.java
 │
 ├── dto                                      # Classes mappées depuis le JSON récupéré de l'API
 │   ├── JourneeDTO.java                      # Objet construit à partir des deux classes ci-dessous
 │   ├── PlatDTO.java                         # Représente un plat selon l'API
+│   ├── LabelDTO.java                        # Représente un label (AOP, AOC, etc..) selon l'API
 │   └── ServiceDTO.java                      # Représente un service selon l'API
+
 │
 ├── exception                                # Les différentes exceptions personnalisées
 │   ├── ResponseExceptionData.java           # Représente les données envoyées au front lors de la levée d'une exception
@@ -123,8 +128,8 @@ La logique du cache est gérée directement dans la classe `APIClient`. C'est el
 ## En Local
 
 Avant tout, il faut commencer par compléter la configuration de l'application et notamment les informations relatives à l'API avec laquelle communiquer. Intellij est recommandé pour un lancement en local : il suffit d'ajouter une configuration d'application sur la classe `fr.recia.menucantine.MenuCantineApplication` après avoir ouvert le projet.
-L'application est alors accessible sur l'URL suivante : `https://localhost:PORT/menuCantine/demo/demo.html`
-Attention si on change la classe `ServiceDTO` ou `PlatDTO` il faut bien penser à supprimer le cache avant de relancer l'application.
+L'application est alors accessible sur l'URL suivante : `http://localhost:PORT/menuCantine/demo/demo.html`
+Attention si on change la classe `ServiceDTO`, `PlatDTO` ou `LabelDTO` il faut bien penser à supprimer le cache avant de relancer l'application.
 
 ## Nouvelle version du front
 
@@ -169,7 +174,7 @@ La configuration par défaut se trouve dans le fichier `application.yml` dans le
 | spring.cache.type                  | La librairie utilisée pour la gestion du cache                                                              | ehcache                           |
 | mapper.services                    | Un dictionnaire des services avec le nom et le numéro de chaque service                                     | *à voir directement dans la conf* |
 | mapper.sousmenus                   | Un dictionnaire des sous-menus avec le nom, le nom final et le numéro de chaque sous-menu                   | *à voir directement dans la conf* |
-| uais.regroupement                  | Un dictionnaire associant un UAI à un autre (lorsque la clé est demandée, c'est la valeur qui sera utlisée) | *à voir directement dans la conf* |
+| uais.regroupement                  | Un dictionnaire associant un UAI à un autre (lorsque la clé est demandée, c'est la valeur qui sera utlisée) | *à compléter*                     |
 | menucantine.demo                   | Si le mode démo locale est actif (uniquement pour les tests en local)                                       | false                             |
 | security.cors.enabled              | Si le CORS est activé                                                                                       | false                             |
 | security.cors.allowedOrigins       | La liste des allowedOrigins pour la config du CORS                                                          | *à compléter*                     |
