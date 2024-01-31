@@ -20,7 +20,7 @@ import lombok.Getter;
 @Getter
 public class CustomMenuCantineException extends Exception{
 
-    private String displayMessage;
+    private final String displayMessage;
 
     public CustomMenuCantineException(String errorMessage, String displayMessage){
         super(errorMessage);

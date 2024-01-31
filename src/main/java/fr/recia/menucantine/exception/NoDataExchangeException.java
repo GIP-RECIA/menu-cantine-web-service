@@ -18,7 +18,7 @@ package fr.recia.menucantine.exception;
 public class NoDataExchangeException extends CustomMenuCantineException {
 
     public NoDataExchangeException(String errorMessage) {
-        super(errorMessage, "L'établissement a désactivé le partage des menus de la cantine, ils ne peuvent donc pas être affichés.");
+        super(errorMessage, "L'établissement a désactivé le partage des menus du restaurant scolaire, ils ne peuvent donc pas être affichés.");
     }
 
 }
