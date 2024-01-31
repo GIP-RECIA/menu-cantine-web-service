@@ -112,6 +112,7 @@ public class MapperWebGerest implements IMapper {
     public List<SousMenu> buildListSousMenu(ServiceDTO serviceDTO){
         //Première étape : regrouper tous les plats selon leur type en sous-menus
         Map<String, SousMenu> sousMenuMap = new HashMap<>();
+        Map<String, SousMenu> sousMenuInconnus = new HashMap<>();
         for(PlatDTO platDTO: serviceDTO.getContenu()){
             if(!sousMenuMap.containsKey(platDTO.getType())){
                 // Tri des menus fait grâce à l'enum EnumTypeSousMenu, pas d'info dans l'API autre que le type
@@ -121,7 +122,17 @@ public class MapperWebGerest implements IMapper {
                     sousMenu.addChoix(buildPlat(platDTO));
                     sousMenuMap.put(platDTO.getType(), sousMenu);
                 }else{
-                    log.error("Nom de sous-menu "+platDTO.getType()+" inconnu.");
+                    // Cas ou on a un sous-menu qui n'est pas connu dans la config
+                    log.error("Nom de sous-menu "+platDTO.getType()+" inconnu. Le sous-menu sera ajouté à la fin des sous-menus.");
+                    if(!sousMenuInconnus.containsKey(platDTO.getType())){
+                        SousMenu sousMenu = new SousMenu(new ArrayList<>(), -1);
+                        sousMenu.setNbPlats(0);
+                        sousMenu.addChoix(buildPlat(platDTO));
+                        sousMenuInconnus.put(platDTO.getType(), sousMenu);
+                    }else{
+                        SousMenu sousMenu = sousMenuInconnus.get(platDTO.getType());
+                        sousMenu.addChoix(buildPlat(platDTO));
+                    }
                 }
             }
             else{
@@ -141,6 +152,15 @@ public class MapperWebGerest implements IMapper {
                 sousMenuList.add(sousMenu);
             }
         }
+
+        //Troisième étape : ajout des sous-menus inconnus qu'on ne peut pas trier
+        int rank = 7;
+        for(SousMenu sousMenu : sousMenuInconnus.values()){
+            sousMenu.setRank(rank);
+            sousMenuList.add(sousMenu);
+            rank+=1;
+        }
+
         return sousMenuList;
 
     }
@@ -152,7 +172,11 @@ public class MapperWebGerest implements IMapper {
         plat.setName(Character.toUpperCase(nomPlatCleaned.charAt(0)) + nomPlatCleaned.toLowerCase().substring(1));
         plat.setAllergens(buildAllergens(platDTO));
         // La family du plat permet de changer l'intitulé du sous-menu auquel appartient le plat
-        plat.setFamily(mapperConfig.getSousMenuFinalName(platDTO.getType()));
+        if(mapperConfig.getSousmenus().containsKey(platDTO.getType())){
+            plat.setFamily(mapperConfig.getSousMenuFinalName(platDTO.getType()));
+        }else{
+            plat.setFamily(platDTO.getType());
+        }
         plat.setLabels(new ArrayList<>());
         plat.setLabelsInfo(buildLabels(platDTO));
         plat.setGemrcn(buildGemrcn(platDTO));
