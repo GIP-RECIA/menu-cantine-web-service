@@ -148,7 +148,7 @@ public class MapperWebGerest implements IMapper {
     public Plat buildPlat(PlatDTO platDTO){
         Plat plat = new Plat();
         String nomPlatCleaned = platDTO.getNom();
-        nomPlatCleaned = nomPlatCleaned.replace("*","").replace("#","");
+        nomPlatCleaned = nomPlatCleaned.replace("*","").replace("#","").replace("§","");
         plat.setName(Character.toUpperCase(nomPlatCleaned.charAt(0)) + nomPlatCleaned.toLowerCase().substring(1));
         plat.setAllergens(buildAllergens(platDTO));
         // La family du plat permet de changer l'intitulé du sous-menu auquel appartient le plat
@@ -215,10 +215,10 @@ public class MapperWebGerest implements IMapper {
             allergensList.add("Arachide");
         }
         if(platDTO.isAllerg_celeri()){
-            allergensList.add("Celeri");
+            allergensList.add("Céleri");
         }
         if(platDTO.isAllerg_crustace()){
-            allergensList.add("Crustace");
+            allergensList.add("Crustacé");
         }
         if(platDTO.isAllerg_fruit_coque()){
             allergensList.add("Fruit à coque");
@@ -245,7 +245,7 @@ public class MapperWebGerest implements IMapper {
             allergensList.add("Poisson");
         }
         if(platDTO.isAllerg_sesame()){
-            allergensList.add("Sesame");
+            allergensList.add("Sésame");
         }
         if(platDTO.isAllerg_soja()){
             allergensList.add("Soja");
