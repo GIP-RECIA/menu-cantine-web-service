@@ -26,31 +26,3 @@ api:
 spring:
   cache:
     type: ehcache
-
-mapper:
-  services:
-    '[Petit déjeuner]': 1
-    '[Déjeuner]': 2
-    '[Goûter]': 3
-    '[Dîner]': 4
-  sousmenus:
-    entree:
-      nom: "Entrée"
-      numero: 1
-    plat:
-      nom: "Plat"
-      numero: 2
-    accompagnement:
-      nom: "Accompagnement"
-      numero: 3
-    laitage:
-      nom: "Laitage"
-      numero: 4
-    dessert:
-      nom: "Dessert"
-      numero: 5
-    autre:
-      nom: "Autre"
-      numero: 6
-
-
