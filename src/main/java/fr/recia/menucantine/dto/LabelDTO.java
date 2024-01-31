@@ -24,6 +24,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class LabelDTO implements Serializable {
 
+    private static final long serialVersionUID = 968452L;
+
     private String code;
     private String libelle;
 

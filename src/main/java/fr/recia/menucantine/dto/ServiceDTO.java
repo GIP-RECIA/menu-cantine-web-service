@@ -25,6 +25,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ServiceDTO implements Serializable {
 
+    private static final long serialVersionUID = 580335L;
+
     private String message;
     private int error;
     private int nbObjet;
