@@ -102,7 +102,11 @@ public class MapperWebGerest implements IMapper {
         service.setRank(mapperConfig.getNumService(typeService)-1);
         service.setTypeVide(false);
         // typeVide vaut true si jamais il n'y a pas de plat dans le service = il n'y a pas de service
-        if(serviceDTO.getContenu().isEmpty()){
+        if(serviceDTO.getContenu() != null){
+            if(serviceDTO.getContenu().isEmpty()){
+                service.setTypeVide(true);
+            }
+        }else{
             service.setTypeVide(true);
         }
         service.setMenu(buildListSousMenu(serviceDTO));
@@ -113,31 +117,33 @@ public class MapperWebGerest implements IMapper {
         //Première étape : regrouper tous les plats selon leur type en sous-menus
         Map<String, SousMenu> sousMenuMap = new HashMap<>();
         Map<String, SousMenu> sousMenuInconnus = new HashMap<>();
-        for(PlatDTO platDTO: serviceDTO.getContenu()){
-            if(!sousMenuMap.containsKey(platDTO.getType())){
-                // Tri des menus fait grâce à l'enum EnumTypeSousMenu, pas d'info dans l'API autre que le type
-                if(mapperConfig.getSousmenus().containsKey(platDTO.getType())) {
-                    SousMenu sousMenu = new SousMenu(new ArrayList<>(), mapperConfig.getSousMenuRank(platDTO.getType()));
-                    sousMenu.setNbPlats(0);
-                    sousMenu.addChoix(buildPlat(platDTO));
-                    sousMenuMap.put(platDTO.getType(), sousMenu);
-                }else{
-                    // Cas ou on a un sous-menu qui n'est pas connu dans la config
-                    log.error("Nom de sous-menu "+platDTO.getType()+" inconnu. Le sous-menu sera ajouté à la fin des sous-menus.");
-                    if(!sousMenuInconnus.containsKey(platDTO.getType())){
-                        SousMenu sousMenu = new SousMenu(new ArrayList<>(), -1);
+        if(serviceDTO.getContenu() != null){
+            for(PlatDTO platDTO: serviceDTO.getContenu()){
+                if(!sousMenuMap.containsKey(platDTO.getType())){
+                    // Tri des menus fait grâce à l'enum EnumTypeSousMenu, pas d'info dans l'API autre que le type
+                    if(mapperConfig.getSousmenus().containsKey(platDTO.getType())) {
+                        SousMenu sousMenu = new SousMenu(new ArrayList<>(), mapperConfig.getSousMenuRank(platDTO.getType()));
                         sousMenu.setNbPlats(0);
                         sousMenu.addChoix(buildPlat(platDTO));
-                        sousMenuInconnus.put(platDTO.getType(), sousMenu);
+                        sousMenuMap.put(platDTO.getType(), sousMenu);
                     }else{
-                        SousMenu sousMenu = sousMenuInconnus.get(platDTO.getType());
-                        sousMenu.addChoix(buildPlat(platDTO));
+                        // Cas ou on a un sous-menu qui n'est pas connu dans la config
+                        log.error("Nom de sous-menu "+platDTO.getType()+" inconnu. Le sous-menu sera ajouté à la fin des sous-menus.");
+                        if(!sousMenuInconnus.containsKey(platDTO.getType())){
+                            SousMenu sousMenu = new SousMenu(new ArrayList<>(), -1);
+                            sousMenu.setNbPlats(0);
+                            sousMenu.addChoix(buildPlat(platDTO));
+                            sousMenuInconnus.put(platDTO.getType(), sousMenu);
+                        }else{
+                            SousMenu sousMenu = sousMenuInconnus.get(platDTO.getType());
+                            sousMenu.addChoix(buildPlat(platDTO));
+                        }
                     }
                 }
-            }
-            else{
-                SousMenu sousMenu = sousMenuMap.get(platDTO.getType());
-                sousMenu.addChoix(buildPlat(platDTO));
+                else{
+                    SousMenu sousMenu = sousMenuMap.get(platDTO.getType());
+                    sousMenu.addChoix(buildPlat(platDTO));
+                }
             }
         }
 
@@ -214,10 +220,12 @@ public class MapperWebGerest implements IMapper {
         // Labels sous forme d'une liste de code dans l'API (attention l'attribut labels peut ne pas être défini dans le JSON)
         if(platDTO.getLabels() != null){
             for(LabelDTO labelDTO: platDTO.getLabels()){
-                Labels label = Labels.getLabelFromId(Integer.parseInt(labelDTO.getCode()));
-                // Si le label est null alors on ne l'ajoute pas
-                if(label != null){
-                    labelsList.add(label);
+                if(labelDTO.getCode() != null && labelDTO.getLibelle() != null){
+                    Labels label = Labels.getLabelFromId(Integer.parseInt(labelDTO.getCode()));
+                    // Si le label est null alors on ne l'ajoute pas
+                    if(label != null){
+                        labelsList.add(label);
+                    }
                 }
             }
         }
