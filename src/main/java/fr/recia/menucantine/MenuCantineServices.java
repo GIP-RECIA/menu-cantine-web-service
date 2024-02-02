@@ -91,7 +91,7 @@ public class MenuCantineServices {
 		log.trace("Dans la méthode newFindSemaine");
 
 		// Première étape, on regarde si l'UAI demandé est mappé par un autre UAI
-		String uai = requete.getUai();
+		String uai = requete.getUai().toUpperCase();
 		if(uaiConfig.getRegroupements() != null){
 			if(uaiConfig.isMapped(requete.getUai())){
 				uai = uaiConfig.getNewUAI(uai);
@@ -135,8 +135,12 @@ public class MenuCantineServices {
 				}else{
 					log.error("Erreur sur le retour de la requête avec les paramètres uai={}, date={}, service={}." +
 							"\nMessage retourné : {}", uai, menuDayString, numService, serviceDTO.getMessage());
-					if(serviceDTO.getMessage().equals("L'etablissement a bloqué l'echange de donnees.")) {
-						throw new NoDataExchangeException("L'établissement a bloqué l'échange de donnees.");
+					if(serviceDTO.getMessage() != null){
+						if(serviceDTO.getMessage().equals("L'etablissement a bloqué l'echange de donnees.")) {
+							throw new NoDataExchangeException("L'établissement a bloqué l'échange de donnees.");
+						}
+					}else{
+						throw new WebgerestRequestException("Erreur innatendue lors de la requête");
 					}
 				}
 
