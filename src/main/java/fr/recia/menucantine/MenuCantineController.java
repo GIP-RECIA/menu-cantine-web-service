@@ -48,7 +48,7 @@ public class MenuCantineController {
 			log.error(exception.getMessage());
 			return new ResponseEntity<>(new ResponseExceptionData(exception.getDisplayMessage()), HttpStatus.NOT_FOUND);
 		}catch (Exception other){
-			log.error("Une erreur innatendue s'est produite : {}", other.getMessage(), other);
+			log.error("Une erreur innatendue s'est produite : {}. UAI : {}, Date : {}", other.getMessage(), uai, dateJour, other);
 			return new ResponseEntity<>(new ResponseExceptionData("Une erreur est survenue. Les menus de la cantine sont indisponibles pour le moment"),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -69,7 +69,7 @@ public class MenuCantineController {
 			log.error(exception.getMessage());
 			return new ResponseEntity<>(new ResponseExceptionData(exception.getDisplayMessage()), HttpStatus.NOT_FOUND);
 		}catch (Exception other){
-			log.error("Une erreur innatendue s'est produite : {}", other.getMessage(), other);
+			log.error("Une erreur innatendue s'est produite : {}. UAI : {}, Date : {}", other.getMessage(), uai, dateJour, other);
 			return new ResponseEntity<>(new ResponseExceptionData("Une erreur est survenue. Les menus de la cantine sont indisponibles pour le moment"),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
