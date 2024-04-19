@@ -72,7 +72,7 @@ public class MapperWebgerestTests {
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, labelDTOS);
+				false, false, 1, false, false, labelDTOS, false, false);
 		Plat old = mapperWebGerest.buildPlat(platDTO);
 		assertTrue("La liste des allergènes ne contient pas le Gluten", old.getAllergens().contains("Gluten"));
 		assertEquals("Le type du plat n'est pas le bon", old.getFamily(), mapperConfig.getSousMenuFinalName("entree"));
@@ -92,37 +92,37 @@ public class MapperWebgerestTests {
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		PlatDTO platDTO2 = new PlatDTO("Plat test 2", 1, "entree", "Plat test 2", 2,
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		PlatDTO platDTO3 = new PlatDTO("Plat test 3", 3, "plat", "Plat test 3", 3,
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		PlatDTO platDTO4 = new PlatDTO("Plat test 4", 4, "accompagnement", "Plat test 4", 4,
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		PlatDTO platDTO5 = new PlatDTO("Plat test 5", 5, "laitage", "Plat test 5", 5,
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		PlatDTO platDTO6 = new PlatDTO("Plat test 6", 6, "dessert", "Plat test 6", 6,
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		PlatDTO platDTO7 = new PlatDTO("Plat test 7", 7, "autre", "Plat test 7", 7,
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		List<PlatDTO> platDTOList = Arrays.asList(platDTO1, platDTO2, platDTO3, platDTO4, platDTO5, platDTO6, platDTO7);
 		ServiceDTO serviceDTO = new ServiceDTO();
 		serviceDTO.setContenu(platDTOList);
@@ -146,7 +146,7 @@ public class MapperWebgerestTests {
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		List<PlatDTO> platDTOList = Collections.singletonList(platDTO);
 		ServiceDTO serviceDTO = new ServiceDTO();
 		serviceDTO.setContenu(platDTOList);
@@ -166,7 +166,7 @@ public class MapperWebgerestTests {
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		List<PlatDTO> platDTOList1 = Collections.singletonList(platDTO1);
 		ServiceDTO serviceDTO1 = new ServiceDTO();
 		serviceDTO1.setContenu(platDTOList1);
@@ -174,7 +174,7 @@ public class MapperWebgerestTests {
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		List<PlatDTO> platDTOList2 = Collections.singletonList(platDTO2);
 		ServiceDTO serviceDTO2 = new ServiceDTO();
 		serviceDTO2.setContenu(platDTOList2);
@@ -213,7 +213,7 @@ public class MapperWebgerestTests {
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		List<PlatDTO> platDTOList1 = Collections.singletonList(platDTO1);
 		ServiceDTO serviceDTO1 = new ServiceDTO();
 		serviceDTO1.setContenu(platDTOList1);
@@ -221,7 +221,7 @@ public class MapperWebgerestTests {
 				false, true, false, false, true, false,
 				false, false, false, false, false,
 				false, false, false, false, false,
-				false, false, 1, false, false, null);
+				false, false, 1, false, false, null, false, false);
 		List<PlatDTO> platDTOList2 = Collections.singletonList(platDTO2);
 		ServiceDTO serviceDTO2 = new ServiceDTO();
 		serviceDTO2.setContenu(platDTOList2);

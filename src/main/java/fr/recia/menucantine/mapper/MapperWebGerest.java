@@ -216,6 +216,12 @@ public class MapperWebGerest implements IMapper {
         if(platDTO.isVegetarien()) {
             labelsList.add(Labels.getLabel("Végetarien"));
         }
+        if(platDTO.isAgrimer_fl()){
+            labelsList.add(Labels.getLabel("Fruits et légumes à l’école"));
+        }
+        if(platDTO.isAgrimer_lait()){
+            labelsList.add(Labels.getLabel("Lait et produits laitiers à l’école"));
+        }
 
         // Labels sous forme d'une liste de code dans l'API (attention l'attribut labels peut ne pas être défini dans le JSON)
         if(platDTO.getLabels() != null){

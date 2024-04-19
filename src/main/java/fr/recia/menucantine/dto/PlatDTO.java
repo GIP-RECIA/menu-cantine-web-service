@@ -58,6 +58,10 @@ public class PlatDTO implements Serializable {
     private boolean a_noter;
     @JsonProperty("labels")
     private List<LabelDTO> labels;
+    @JsonProperty("Agrimer_FL")
+    private boolean agrimer_fl;
+    @JsonProperty("Agrimer_LAIT")
+    private boolean agrimer_lait;
 
     public PlatDTO(){}
 
