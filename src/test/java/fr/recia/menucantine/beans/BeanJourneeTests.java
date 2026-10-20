@@ -28,13 +28,12 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @ActiveProfiles({ "unit" })
-public class BeanJourneeTests {
+public class BeanJourneeTests implements ServiceFixtures, SousMenuFixtures{
 
     private Service service1;
     private Service service2;
@@ -42,43 +41,22 @@ public class BeanJourneeTests {
 
     @MockitoBean
     private CacheManager cacheManager;
-
     @BeforeEach
     public void setup(){
-        Plat plat1 = new Plat("plat1", "entree");
-        SousMenu entree = new SousMenu(Collections.singletonList(plat1), 1);
-        Plat plat2 = new Plat("plat2","plat");
-        Plat plat21 = new Plat("plat21","plat");
-        SousMenu plat = new SousMenu(Arrays.asList(plat2, plat21), 2);
-        Plat plat3 = new Plat("plat3", "accompagnement");
-        SousMenu accompagnement = new SousMenu(Collections.singletonList(plat3), 3);
-        Plat plat4 = new Plat("plat4", "fromage");
-        Plat plat41 = new Plat("plat41", "fromage");
-        Plat plat42 = new Plat("plat42", "fromage");
-        SousMenu fromage = new SousMenu(Arrays.asList(plat4, plat41, plat42), 4);
-        Plat plat5 = new Plat("plat5", "dessert");
-        SousMenu dessert = new SousMenu(Collections.singletonList(plat5), 5);
-        Plat plat6 = new Plat("plat6", "autre");
-        SousMenu autre = new SousMenu(Collections.singletonList(plat6), 6);
-        service1 = new Service("Déjeuner", 2, false);
-        service1.setMenu(Arrays.asList(entree, plat, accompagnement, fromage, dessert, autre));
-        Plat plat1s2 = new Plat("plat1s2", "entree");
-        SousMenu entrees2 = new SousMenu(Collections.singletonList(plat1s2), 1);
-        Plat plat2s2 = new Plat("plat2s2","plat");
-        Plat plat21s2 = new Plat("plat21s2","plat");
-        SousMenu plats2 = new SousMenu(Arrays.asList(plat2s2, plat21s2), 2);
-        Plat plat3s2 = new Plat("plat3s2", "accompagnement");
-        SousMenu accompagnements2 = new SousMenu(Collections.singletonList(plat3s2), 3);
-        Plat plat4s2 = new Plat("plat4s2", "fromage");
-        Plat plat41s2 = new Plat("plat41s2", "fromage");
-        SousMenu fromages2 = new SousMenu(Arrays.asList(plat4s2, plat41s2), 4);
-        Plat plat5s2 = new Plat("plat5s2", "dessert");
-        Plat plat51s2 = new Plat("plat51s2", "dessert");
-        SousMenu desserts2 = new SousMenu(Arrays.asList(plat5s2, plat51s2), 5);
-        Plat plat6s2 = new Plat("plat6s2", "autre");
-        SousMenu autres2 = new SousMenu(Collections.singletonList(plat6s2), 6);
-        service2 = new Service("Diner", 3, false);
-        service2.setMenu(Arrays.asList(entrees2, plats2, accompagnements2, fromages2, desserts2, autres2));
+        service1 = service("Déjeuner", 2, false,
+                sousMenu(1, new Plat("plat1", "entree")),
+                sousMenu(2, new Plat("plat2", "plat"), new Plat("plat21", "plat")),
+                sousMenu(3, new Plat("plat3", "accompagnement")),
+                sousMenu(4, new Plat("plat4", "fromage"), new Plat("plat41", "fromage"), new Plat("plat42", "fromage")),
+                sousMenu(5, new Plat("plat5", "dessert")),
+                sousMenu(6, new Plat("plat6", "autre")));
+        service2 = service("Diner", 3, false,
+                sousMenu(1, new Plat("plat1s2", "entree")),
+                sousMenu(2, new Plat("plat2s2", "plat"), new Plat("plat21s2", "plat")),
+                sousMenu(3, new Plat("plat3s2", "accompagnement")),
+                sousMenu(4, new Plat("plat4s2", "fromage"), new Plat("plat41s2", "fromage")),
+                sousMenu(5, new Plat("plat5s2", "dessert"), new Plat("plat51s2", "dessert")),
+                sousMenu(6, new Plat("plat6s2", "autre")));
         service3 = new Service("Petit déjeuner", 1, true);
     }
 

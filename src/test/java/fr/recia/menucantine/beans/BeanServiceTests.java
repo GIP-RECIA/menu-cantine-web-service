@@ -26,23 +26,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 
 @SpringBootTest
 @ActiveProfiles({ "unit" })
-public class BeanServiceTests {
+public class BeanServiceTests implements SousMenuFixtures{
 
-    private Plat plat1;
-    private Plat plat2;
-    private Plat plat21;
-    private Plat plat3;
-    private Plat plat4;
-    private Plat plat41;
-    private Plat plat42;
-    private Plat plat5;
-    private Plat plat6;
     private SousMenu entree;
     private SousMenu plat;
     private SousMenu accompagnement;
@@ -55,21 +46,12 @@ public class BeanServiceTests {
 
     @BeforeEach
     public void setup(){
-        plat1 = new Plat("plat1", "entree");
-        entree = new SousMenu(Collections.singletonList(plat1), 1);
-        plat2 = new Plat("plat2", "plat");
-        plat21 = new Plat("plat21", "plat");
-        plat = new SousMenu(Arrays.asList(plat2, plat21), 2);
-        plat3 = new Plat("plat3", "accompagnement");
-        accompagnement = new SousMenu(Collections.singletonList(plat3), 3);
-        plat4 = new Plat("plat4", "fromage");
-        plat41 = new Plat("plat41", "fromage");
-        plat42 = new Plat("plat42", "fromage");
-        fromage = new SousMenu(Arrays.asList(plat4, plat41, plat42), 4);
-        plat5 = new Plat("plat5", "dessert");
-        dessert = new SousMenu(Collections.singletonList(plat5), 5);
-        plat6 = new Plat("plat6", "autre");
-        autre = new SousMenu(Collections.singletonList(plat6), 6);
+        entree = sousMenu(1, new Plat("plat1", "entree"));
+        plat = sousMenu(2, new Plat("plat2", "plat"), new Plat("plat21", "plat"));
+        accompagnement = sousMenu(3, new Plat("plat3", "accompagnement"));
+        fromage = sousMenu(4, new Plat("plat4", "fromage"), new Plat("plat41", "fromage"), new Plat("plat42", "fromage"));
+        dessert = sousMenu(5, new Plat("plat5", "dessert"));
+        autre = sousMenu(6, new Plat("plat6", "autre"));
     }
 
     @Test

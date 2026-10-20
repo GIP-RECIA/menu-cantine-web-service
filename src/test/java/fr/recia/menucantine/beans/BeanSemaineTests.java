@@ -33,30 +33,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @ActiveProfiles({ "unit" })
-public class BeanSemaineTests {
+public class BeanSemaineTests implements ServiceFixtures, SousMenuFixtures{
 
     private Journee journee1;
     private Journee journee2;
 
     @MockitoBean
     private CacheManager cacheManager;
-
-    /**
-     * Construit un SousMenu à partir de ses plats, sans avoir à passer par une liste à la main.
-     */
-    private static SousMenu sousMenu(int rank, Plat... plats) {
-        return new SousMenu(new ArrayList<>(Arrays.asList(plats)), rank);
-    }
-
-    /**
-     * Construit un Service "rempli" à partir de ses sous-menus. Les services vides
-     * (sans sous-menu) continuent d'être créés directement via `new Service(...)`.
-     */
-    private static Service service(String name, int rank, boolean typeVide, SousMenu... sousMenus) {
-        Service service = new Service(name, rank, typeVide);
-        service.setMenu(Arrays.asList(sousMenus));
-        return service;
-    }
 
     @BeforeEach
     public void setup(){
