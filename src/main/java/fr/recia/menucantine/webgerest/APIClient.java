@@ -1,12 +1,13 @@
 /**
  * Copyright (C) 2024 GIP-RECIA https://www.recia.fr/
- * @Author (C) 2024 GIP-RECIA
  *
+ * @Author (C) 2024 GIP-RECIA
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *                 http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,6 +20,7 @@ import fr.recia.menucantine.dto.ServiceDTO;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 import org.slf4j.Logger;
@@ -39,15 +41,12 @@ import java.util.Map;
 @Component
 @Profile("!mock")
 @Data
+@RequiredArgsConstructor
 public class APIClient implements IAPIClient {
 
     private static final Logger log = LoggerFactory.getLogger(APIClient.class);
-
-    @Autowired
-    private CacheManager cacheManager;
-
-    @Autowired
-    private WebClient webClient;
+    private final CacheManager cacheManager;
+    private final WebClient webClient;
 
     @Value("${api.initial-query-url}")
     private String initialQueryURL;
@@ -64,23 +63,18 @@ public class APIClient implements IAPIClient {
     @Value("${api.client_id}")
     private String client_id;
 
-    private Map<String,String> dynamicURL; // Associe un UAI a une URL
-    private Map<String,String> authToken; // Associe une URL à un token utilisé pour les requêtes
-
-    public APIClient(WebClient.Builder webClientBuilder) {
-        this.dynamicURL = new HashMap<>();
-        this.authToken = new HashMap<>();
-    }
+    private Map<String, String> dynamicURL = new HashMap<>(); // Associe un UAI a une URL
+    private Map<String, String> authToken = new HashMap<>(); // Associe une URL à un token utilisé pour les requêtes
 
     /**
      * Requête pour récupérer l'URL à utiliser pour les toutes les autres requêtes. Pas besoin de token pour celle-ci.
      * @param uai L'UAI de l'établissement à chercher
      * @return Un objet contenant l'url à utiliser
      */
-    public DynamicURLResponse initializeAndGetDynamicEndpoint(String uai){
+    public DynamicURLResponse initializeAndGetDynamicEndpoint(String uai) {
         log.trace("Dans la méthode initializeAndGetDynamicEndpoint");
         return webClient.get()
-                .uri(initialQueryURL+"?rne={uai}", uai)
+                .uri(initialQueryURL + "?rne={uai}", uai)
                 .retrieve()
                 .bodyToMono(DynamicURLResponse.class)
                 .timeout(Duration.ofSeconds(5))
@@ -116,8 +110,8 @@ public class APIClient implements IAPIClient {
     public ServiceDTO makeAuthenticatedApiCallGetMenuInternal(String url, String uai, String datemenu, int service) {
         log.trace("Dans la méthode makeAuthenticatedApiCallGetMenuInternal");
         return webClient.get()
-                .uri(url + menuEndpoint+"?rne={rne}&date_menu={datemenu}&service={service}",
-                                uai, datemenu, service)
+                .uri(url + menuEndpoint + "?rne={rne}&date_menu={datemenu}&service={service}",
+                        uai, datemenu, service)
                 .header("Authorization", authToken.get(url))
                 .retrieve()
                 .bodyToMono(ServiceDTO.class)
@@ -151,7 +145,7 @@ public class APIClient implements IAPIClient {
         // Au préalable, on regarde si la requête n'est pas dans le cache d'erreur
         ServiceDTO serviceDTO = null;
         Element element = cacheManager.getCache("erreur").get(cacheKeyRequete);
-        if(element != null){
+        if (element != null) {
             serviceDTO = (ServiceDTO) element.getObjectValue();
             log.debug("Récupération de la réponse de la requête depuis le cache erreur");
             return serviceDTO;
@@ -159,18 +153,18 @@ public class APIClient implements IAPIClient {
 
         // On va regarder dans un cache ou l'autre en fonction de la date actuelle par rapport à la date de la requête
         // Cache permanent : requête sur une date passée
-        if(today.isAfter(dateRequete)){
+        if (today.isAfter(dateRequete)) {
             element = cacheManager.getCache("permanent").get(cacheKeyRequete);
-            if(element != null){
+            if (element != null) {
                 serviceDTO = (ServiceDTO) element.getObjectValue();
                 log.debug("Récupération de la réponse de la requête depuis le cache permanent");
                 return serviceDTO;
             }
         }
         // Cache requetes : requête sur une date future
-        else{
+        else {
             element = cacheManager.getCache("requetes").get(cacheKeyRequete);
-            if(element != null){
+            if (element != null) {
                 serviceDTO = (ServiceDTO) element.getObjectValue();
                 log.debug("Récupération de la réponse de la requête depuis le cache requetes");
                 return serviceDTO;
@@ -178,24 +172,24 @@ public class APIClient implements IAPIClient {
         }
 
         // Deuxième étape : regarder si on a l'URL associée à l'UAI
-        if(!dynamicURL.containsKey(uai)){
+        if (!dynamicURL.containsKey(uai)) {
             log.debug("Nouvel UAI, pas d'association connue");
             final DynamicURLResponse dynamicURLResponse = initializeAndGetDynamicEndpoint(uai);
-            if(dynamicURLResponse.getError() == 0){
+            if (dynamicURLResponse.getError() == 0) {
                 dynamicURL.put(uai, dynamicURLResponse.getContenu());
                 log.debug("Association trouvée pour l'UAI {}", uai);
-            }else{
+            } else {
                 dynamicURL.put(uai, null);
                 throw new UnknownUAIException("Pas d'URL connue pour l'UAI " + uai);
             }
         }
         final String url = dynamicURL.get(uai);
-        if(url == null){
+        if (url == null) {
             throw new UnknownUAIException("Pas d'URL connue pour l'UAI " + uai);
         }
 
         // Si pour l'URL on a un token invalide on sort directement
-        if(cacheManager.getCache("token").get(url) != null){
+        if (cacheManager.getCache("token").get(url) != null) {
             log.debug("Requête pour retrouver le token stockée dans le cache erreur.");
             throw new WebgerestRequestException("Erreur lors de l'authentification. Token invalide encore en cache.");
         }
@@ -206,14 +200,14 @@ public class APIClient implements IAPIClient {
         //Troisième étape : lancer la requête, et se réauthentifier si le token est expiré
         try {
             serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
-        }catch(WebClientResponseException webClientResponseException){
+        } catch (WebClientResponseException webClientResponseException) {
             log.debug("Erreur dans la requête : code erreur " + webClientResponseException.getStatusCode().value());
             // Si erreur 401 on récupère un nouveau token et on réessaye une fois
-            if(webClientResponseException.getStatusCode().value() == 401){
+            if (webClientResponseException.getStatusCode().value() == 401) {
                 log.debug("Récupération d'un nouveau token");
                 AuthResponse authResponse = authenticateAndGetToken(url);
                 // Si on a une erreur sur l'authentification on retourne directement et on passe le token en cache erreur
-                if(authResponse.getError() == 1){
+                if (authResponse.getError() == 1) {
                     log.debug("Mise en cache erreur de la requête pour récupérer le token. Authentification échouée.");
                     cacheManager.getCache("token").put(new Element(url, "erreur"));
                     throw new WebgerestRequestException("Erreur lors de l'authentification. Message retourné : "
@@ -222,9 +216,9 @@ public class APIClient implements IAPIClient {
                 // Sinon on réessaye
                 authToken.put(url, authResponse.getToken());
                 log.debug("Nouvelle requête avec le nouveau token");
-                try{
+                try {
                     serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
-                }catch(WebClientResponseException webClientInternalResponseException){
+                } catch (WebClientResponseException webClientInternalResponseException) {
                     log.debug("Nouvelle erreur, stockage de la requête dans le cache erreur");
                     // On passe volontairement un service non null au cache pour indiquer qu'on a un service en erreur associé à cette requête
                     cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, new ServiceDTO(null, 1, 0, null)));
@@ -232,8 +226,7 @@ public class APIClient implements IAPIClient {
                             + webClientInternalResponseException.getRequest().getURI() + "\nCode erreur retourné : "
                             + webClientInternalResponseException.getStatusCode().value());
                 }
-            }
-            else{
+            } else {
                 cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, new ServiceDTO(null, 1, 0, null)));
                 throw new WebgerestRequestException("Erreur innatendue lors de la requête "
                         + webClientResponseException.getRequest().getURI() + "\nCode erreur retourné : "
@@ -242,18 +235,18 @@ public class APIClient implements IAPIClient {
         }
 
         // On vérifie qu'on a pas reçu une réponse en erreur, si c'est le cas on ne la place pas dans le cache
-        if(serviceDTO.getError() == 0){
+        if (serviceDTO.getError() == 0) {
             //Avant de retourner la valeur on la place dans le bon cache
-            if(today.isAfter(dateRequete)){
+            if (today.isAfter(dateRequete)) {
                 log.debug("Stockage de la réponse de la requête dans le cache permanent");
                 cacheManager.getCache("permanent").put(new Element(cacheKeyRequete, serviceDTO));
-            }else{
+            } else {
                 log.debug("Stockage de la réponse de la requête dans le cache requetes");
                 cacheManager.getCache("requetes").put(new Element(cacheKeyRequete, serviceDTO));
             }
         }
         // Une requête qui n'est pas en erreur mais retourne une erreur doit aussi être placée dans le cache erreur
-        else{
+        else {
             cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, serviceDTO));
         }
 
