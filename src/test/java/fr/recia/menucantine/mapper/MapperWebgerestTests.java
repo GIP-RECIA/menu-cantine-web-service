@@ -61,15 +61,31 @@ public class MapperWebgerestTests {
 	@MockitoBean
 	private CacheManager cacheManager;
 
+	/**
+	 * Construit un PlatDTO "de base" tel que l'API le renverrait : local, avec du gluten,
+	 * une quantité prévue de 1, et aucun des autres attributs (allergènes, labels, etc.).
+	 * On ne précise que ce qui varie d'un test à l'autre (nom, id, type, ordre) ; le reste
+	 * peut être surchargé via les setters du builder renvoyé si un test en a besoin.
+	 */
+	private static PlatDTO.PlatDTOBuilder platDTO(String nom, int id, String type, int ordre) {
+		return PlatDTO.builder()
+				.nom(nom)
+				.id(id)
+				.type(type)
+				.designationMenu(nom)
+				.ordre(ordre)
+				.local(true)
+				.allerg_gluten(true)
+				.quantiteprevue(1);
+	}
+
 	@Test
 	public void testMapPlatDTOToPlat(){
 		List<LabelDTO> labelDTOS = new ArrayList<>();
 		labelDTOS.add(new LabelDTO("1", "Label Test"));
-		PlatDTO platDTO = new PlatDTO("Plat test 1", 1, "entree", "Plat test 1", 1,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, labelDTOS, false, false);
+		PlatDTO platDTO = platDTO("Plat test 1", 1, "entree", 1)
+				.labels(labelDTOS)
+				.build();
 		Plat old = mapperWebGerest.buildPlat(platDTO);
 		assertTrue(old.getAllergens().contains("Gluten"), "La liste des allergènes ne contient pas le Gluten");
 		assertEquals(old.getFamily(), mapperConfig.getSousMenuFinalName("entree"), "Le type du plat n'est pas le bon");
@@ -85,41 +101,13 @@ public class MapperWebgerestTests {
 
 	@Test
 	public void testMapListePlatToListeSousMenu(){
-		PlatDTO platDTO1 = new PlatDTO("Plat test 1", 1, "entree", "Plat test 1", 1,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
-		PlatDTO platDTO2 = new PlatDTO("Plat test 2", 1, "entree", "Plat test 2", 2,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
-		PlatDTO platDTO3 = new PlatDTO("Plat test 3", 3, "plat", "Plat test 3", 3,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
-		PlatDTO platDTO4 = new PlatDTO("Plat test 4", 4, "accompagnement", "Plat test 4", 4,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
-		PlatDTO platDTO5 = new PlatDTO("Plat test 5", 5, "laitage", "Plat test 5", 5,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
-		PlatDTO platDTO6 = new PlatDTO("Plat test 6", 6, "dessert", "Plat test 6", 6,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
-		PlatDTO platDTO7 = new PlatDTO("Plat test 7", 7, "autre", "Plat test 7", 7,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
+		PlatDTO platDTO1 = platDTO("Plat test 1", 1, "entree", 1).build();
+		PlatDTO platDTO2 = platDTO("Plat test 2", 1, "entree", 2).build();
+		PlatDTO platDTO3 = platDTO("Plat test 3", 3, "plat", 3).build();
+		PlatDTO platDTO4 = platDTO("Plat test 4", 4, "accompagnement", 4).build();
+		PlatDTO platDTO5 = platDTO("Plat test 5", 5, "laitage", 5).build();
+		PlatDTO platDTO6 = platDTO("Plat test 6", 6, "dessert", 6).build();
+		PlatDTO platDTO7 = platDTO("Plat test 7", 7, "autre", 7).build();
 		List<PlatDTO> platDTOList = Arrays.asList(platDTO1, platDTO2, platDTO3, platDTO4, platDTO5, platDTO6, platDTO7);
 		ServiceDTO serviceDTO = new ServiceDTO();
 		serviceDTO.setContenu(platDTOList);
@@ -139,11 +127,7 @@ public class MapperWebgerestTests {
 
 	@Test
 	public void testMapServiceDTOToService(){
-		PlatDTO platDTO = new PlatDTO("Plat test 1", 1, "entree", "Plat test 1", 1,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
+		PlatDTO platDTO = platDTO("Plat test 1", 1, "entree", 1).build();
 		List<PlatDTO> platDTOList = Collections.singletonList(platDTO);
 		ServiceDTO serviceDTO = new ServiceDTO();
 		serviceDTO.setContenu(platDTOList);
@@ -159,19 +143,11 @@ public class MapperWebgerestTests {
 	public void testMapJourneeDTOToJournee(){
 		JourneeDTO journeeDTO = new JourneeDTO();
 		LocalDate now = LocalDate.of(2023, 12, 5);
-		PlatDTO platDTO1 = new PlatDTO("Plat test 1", 1, "entree", "Plat test 1", 1,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
+		PlatDTO platDTO1 = platDTO("Plat test 1", 1, "entree", 1).build();
 		List<PlatDTO> platDTOList1 = Collections.singletonList(platDTO1);
 		ServiceDTO serviceDTO1 = new ServiceDTO();
 		serviceDTO1.setContenu(platDTOList1);
-		PlatDTO platDTO2 = new PlatDTO("Plat test 2", 2, "entree", "Plat test 2", 1,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
+		PlatDTO platDTO2 = platDTO("Plat test 2", 2, "entree", 1).build();
 		List<PlatDTO> platDTOList2 = Collections.singletonList(platDTO2);
 		ServiceDTO serviceDTO2 = new ServiceDTO();
 		serviceDTO2.setContenu(platDTOList2);
@@ -206,19 +182,11 @@ public class MapperWebgerestTests {
 		JourneeDTO journeeDTO2 = new JourneeDTO();
 		LocalDate now1 = LocalDate.of(2023, 12, 5);
 		LocalDate now2 = LocalDate.of(2023, 12, 5);
-		PlatDTO platDTO1 = new PlatDTO("Plat test 1", 1, "entree", "Plat test 1", 1,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
+		PlatDTO platDTO1 = platDTO("Plat test 1", 1, "entree", 1).build();
 		List<PlatDTO> platDTOList1 = Collections.singletonList(platDTO1);
 		ServiceDTO serviceDTO1 = new ServiceDTO();
 		serviceDTO1.setContenu(platDTOList1);
-		PlatDTO platDTO2 = new PlatDTO("Plat test 2", 2, "entree", "Plat test 2", 1,
-				false, true, false, false, true, false,
-				false, false, false, false, false,
-				false, false, false, false, false,
-				false, false, 1, false, false, null, false, false);
+		PlatDTO platDTO2 = platDTO("Plat test 2", 2, "entree", 1).build();
 		List<PlatDTO> platDTOList2 = Collections.singletonList(platDTO2);
 		ServiceDTO serviceDTO2 = new ServiceDTO();
 		serviceDTO2.setContenu(platDTOList2);
