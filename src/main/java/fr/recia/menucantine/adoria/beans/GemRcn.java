@@ -33,14 +33,14 @@ import lombok.Getter;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public final class GemRcn {
 
+    static private Map<String, GemRcn> s2GemRcn = new HashMap<>();
+    private static int maxCodeI = 0;
     public static final GemRcn Autre = new GemRcn("", "", 0, "#fff");
     private static final Logger log = LoggerFactory.getLogger(GemRcn.class);
     private static final Pattern P_INT = Pattern.compile("\\s*,\\s*\"");
     private static final Pattern P_STR = Pattern.compile("\"?\\s*,\\s*\"");
     private static final Pattern P_END = Pattern.compile("\"(\\s*,\\s*\")?");
     static List<GemRcn> listAll;
-    static private Map<String, GemRcn> s2GemRcn = new HashMap<>();
-    private static int maxCodeI = 0;
     String codeS;
 
     @Getter
