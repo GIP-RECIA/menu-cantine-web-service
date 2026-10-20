@@ -17,13 +17,17 @@ package fr.recia.menucantine.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class PlatDTO implements Serializable {
 
     private static final long serialVersionUID = 655293L;
@@ -62,7 +66,5 @@ public class PlatDTO implements Serializable {
     private boolean agrimer_fl;
     @JsonProperty("Agrimer_LAIT")
     private boolean agrimer_lait;
-
-    public PlatDTO(){}
 
 }
