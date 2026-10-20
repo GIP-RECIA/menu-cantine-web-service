@@ -37,8 +37,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@Profile("!mock")
 @Data
-public class APIClient {
+public class APIClient implements IAPIClient {
 
     private static final Logger log = LoggerFactory.getLogger(APIClient.class);
 
@@ -136,6 +137,7 @@ public class APIClient {
      * @param service Un entier compris entre 1 et 4 inclus (petit déjeuner, déjeuner, gouter, diner)
      * @return Un objet qui représente le résultat de l'appel sans aucune transformation
      */
+    @Override
     public ServiceDTO makeAuthenticatedApiCallGetMenu(String uai, String datemenu, int service) throws UnknownUAIException, WebgerestRequestException {
 
         log.trace("Dans la méthode makeAuthenticatedApiCallGetMenu");

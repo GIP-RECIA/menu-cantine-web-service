@@ -15,6 +15,27 @@
  */
 package fr.recia.menucantine;
 
+import fr.recia.menucantine.adoria.beans.Labels;
+import fr.recia.menucantine.beans.Requete;
+import fr.recia.menucantine.beans.RequeteHelper;
+import fr.recia.menucantine.beans.Semaine;
+import fr.recia.menucantine.config.MapperConfig;
+import fr.recia.menucantine.config.UAIConfig;
+import fr.recia.menucantine.dto.JourneeDTO;
+import fr.recia.menucantine.dto.ServiceDTO;
+import fr.recia.menucantine.exception.NoDataExchangeException;
+import fr.recia.menucantine.exception.UnknownUAIException;
+import fr.recia.menucantine.exception.WebgerestRequestException;
+import fr.recia.menucantine.mapper.IMapper;
+import fr.recia.menucantine.webgerest.IAPIClient;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,55 +44,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.annotation.ManagedBean;
-import javax.annotation.PostConstruct;
-
-import fr.recia.menucantine.config.MapperConfig;
-import fr.recia.menucantine.config.UAIConfig;
-import fr.recia.menucantine.exception.NoDataExchangeException;
-import fr.recia.menucantine.exception.UnknownUAIException;
-import fr.recia.menucantine.exception.WebgerestRequestException;
-import fr.recia.menucantine.mapper.IMapper;
-import fr.recia.menucantine.mapper.MapperWebGerest;
-import fr.recia.menucantine.dto.JourneeDTO;
-import fr.recia.menucantine.dto.ServiceDTO;
-import fr.recia.menucantine.webgerest.APIClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-
-import fr.recia.menucantine.adoria.beans.Labels;
-import fr.recia.menucantine.beans.Requete;
-import fr.recia.menucantine.beans.RequeteHelper;
-import fr.recia.menucantine.beans.Semaine;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
-
 @Configuration
 @ManagedBean
+@RequiredArgsConstructor
 public class MenuCantineServices {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);
 
-	@Autowired
-	APIClient apiClient;
+    private final IAPIClient apiClient;
+	private final IMapper mapperWebGerest;
+	private final MapperConfig mapperConfig;
+	private final UAIConfig uaiConfig;
 
-	@Autowired
-	IMapper mapperWebGerest;
-
-	@Autowired
-	private MapperConfig mapperConfig;
-
-	@Autowired
-	private UAIConfig uaiConfig;
-	
 	@Value("${adoria.gemrcn-csv}")
 	String gemrcnFilename;
-	
+
 	@Value("${adoria.labels-csv}")
 	String labelsFilename;
-	
+
 	@PostConstruct
 	public void postConstructInit(){
 		// Pas besoin de charger les GemRcn car on ne les utilise pas dans cette version
