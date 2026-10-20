@@ -183,7 +183,7 @@ public class APIClient implements IAPIClient {
             final DynamicURLResponse dynamicURLResponse = initializeAndGetDynamicEndpoint(uai);
             if(dynamicURLResponse.getError() == 0){
                 dynamicURL.put(uai, dynamicURLResponse.getContenu());
-                log.debug("Association trouvée pour l'UAI " + uai);
+                log.debug("Association trouvée pour l'UAI {}", uai);
             }else{
                 dynamicURL.put(uai, null);
                 throw new UnknownUAIException("Pas d'URL connue pour l'UAI " + uai);
