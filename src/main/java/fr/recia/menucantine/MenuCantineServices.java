@@ -51,12 +51,12 @@ import java.util.Objects;
 public class MenuCantineServices {
 
     private static final Logger log = LoggerFactory.getLogger(MenuCantineServices.class);
-
+    private static final String MESSAGE_ECHANGE_BLOQUE = "L'etablissement a bloqué l'echange de donnees.";
+    private static final String UNEXPECTED_ERROR = "Erreur innatendue lors de la requête";
     private final IAPIClient apiClient;
     private final IMapper mapperWebGerest;
     private final MapperConfig mapperConfig;
     private final UAIConfig uaiConfig;
-
     @Value("${adoria.gemrcn-csv}")
     String gemrcnFilename;
 
@@ -70,9 +70,10 @@ public class MenuCantineServices {
 
     /**
      * Prends en entrée un objet Requête, fait les appels correspondants à l'API et retourne une Semaine
+     *
      * @param requete La requête avec la date et l'UAI demandé
      * @return Un objet de type Semaine à envoyer directement au front
-     * @throws UnknownUAIException Dans le cas ou l'UAI n'a pas d'URL associé
+     * @throws UnknownUAIException       Dans le cas ou l'UAI n'a pas d'URL associé
      * @throws WebgerestRequestException Dans le cas ou on a une erreur innatendue sur une des requêtes
      */
     public Semaine newFindSemaine(Requete requete) throws UnknownUAIException, WebgerestRequestException, NoDataExchangeException {
@@ -125,11 +126,11 @@ public class MenuCantineServices {
                     log.error("Erreur sur le retour de la requête avec les paramètres uai={}, date={}, service={}." +
                             "\nMessage retourné : {}", uai, menuDayString, numService, serviceDTO.getMessage());
                     if (serviceDTO.getMessage() != null) {
-                        if (serviceDTO.getMessage().equals("L'etablissement a bloqué l'echange de donnees.")) {
+                        if (serviceDTO.getMessage().equals(MESSAGE_ECHANGE_BLOQUE)) {
                             throw new NoDataExchangeException("L'établissement a bloqué l'échange de donnees.");
                         }
                     } else {
-                        throw new WebgerestRequestException("Erreur innatendue lors de la requête");
+                        throw new WebgerestRequestException(UNEXPECTED_ERROR);
                     }
                 }
 
