@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import jakarta.annotation.ManagedBean;
 import jakarta.annotation.PostConstruct;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -45,7 +44,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Configuration
-@ManagedBean
 @RequiredArgsConstructor
 public class MenuCantineServices {
 
