@@ -28,7 +28,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -42,80 +41,57 @@ public class BeanSemaineTests {
     @MockitoBean
     private CacheManager cacheManager;
 
+    /**
+     * Construit un SousMenu à partir de ses plats, sans avoir à passer par une liste à la main.
+     */
+    private static SousMenu sousMenu(int rank, Plat... plats) {
+        return new SousMenu(new ArrayList<>(Arrays.asList(plats)), rank);
+    }
+
+    /**
+     * Construit un Service "rempli" à partir de ses sous-menus. Les services vides
+     * (sans sous-menu) continuent d'être créés directement via `new Service(...)`.
+     */
+    private static Service service(String name, int rank, boolean typeVide, SousMenu... sousMenus) {
+        Service service = new Service(name, rank, typeVide);
+        service.setMenu(Arrays.asList(sousMenus));
+        return service;
+    }
+
     @BeforeEach
     public void setup(){
-        Plat plat1 = new Plat("plat1", "entree");
-        SousMenu entree = new SousMenu(new ArrayList<>(Collections.singletonList(plat1)), 1);
-        Plat plat2 = new Plat("plat2","plat");
-        Plat plat21 = new Plat("plat21","plat");
-        SousMenu plat = new SousMenu(new ArrayList<>(Arrays.asList(plat2, plat21)), 2);
-        Plat plat3 = new Plat("plat3", "accompagnement");
-        SousMenu accompagnement = new SousMenu(new ArrayList<>(Collections.singletonList(plat3)), 3);
-        Plat plat4 = new Plat("plat4", "fromage");
-        Plat plat41 = new Plat("plat41", "fromage");
-        Plat plat42 = new Plat("plat42", "fromage");
-        SousMenu fromage = new SousMenu(new ArrayList<>(Arrays.asList(plat4, plat41, plat42)), 4);
-        Plat plat5 = new Plat("plat5", "dessert");
-        SousMenu dessert = new SousMenu(new ArrayList<>(Collections.singletonList(plat5)), 5);
-        Plat plat6 = new Plat("plat6", "autre");
-        SousMenu autre = new SousMenu(new ArrayList<>(Collections.singletonList(plat6)), 6);
-        Service service1 = new Service("Déjeuner", 2, false);
-        service1.setMenu(Arrays.asList(entree, plat, accompagnement, fromage, dessert, autre));
-        Plat plat1s2 = new Plat("plat1s2", "entree");
-        SousMenu entrees2 = new SousMenu(new ArrayList<>(Collections.singletonList(plat1s2)), 1);
-        Plat plat2s2 = new Plat("plat2s2","plat");
-        Plat plat21s2 = new Plat("plat21s2","plat");
-        SousMenu plats2 = new SousMenu(new ArrayList<>(Arrays.asList(plat2s2, plat21s2)), 2);
-        Plat plat3s2 = new Plat("plat3s2", "accompagnement");
-        SousMenu accompagnements2 = new SousMenu(new ArrayList<>(Collections.singletonList(plat3s2)), 3);
-        Plat plat4s2 = new Plat("plat4s2", "fromage");
-        Plat plat41s2 = new Plat("plat41s2", "fromage");
-        SousMenu fromages2 = new SousMenu(new ArrayList<>(Arrays.asList(plat4s2, plat41s2)), 4);
-        Plat plat5s2 = new Plat("plat5s2", "dessert");
-        Plat plat51s2 = new Plat("plat51s2", "dessert");
-        SousMenu desserts2 = new SousMenu(new ArrayList<>(Arrays.asList(plat5s2, plat51s2)), 5);
-        Plat plat6s2 = new Plat("plat6s2", "autre");
-        SousMenu autres2 = new SousMenu(new ArrayList<>(Collections.singletonList(plat6s2)), 6);
-        Service service2 = new Service("Diner", 3, false);
-        service2.setMenu(Arrays.asList(entrees2, plats2, accompagnements2, fromages2, desserts2, autres2));
-        service2.setMenu(Arrays.asList(entrees2, plats2, accompagnements2, fromages2, desserts2, autres2));
+        Service service1 = service("Déjeuner", 2, false,
+                sousMenu(1, new Plat("plat1", "entree")),
+                sousMenu(2, new Plat("plat2", "plat"), new Plat("plat21", "plat")),
+                sousMenu(3, new Plat("plat3", "accompagnement")),
+                sousMenu(4, new Plat("plat4", "fromage"), new Plat("plat41", "fromage"), new Plat("plat42", "fromage")),
+                sousMenu(5, new Plat("plat5", "dessert")),
+                sousMenu(6, new Plat("plat6", "autre")));
+        Service service2 = service("Diner", 3, false,
+                sousMenu(1, new Plat("plat1s2", "entree")),
+                sousMenu(2, new Plat("plat2s2", "plat"), new Plat("plat21s2", "plat")),
+                sousMenu(3, new Plat("plat3s2", "accompagnement")),
+                sousMenu(4, new Plat("plat4s2", "fromage"), new Plat("plat41s2", "fromage")),
+                sousMenu(5, new Plat("plat5s2", "dessert"), new Plat("plat51s2", "dessert")),
+                sousMenu(6, new Plat("plat6s2", "autre")));
         Service service3 = new Service("Service vide", 4, true);
         journee1 = new Journee();
         journee1.setDestinations(new ArrayList<>(Arrays.asList(service1, service2, service3)));
-        Plat j2plat1 = new Plat("j2plat1", "entree");
-        SousMenu j2entree = new SousMenu(new ArrayList<>(Collections.singletonList(j2plat1)), 1);
-        Plat j2plat2 = new Plat("j2plat2","plat");
-        SousMenu j2plat = new SousMenu(new ArrayList<>(Collections.singletonList(j2plat2)), 2);
-        Plat j2plat3 = new Plat("j2plat3", "accompagnement");
-        SousMenu j2accompagnement = new SousMenu(new ArrayList<>(Collections.singletonList(j2plat3)), 3);
-        Plat j2plat4 = new Plat("j2plat4", "fromage");
-        Plat j2plat41 = new Plat("j2plat41", "fromage");
-        SousMenu j2fromage = new SousMenu(new ArrayList<>(Arrays.asList(j2plat4, j2plat41)), 4);
-        Plat j2plat5 = new Plat("j2plat5", "dessert");
-        Plat j2plat51 = new Plat("j2plat51", "dessert");
-        SousMenu j2dessert = new SousMenu(new ArrayList<>(Arrays.asList(j2plat5, j2plat51)), 5);
-        Plat j2plat6 = new Plat("j2plat6", "autre");
-        SousMenu j2autre = new SousMenu(new ArrayList<>(Collections.singletonList(j2plat6)), 6);
-        Service j2service1 = new Service("Déjeuner", 2, false);
-        j2service1.setMenu(Arrays.asList(j2entree, j2plat, j2accompagnement, j2fromage, j2dessert, j2autre));
-        Plat j2plat1s2 = new Plat("j2plat1s2", "entree");
-        SousMenu j2entrees2 = new SousMenu(new ArrayList<>(Collections.singletonList(j2plat1s2)), 1);
-        Plat j2plat2s2 = new Plat("j2plat2s2","plat");
-        Plat j2plat21s2 = new Plat("j2plat21s2","plat");
-        Plat j2plat22s2 = new Plat("j2plat22s2","plat");
-        SousMenu j2plats2 = new SousMenu(new ArrayList<>(Arrays.asList(j2plat2s2, j2plat21s2, j2plat22s2)), 2);
-        Plat j2plat3s2 = new Plat("j2plat3s2", "accompagnement");
-        Plat j2plat31s2 = new Plat("j2plat3s2", "accompagnement");
-        SousMenu j2accompagnements2 = new SousMenu(new ArrayList<>(Arrays.asList(j2plat3s2, j2plat31s2)), 3);
-        Plat j2plat4s2 = new Plat("j2plat4s2", "fromage");
-        SousMenu j2fromages2 = new SousMenu(new ArrayList<>(Collections.singletonList(j2plat4s2)), 4);
-        Plat j2plat5s2 = new Plat("j2plat5s2", "dessert");
-        Plat j2plat51s2 = new Plat("j2plat51s2", "dessert");
-        SousMenu j2desserts2 = new SousMenu(new ArrayList<>(Arrays.asList(j2plat5s2, j2plat51s2)), 5);
-        Plat j2plat6s2 = new Plat("j2plat6s2", "autre");
-        SousMenu j2autres2 = new SousMenu(new ArrayList<>(Collections.singletonList(j2plat6s2)), 6);
-        Service j2service2 = new Service("Diner", 3, false);
-        j2service2.setMenu(Arrays.asList(j2entrees2, j2plats2, j2accompagnements2, j2fromages2, j2desserts2, j2autres2));
+
+        Service j2service1 = service("Déjeuner", 2, false,
+                sousMenu(1, new Plat("j2plat1", "entree")),
+                sousMenu(2, new Plat("j2plat2", "plat")),
+                sousMenu(3, new Plat("j2plat3", "accompagnement")),
+                sousMenu(4, new Plat("j2plat4", "fromage"), new Plat("j2plat41", "fromage")),
+                sousMenu(5, new Plat("j2plat5", "dessert"), new Plat("j2plat51", "dessert")),
+                sousMenu(6, new Plat("j2plat6", "autre")));
+        Service j2service2 = service("Diner", 3, false,
+                sousMenu(1, new Plat("j2plat1s2", "entree")),
+                sousMenu(2, new Plat("j2plat2s2", "plat"), new Plat("j2plat21s2", "plat"), new Plat("j2plat22s2", "plat")),
+                sousMenu(3, new Plat("j2plat3s2", "accompagnement"), new Plat("j2plat31s2", "accompagnement")),
+                sousMenu(4, new Plat("j2plat4s2", "fromage")),
+                sousMenu(5, new Plat("j2plat5s2", "dessert"), new Plat("j2plat51s2", "dessert")),
+                sousMenu(6, new Plat("j2plat6s2", "autre")));
         Service j2service3 = new Service("Service vide", 4, true);
         journee2 = new Journee();
         journee2.setDestinations(new ArrayList<>(Arrays.asList(j2service1, j2service2, j2service3)));
