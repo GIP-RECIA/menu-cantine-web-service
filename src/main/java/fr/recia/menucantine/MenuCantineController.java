@@ -16,6 +16,7 @@
 package fr.recia.menucantine;
 
 import fr.recia.menucantine.exception.*;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,11 @@ import fr.recia.menucantine.beans.Semaine;
 
 @RestController
 @RequestMapping(path = "/api")
+@RequiredArgsConstructor
 public class MenuCantineController {
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineController.class);	
 			  
-	@Autowired
-	private MenuCantineServices services;
+	private final MenuCantineServices services;
 	
 	@GetMapping(
 			path="/demomenu",

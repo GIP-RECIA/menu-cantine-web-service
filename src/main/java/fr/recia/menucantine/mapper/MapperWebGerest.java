@@ -24,6 +24,7 @@ import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.LabelDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +36,15 @@ import java.util.*;
 
 
 @Component
+@RequiredArgsConstructor
 public class MapperWebGerest implements IMapper {
 
     private static final Logger log = LoggerFactory.getLogger(MapperWebGerest.class);
 
-    @Autowired
-    private MapperConfig mapperConfig;
+    private final MapperConfig mapperConfig;
 
     public Semaine buildSemaine(List<JourneeDTO> journeeDTOList, LocalDate requestDate, String uai){
-        // Première étape : constuire la Semaine
+        // Première étape : construire la Semaine
         final LocalDate lundi = RequeteHelper.jourMemeSemaine(requestDate, 1);
         final LocalDate vendredi = RequeteHelper.jourMemeSemaine(requestDate, 5);
         Semaine semaine = new Semaine();
