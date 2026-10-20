@@ -34,8 +34,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.ManagedBean;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.ManagedBean;
+import jakarta.annotation.PostConstruct;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
