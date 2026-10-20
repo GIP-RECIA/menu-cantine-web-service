@@ -125,12 +125,15 @@ public class MenuCantineServices {
                 } else {
                     log.error("Erreur sur le retour de la requête avec les paramètres uai={}, date={}, service={}." +
                             "\nMessage retourné : {}", uai, menuDayString, numService, serviceDTO.getMessage());
-                    if (serviceDTO.getMessage() != null) {
+
+                    if (serviceDTO.getMessage() == null) {
+                        throw new WebgerestRequestException(UNEXPECTED_ERROR);
+                    } else {
                         if (serviceDTO.getMessage().equals(MESSAGE_ECHANGE_BLOQUE)) {
                             throw new NoDataExchangeException("L'établissement a bloqué l'échange de donnees.");
+                        } else {
+                            throw new WebgerestRequestException(serviceDTO.getMessage());
                         }
-                    } else {
-                        throw new WebgerestRequestException(UNEXPECTED_ERROR);
                     }
                 }
 
