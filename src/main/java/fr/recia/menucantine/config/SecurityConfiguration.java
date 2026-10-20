@@ -15,96 +15,91 @@
  */
 package fr.recia.menucantine.config;
 
-import org.apereo.portal.soffit.security.SoffitApiAuthenticationManager;
-import org.apereo.portal.soffit.security.SoffitApiPreAuthenticatedProcessingFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import fr.recia.menucantine.config.beans.SoffitProperties;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.ErrorPageFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import fr.recia.notifications.soffit_java_client.SoffitJwtAuthenticationFilter;
+import fr.recia.notifications.soffit_java_client.SoffitJwtValidator;
 
-import javax.servlet.Filter;
 
+import jakarta.servlet.Filter;
+
+@Profile("!test")
 @Configuration
 @EnableWebSecurity
+@Slf4j
+@RequiredArgsConstructor
 public class SecurityConfiguration{
-
-	@Value("${soffit.jwt.signatureKey:Changeme}")
-    private String signatureKey;
 
 	@Value("${menucantine.demo:false}")
 	private boolean isDemoLocale;
-
-	@Autowired
-	private CorsConfig corsConfig;
-
-	private static final Logger log = LoggerFactory.getLogger(SecurityConfiguration.class);
+	private final CorsConfig corsConfig;
+	private final SoffitProperties jwtProperties;
 
 	@Bean
-    protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	SoffitJwtValidator soffitJwtValidator() {
+		return new SoffitJwtValidator(jwtProperties.getSignatureKey());
+	}
+
+	@Bean
+	SoffitJwtAuthenticationFilter soffitJwtAuthenticationFilter(SoffitJwtValidator validator) {
+		return new SoffitJwtAuthenticationFilter(validator);
+	}
+	@Bean
+    protected SecurityFilterChain securityFilterChain(HttpSecurity http, SoffitJwtAuthenticationFilter filter) throws Exception {
 		 /*
 		 * Provide a SoffitApiPreAuthenticatedProcessingFilter (from uPortal) that is NOT a
 		 * top-level bean in the Spring Application Context.
 		 */
-		log.debug("configure signatureKey = {}", signatureKey);
-        final AbstractPreAuthenticatedProcessingFilter filter =
-                new SoffitApiPreAuthenticatedProcessingFilter(signatureKey);
-        
-        filter.setAuthenticationManager(authenticationManager());
 
 		if(isDemoLocale){
 			log.warn("Mode DEMO LOCALE activé !");
-			http
-				.addFilter(filter)
-				.authorizeRequests()
-					.anyRequest().permitAll();
-		}else{
-			http
-				.addFilter(filter)
-				.authorizeRequests()
-					.antMatchers(HttpMethod.GET, "/health-check").anonymous()
-					.antMatchers(HttpMethod.HEAD, "/health-check").anonymous()
-					.antMatchers(HttpMethod.GET, "/api/menu").authenticated()
-					.antMatchers(HttpMethod.GET, "/img/*").permitAll()
-					.anyRequest().denyAll()
-				.and()
-				/*
-				 * Session fixation protection is provided by uPortal.  Since portlet tech requires
-				 * sessionCookiePath=/, we will make the portal unusable if other modules are changing
-				 * the sessionId as well.
-				 */
-				.sessionManagement()
-					.sessionFixation().none();
+			http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+		}else {
+			http	.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+					.authorizeHttpRequests(auth -> auth
+							.requestMatchers(HttpMethod.GET, "/health-check").anonymous()
+							.requestMatchers(HttpMethod.HEAD, "/health-check").anonymous()
+							.requestMatchers(HttpMethod.GET, "/api/menu").authenticated()
+							.requestMatchers(HttpMethod.GET, "/img/*").permitAll()
+							.anyRequest().denyAll()
+					);
+
+			http.sessionManagement(config -> config.sessionFixation().none());
+			/*
+			 * À remplacer par la ligne ci-dessous quand cela sera sorti du portail
+			 */
+			//	http.sessionManagement(config -> config.sessionFixation().newSession());
+
 		}
 
 		if(corsConfig.isEnabled()) {
 			log.debug("CORS est autorisé !");
-			http.cors().configurationSource(corsConfigurationSource());
+			http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 		}
 		else{
 			log.debug("CORS désactivé.");
-			http.cors().disable();
+			http.cors(AbstractHttpConfigurer::disable);
 		}
 
 		return http.build();
 	}
 
-	@Bean
-    public AuthenticationManager authenticationManager() {
-        return new SoffitApiAuthenticationManager();
-    }
 
 	@Bean
 	public ErrorPageFilter errorPageFilter() {
@@ -119,6 +114,13 @@ public class SecurityConfiguration{
 		 */
 		FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
 		filterRegistrationBean.setFilter(errorPageFilter());
+		filterRegistrationBean.setEnabled(false);
+		return filterRegistrationBean;
+	}
+	@Bean
+	public FilterRegistrationBean<SoffitJwtAuthenticationFilter> disableSoffitJwtAuthenticationFilterAutoRegistration(SoffitJwtAuthenticationFilter filter) {
+		FilterRegistrationBean<SoffitJwtAuthenticationFilter> filterRegistrationBean = new FilterRegistrationBean<>();
+		filterRegistrationBean.setFilter(filter);
 		filterRegistrationBean.setEnabled(false);
 		return filterRegistrationBean;
 	}
