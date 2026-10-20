@@ -25,10 +25,10 @@ import fr.recia.menucantine.dto.LabelDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
 import fr.recia.menucantine.enums.Allergen;
+import fr.recia.menucantine.enums.LabelsNourriture;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -206,25 +206,12 @@ public class MapperWebGerest implements IMapper {
     public List<Labels> buildLabels(PlatDTO platDTO) {
         List<Labels> labelsList = new ArrayList<>();
         // Labels sous forme d'attributs booléens dans l'API
-        if(platDTO.isBio()){
-            labelsList.add(Labels.getLabel("BIO"));
-        }
-        if(platDTO.isFaitmaison()){
-            labelsList.add(Labels.getLabel("Fait Maison"));
-        }
-        if(platDTO.isLocal()){
-            labelsList.add(Labels.getLabel("Local"));
-        }
-        if(platDTO.isVegetarien()) {
-            labelsList.add(Labels.getLabel("Végetarien"));
-        }
-        if(platDTO.isAgrimer_fl()){
-            labelsList.add(Labels.getLabel("Fruits et légumes à l’école"));
-        }
-        if(platDTO.isAgrimer_lait()){
-            labelsList.add(Labels.getLabel("Lait et produits laitiers à l’école"));
-        }
 
+        for (LabelsNourriture labelsNourriture : LabelsNourriture.values()){
+            if (labelsNourriture.isPresentOn(platDTO)){
+                labelsList.add(Labels.getLabel(labelsNourriture.getDisplayName()));
+            }
+        }
         // Labels sous forme d'une liste de code dans l'API (attention l'attribut labels peut ne pas être défini dans le JSON)
         if(platDTO.getLabels() != null){
             for(LabelDTO labelDTO: platDTO.getLabels()){
