@@ -20,20 +20,16 @@ import fr.recia.menucantine.adoria.beans.Plat;
 import fr.recia.menucantine.adoria.beans.Service;
 import fr.recia.menucantine.adoria.beans.SousMenu;
 import net.sf.ehcache.CacheManager;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.junit.Assert.*;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles({ "unit" })
 public class BeanServiceTests {
@@ -57,7 +53,7 @@ public class BeanServiceTests {
     @MockitoBean
     private CacheManager cacheManager;
 
-    @Before
+    @BeforeEach
     public void setup(){
         plat1 = new Plat("plat1", "entree");
         entree = new SousMenu(Collections.singletonList(plat1), 1);
@@ -81,12 +77,12 @@ public class BeanServiceTests {
         Service service = new Service();
         service.setMenu(Arrays.asList(entree, plat, accompagnement, fromage, dessert, autre));
         NbPlatParSsMenu nbPlatParSsMenu = service.clean();
-        assertEquals("Le sousmenu de rank 1 possède 1 plat", 1, nbPlatParSsMenu.get(1), 0);
-        assertEquals("Le sousmenu de rank 2 possède 2 plat", 2, nbPlatParSsMenu.get(2), 0);
-        assertEquals("Le sousmenu de rank 3 possède 1 plat", 1, nbPlatParSsMenu.get(3), 0);
-        assertEquals("Le sousmenu de rank 4 possède 3 plat", 3, nbPlatParSsMenu.get(4), 0);
-        assertEquals("Le sousmenu de rank 5 possède 1 plat", 1, nbPlatParSsMenu.get(5), 0);
-        assertEquals("Le sousmenu de rank 6 possède 1 plat", 1, nbPlatParSsMenu.get(6), 0);
+        assertEquals( 1, nbPlatParSsMenu.get(1), 0, "Le sousmenu de rank 1 possède 1 plat");
+        assertEquals( 2, nbPlatParSsMenu.get(2), 0,"Le sousmenu de rank 2 possède 2 plat");
+        assertEquals( 1, nbPlatParSsMenu.get(3), 0, "Le sousmenu de rank 3 possède 1 plat");
+        assertEquals( 3, nbPlatParSsMenu.get(4), 0,"Le sousmenu de rank 4 possède 3 plat");
+        assertEquals( 1, nbPlatParSsMenu.get(5), 0,"Le sousmenu de rank 5 possède 1 plat");
+        assertEquals( 1, nbPlatParSsMenu.get(6), 0,"Le sousmenu de rank 6 possède 1 plat");
     }
 
 }

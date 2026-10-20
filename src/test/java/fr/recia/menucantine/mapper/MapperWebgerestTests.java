@@ -27,13 +27,11 @@ import fr.recia.menucantine.dto.LabelDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
 import net.sf.ehcache.CacheManager;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -41,7 +39,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests sur le mapper WebGerest
@@ -50,7 +48,6 @@ import static org.junit.Assert.*;
  * Le nettoyage et la complétion sont testé directement dans les tests des beans adoria
  * Teste aussi bien la création d'objets remplis que d'objets vides
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles({ "unit" })
 public class MapperWebgerestTests {
@@ -74,16 +71,16 @@ public class MapperWebgerestTests {
 				false, false, false, false, false,
 				false, false, 1, false, false, labelDTOS, false, false);
 		Plat old = mapperWebGerest.buildPlat(platDTO);
-		assertTrue("La liste des allergènes ne contient pas le Gluten", old.getAllergens().contains("Gluten"));
-		assertEquals("Le type du plat n'est pas le bon", old.getFamily(), mapperConfig.getSousMenuFinalName("entree"));
-		assertTrue("La liste labels doit être vide", old.getLabels().isEmpty());
-        assertEquals("La liste labelsInfo doit contenir les deux labels", 2, old.getLabelsInfo().size());
-		assertNull("La liste gemrcn doit être null", old.getGemrcn());
-		assertEquals("Le nom du plat n'est pas le bon nom ", "Plat test 1", old.getName());
-		assertEquals("Le familyrank doit valoir 1", 1, old.getFamilyRank(), 0);
-		assertNull("La liste nutritions doit être null", old.getNutritions());
-		assertEquals("La subfamily doit être la châine vide", "", old.getSubFamily());
-		assertEquals("Le plat ne doit pas être de type vide ", false, old.getTypeVide());
+		assertTrue(old.getAllergens().contains("Gluten"), "La liste des allergènes ne contient pas le Gluten");
+		assertEquals(old.getFamily(), mapperConfig.getSousMenuFinalName("entree"), "Le type du plat n'est pas le bon");
+		assertTrue(old.getLabels().isEmpty(), "La liste labels doit être vide");
+        assertEquals(2, old.getLabelsInfo().size(), "La liste labelsInfo doit contenir les deux labels");
+		assertNull(old.getGemrcn(), "La liste gemrcn doit être null");
+		assertEquals("Plat test 1", old.getName(), "Le nom du plat n'est pas le bon nom ");
+		assertEquals(1, old.getFamilyRank(), 0, "Le familyrank doit valoir 1");
+		assertNull(old.getNutritions(), "La liste nutritions doit être null");
+		assertEquals("", old.getSubFamily(), "La subfamily doit être la châine vide");
+		assertEquals(false, old.getTypeVide(), "Le plat ne doit pas être de type vide ");
 	}
 
 	@Test
@@ -127,9 +124,9 @@ public class MapperWebgerestTests {
 		ServiceDTO serviceDTO = new ServiceDTO();
 		serviceDTO.setContenu(platDTOList);
 		List<SousMenu> sousMenuList = mapperWebGerest.buildListSousMenu(serviceDTO);
-		assertEquals("La liste des sous-menus doit contenir 6 élements", 6, sousMenuList.size());
-		assertEquals("Le premier sous-menu doit contenir 2 élements", 2, sousMenuList.get(0).getChoix().size());
-		assertEquals("Le troisième objet de la liste doit être le sous-menu d'accompagnement", "Accompagnement", sousMenuList.get(2).getChoix().get(0).getFamily());
+		assertEquals(6, sousMenuList.size(), "La liste des sous-menus doit contenir 6 élements");
+		assertEquals(2, sousMenuList.get(0).getChoix().size(), "Le premier sous-menu doit contenir 2 élements");
+		assertEquals("Accompagnement", sousMenuList.get(2).getChoix().get(0).getFamily(), "Le troisième objet de la liste doit être le sous-menu d'accompagnement");
 	}
 
 	@Test
@@ -137,7 +134,7 @@ public class MapperWebgerestTests {
 		ServiceDTO serviceDTO = new ServiceDTO();
 		serviceDTO.setContenu(new ArrayList<>());
 		List<SousMenu> sousMenuList = mapperWebGerest.buildListSousMenu(serviceDTO);
-		assertEquals("La liste des sous-menus doit être vide", 0, sousMenuList.size());
+		assertEquals(0, sousMenuList.size(), "La liste des sous-menus doit être vide");
 	}
 
 	@Test
@@ -151,11 +148,11 @@ public class MapperWebgerestTests {
 		ServiceDTO serviceDTO = new ServiceDTO();
 		serviceDTO.setContenu(platDTOList);
 		Service service = mapperWebGerest.buildService(serviceDTO, "Déjeuner");
-		assertEquals("Le nom du service doit valoir Déjeuner", "Déjeuner", service.getName());
-		assertEquals("Le nom du service doit valoir Déjeuner", "Déjeuner", service.getServiceName());
-		assertEquals("Le rank du service doit valoir 1", 1, service.getRank(), 0);
-		assertFalse("Le type de service ne doit pas valoir false", service.getTypeVide());
-		assertEquals("Le liste des plats du service ne doit pas être vide", 1, service.getMenu().size());
+		assertEquals("Déjeuner", service.getName(), "Le nom du service doit valoir Déjeuner");
+		assertEquals("Déjeuner", service.getServiceName(), "Le nom du service doit valoir Déjeuner");
+		assertEquals(1, service.getRank(), 0, "Le rank du service doit valoir 1");
+		assertFalse(service.getTypeVide(), "Le type de service ne doit pas valoir false");
+		assertEquals(1, service.getMenu().size(), "Le liste des plats du service ne doit pas être vide");
 	}
 
 	@Test
@@ -182,9 +179,9 @@ public class MapperWebgerestTests {
 		journeeDTO.addService("Déjeuner", serviceDTO1);
 		journeeDTO.addService("Dîner", serviceDTO2);
 		Journee journee = mapperWebGerest.buildJournee(journeeDTO);
-		assertEquals("Le jour de la journée est mardi", "mardi", journee.getJour());
-		assertFalse("La journée ne doit pas être vide", journee.isVide());
-		assertEquals("Il doit y avoir deux services dans la journée", 2, journee.getDestinations().size(), 0);
+		assertEquals("mardi", journee.getJour(), "Le jour de la journée est mardi");
+		assertFalse(journee.isVide(), "La journée ne doit pas être vide");
+		assertEquals(2, journee.getDestinations().size(), 0, "Il doit y avoir deux services dans la journée");
 	}
 
 	@Test
@@ -199,8 +196,8 @@ public class MapperWebgerestTests {
 		JourneeDTO journeeDTO3 = new JourneeDTO();
 		journeeDTO3.setDate(now);
 		Journee journee3 = mapperWebGerest.buildJournee(journeeDTO3);
-		assertTrue("La journée doit être vide", journee2.isVide());
-		assertTrue("La journée doit être vide", journee3.isVide());
+		assertTrue(journee2.isVide(), "La journée doit être vide");
+		assertTrue(journee3.isVide(), "La journée doit être vide");
 	}
 
 	@Test
@@ -231,15 +228,15 @@ public class MapperWebgerestTests {
 		journeeDTO2.addService("Déjeuner", serviceDTO2);
 		List<JourneeDTO> journeeDTOList = Arrays.asList(journeeDTO1, journeeDTO2);
 		Semaine semaine = mapperWebGerest.buildSemaine(journeeDTOList, now1, "000000F");
-		assertEquals("Le nombre de jours de la semaine doit valoir 2", 2, semaine.getNbJours(), 0);
-		assertEquals("Le début de la semaine est le 4 décembre 23", "4 décembre 23", semaine.getDebut());
-		assertEquals("Le début de la semaine est le 8 décembre 23", "8 décembre 23", semaine.getFin());
-		assertNotNull("La requête ne doit pas être nulle", semaine.getRequete());
-		assertEquals("La liste des allGemRcn doit être vide", 0, semaine.getAllGemRcn().size(), 0);
-		assertEquals("La semaine précédente doit être 2023-12-01", LocalDate.of(2023, 12, 1), semaine.getPreviousWeek());
-		assertEquals("La semaine suivante doit être 2023-12-11", LocalDate.of(2023, 12, 11), semaine.getNextWeek());
-		assertEquals("La liste des jours de la semaine doit contenir deux jours", 2, semaine.getJours().size(), 0);
-		assertNotNull("Le nombre max de plats par service ne doit pas être null", semaine.getNbPlatMaxParService());
+		assertEquals(2, semaine.getNbJours(), 0, "Le nombre de jours de la semaine doit valoir 2");
+		assertEquals("4 décembre 23", semaine.getDebut(), "Le début de la semaine est le 4 décembre 23");
+		assertEquals("8 décembre 23", semaine.getFin(), "Le début de la semaine est le 8 décembre 23");
+		assertNotNull(semaine.getRequete(), "La requête ne doit pas être nulle");
+		assertEquals(0, semaine.getAllGemRcn().size(), 0, "La liste des allGemRcn doit être vide");
+		assertEquals(LocalDate.of(2023, 12, 1), semaine.getPreviousWeek(), "La semaine précédente doit être 2023-12-01");
+		assertEquals(LocalDate.of(2023, 12, 11), semaine.getNextWeek(), "La semaine suivante doit être 2023-12-11");
+		assertEquals(2, semaine.getJours().size(), 0, "La liste des jours de la semaine doit contenir deux jours");
+		assertNotNull(semaine.getNbPlatMaxParService(), "Le nombre max de plats par service ne doit pas être null");
 	}
 
 	@Test
@@ -247,11 +244,11 @@ public class MapperWebgerestTests {
 		LocalDate now = LocalDate.of(2023, 12, 5);
 		String uai = "000000F";
 		Requete requete = mapperWebGerest.buildRequete(now, uai);
-		assertEquals("La semaine de la requête doit valoir 49", 49, requete.getSemaine(), 0);
-		assertEquals("L'année de la requête doit valoir 2023", 2023, requete.getAnnee(), 0);
-		assertEquals("Le jour de la requête doit valoir 5", 5, requete.getJour(), 0);
-		assertEquals("L'UAI de la requête doit valoir 000000F", "000000F", requete.getUai());
-		assertEquals("La date de la requête doit valoir 05/12/2023", "05/12/2023", requete.getDateJour());
+		assertEquals(49, requete.getSemaine(), 0, "La semaine de la requête doit valoir 49");
+		assertEquals(2023, requete.getAnnee(), 0, "L'année de la requête doit valoir 2023");
+		assertEquals(5, requete.getJour(), 0, "Le jour de la requête doit valoir 5");
+		assertEquals("000000F", requete.getUai(), "L'UAI de la requête doit valoir 000000F");
+		assertEquals("05/12/2023", requete.getDateJour(), "La date de la requête doit valoir 05/12/2023");
 	}
 
 }

@@ -20,21 +20,18 @@ import fr.recia.menucantine.adoria.beans.Plat;
 import fr.recia.menucantine.adoria.beans.Service;
 import fr.recia.menucantine.adoria.beans.SousMenu;
 import net.sf.ehcache.CacheManager;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles({ "unit" })
 public class BeanSemaineTests {
@@ -45,7 +42,7 @@ public class BeanSemaineTests {
     @MockitoBean
     private CacheManager cacheManager;
 
-    @Before
+    @BeforeEach
     public void setup(){
         Plat plat1 = new Plat("plat1", "entree");
         SousMenu entree = new SousMenu(new ArrayList<>(Collections.singletonList(plat1)), 1);
@@ -130,35 +127,35 @@ public class BeanSemaineTests {
         semaine.setJours(Arrays.asList(journee1, journee2));
         semaine.clean();
         semaine.complete();
-        assertEquals("La semaine doit contenir 2 jours", 2, semaine.getJours().size(), 0);
-        assertEquals("Chaque jour doit contenir 2 services", 2, semaine.getJours().get(0).getDestinations().size(), 0);
-        assertEquals("Chaque jour doit contenir 2 services", 2, semaine.getJours().get(1).getDestinations().size(), 0);
-        assertEquals("Le premier service de la première journée contient 7 sous-menus",
-                7, semaine.getJours().get(1).getDestinations().get(0).getMenu().size(), 0);
-        assertEquals("Les sous-menus doivent être complétés correctement : première journée, premier service, cinquième sous-menu",
-                2, semaine.getJours().get(0).getDestinations().get(0).getMenu().get(5).getChoix().size());
-        assertEquals("Les sous-menus doivent être complétés correctement : première journée, deuxième service, deuxième sous-menu",
-                3, semaine.getJours().get(0).getDestinations().get(1).getMenu().get(2).getChoix().size());
-        assertEquals("Les sous-menus doivent être complétés correctement : première journée, deuxième service, troisième sous-menu",
-                2, semaine.getJours().get(0).getDestinations().get(1).getMenu().get(3).getChoix().size());
-        assertEquals("Les sous-menus doivent être complétés correctement : deuxième journée, premier service, deuxième sous-menu",
-                2, semaine.getJours().get(1).getDestinations().get(0).getMenu().get(2).getChoix().size());
-        assertEquals("Les sous-menus doivent être complétés correctement : deuxième journée, premier service, quatrième sous-menu",
-                3, semaine.getJours().get(1).getDestinations().get(0).getMenu().get(4).getChoix().size());
-        assertEquals("Les sous-menus doivent être complétés correctement : deuxième journée, deuxième service, quatrième sous-menu",
-                2, semaine.getJours().get(1).getDestinations().get(1).getMenu().get(4).getChoix().size());
-        assertEquals("Le nombre de plat max par service doit être correct",
-                1, semaine.getNbPlatMaxParService().get("Déjeuner").get(1), 0);
-        assertEquals("Le nombre de plat max par service doit être correct",
-                2, semaine.getNbPlatMaxParService().get("Déjeuner").get(2), 0);
-        assertEquals("Le nombre de plat max par service doit être correct",
-                3, semaine.getNbPlatMaxParService().get("Déjeuner").get(4), 0);
-        assertEquals("Le nombre de plat max par service doit être correct",
-                2, semaine.getNbPlatMaxParService().get("Diner").get(3), 0);
-        assertEquals("Le nombre de plat max par service doit être correct",
-                2, semaine.getNbPlatMaxParService().get("Diner").get(5), 0);
-        assertEquals("Le nombre de plat max par service doit être correct",
-                1, semaine.getNbPlatMaxParService().get("Diner").get(6), 0);
+        assertEquals(2, semaine.getJours().size(), 0, "La semaine doit contenir 2 jours");
+        assertEquals(2, semaine.getJours().get(0).getDestinations().size(), 0, "Chaque jour doit contenir 2 services");
+        assertEquals(2, semaine.getJours().get(1).getDestinations().size(), 0, "Chaque jour doit contenir 2 services");
+        assertEquals(7, semaine.getJours().get(1).getDestinations().get(0).getMenu().size(), 0,
+                "Le premier service de la première journée contient 7 sous-menus");
+        assertEquals(2, semaine.getJours().get(0).getDestinations().get(0).getMenu().get(5).getChoix().size(),
+                "Les sous-menus doivent être complétés correctement : première journée, premier service, cinquième sous-menu");
+        assertEquals(3, semaine.getJours().get(0).getDestinations().get(1).getMenu().get(2).getChoix().size(),
+                "Les sous-menus doivent être complétés correctement : première journée, deuxième service, deuxième sous-menu");
+        assertEquals(2, semaine.getJours().get(0).getDestinations().get(1).getMenu().get(3).getChoix().size(),
+                "Les sous-menus doivent être complétés correctement : première journée, deuxième service, troisième sous-menu");
+        assertEquals(2, semaine.getJours().get(1).getDestinations().get(0).getMenu().get(2).getChoix().size(),
+                "Les sous-menus doivent être complétés correctement : deuxième journée, premier service, deuxième sous-menu");
+        assertEquals(3, semaine.getJours().get(1).getDestinations().get(0).getMenu().get(4).getChoix().size(),
+                "Les sous-menus doivent être complétés correctement : deuxième journée, premier service, quatrième sous-menu");
+        assertEquals(2, semaine.getJours().get(1).getDestinations().get(1).getMenu().get(4).getChoix().size(),
+                "Les sous-menus doivent être complétés correctement : deuxième journée, deuxième service, quatrième sous-menu");
+        assertEquals(1, semaine.getNbPlatMaxParService().get("Déjeuner").get(1), 0,
+                "Le nombre de plat max par service doit être correct");
+        assertEquals(2, semaine.getNbPlatMaxParService().get("Déjeuner").get(2), 0,
+                "Le nombre de plat max par service doit être correct");
+        assertEquals(3, semaine.getNbPlatMaxParService().get("Déjeuner").get(4), 0,
+                "Le nombre de plat max par service doit être correct");
+        assertEquals(2, semaine.getNbPlatMaxParService().get("Diner").get(3), 0,
+                "Le nombre de plat max par service doit être correct");
+        assertEquals(2, semaine.getNbPlatMaxParService().get("Diner").get(5), 0,
+                "Le nombre de plat max par service doit être correct");
+        assertEquals(1, semaine.getNbPlatMaxParService().get("Diner").get(6), 0,
+                "Le nombre de plat max par service doit être correct");
     }
 
 }

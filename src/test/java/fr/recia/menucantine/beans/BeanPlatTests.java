@@ -17,16 +17,13 @@ package fr.recia.menucantine.beans;
 
 import fr.recia.menucantine.adoria.beans.Plat;
 import net.sf.ehcache.CacheManager;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles({ "unit" })
 public class BeanPlatTests {
@@ -37,7 +34,7 @@ public class BeanPlatTests {
     @Test
     public void testCreationPlatVide(){
         Plat plat = Plat.platVide();
-        assertTrue("Le plat doit être vide", plat.getTypeVide());
+        assertTrue(plat.getTypeVide(), "Le plat doit être vide");
     }
 
 }
