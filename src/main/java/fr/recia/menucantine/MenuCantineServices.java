@@ -64,8 +64,6 @@ public class MenuCantineServices {
 
 	@PostConstruct
 	public void postConstructInit(){
-		// Pas besoin de charger les GemRcn car on ne les utilise pas dans cette version
-		// GemRcn.loadFile(gemrcnFilename);
 		Labels.loadFile(labelsFilename);
 	}
 
@@ -89,8 +87,8 @@ public class MenuCantineServices {
 			}
 		}
 
-		// Par défaut on cherche par rapport au jour d'aujourd'hui, mais si jamais on spécifie la date dans la requête
-		// alors on cherche par rapport à cette date en question
+		// Par défaut, on cherche par rapport au jour d'aujourd'hui, mais si jamais on spécifie la date dans la requête
+		// alors on cherche par rapport à cette date en question.
 		LocalDate today = LocalDate.now();
         if (!Objects.equals(requete.getDateJour(), "")) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -106,7 +104,7 @@ public class MenuCantineServices {
 			today = premierJourSemaine.plusWeeks(numeroSemaine - 1).plusDays(numeroJourDansSemaine - 1);
 		}
 
-		log.debug("Date demandée par la requête : " + today);
+		log.debug("Date demandée par la requête : {}", today);
 
         // On doit faire une requête par jour de la semaine pour reconstituer la semaine (numJour=1=lundi, ...)
 		List<JourneeDTO> journeeDTOList = new ArrayList<>();
@@ -138,14 +136,13 @@ public class MenuCantineServices {
 			journeeDTOList.add(journeeDTO);
 		}
 
-		// A partir de la liste des journées, on peut alors reconstituer une semaine
-		// On map la semaine sur l'ancien model pour l'envoyer au front, en donnant aussi la date de la requête et l'uai
+		// À partir de la liste des journées, on peut alors reconstituer une semaine
+		// On map la semaine sur l'ancien model pour l'envoyer au front, en donnant aussi la date de la requête et l'uai.
 		final Semaine semaine = mapperWebGerest.buildSemaine(journeeDTOList, today, uai);
 
-		// Si le nombre de jours vaut 0, cela veut dire qu'on a pas de menu, on renvoie une exception
+		// Si le nombre de jours vaut 0, cela veut dire qu'on a pas de menu, on renvoie une exception.
 		if(semaine.getNbJours() == 0) {
-			log.warn("Aucun menu trouvé pour l'UAI " + uai + " pour la semaine du "
-					+ semaine.getDebut() + " au " + semaine.getFin());
+			log.warn("Aucun menu trouvé pour l'UAI {} pour la semaine du {} au {} ", uai, semaine.getDebut(), semaine.getFin());
 		}
 
 		return semaine;
