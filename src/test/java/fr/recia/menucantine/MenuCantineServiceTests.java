@@ -27,16 +27,14 @@ import fr.recia.menucantine.exception.WebgerestRequestException;
 import fr.recia.menucantine.mapper.MapperWebGerest;
 import fr.recia.menucantine.webgerest.APIClient;
 import net.sf.ehcache.CacheManager;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -54,7 +52,7 @@ public class MenuCantineServiceTests {
     @Mock
     private APIClient apiClient;
 
-    @MockBean
+    @MockitoBean
     private CacheManager cacheManager;
 
     @Mock
@@ -77,6 +75,11 @@ public class MenuCantineServiceTests {
 
     @Captor
     private ArgumentCaptor<Integer> serviceCaptor;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     public void testNewFindSemaine() {

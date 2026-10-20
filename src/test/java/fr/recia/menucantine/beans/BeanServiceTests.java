@@ -24,7 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -54,7 +54,7 @@ public class BeanServiceTests {
     private SousMenu dessert;
     private SousMenu autre;
 
-    @MockBean
+    @MockitoBean
     private CacheManager cacheManager;
 
     @Before

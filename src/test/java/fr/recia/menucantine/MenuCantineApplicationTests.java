@@ -19,7 +19,7 @@ import net.sf.ehcache.CacheManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -28,7 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ActiveProfiles({ "unit" })
 public class MenuCantineApplicationTests {
 
-	@MockBean
+	@MockitoBean
 	private CacheManager cacheManager;
 
 	@Test
