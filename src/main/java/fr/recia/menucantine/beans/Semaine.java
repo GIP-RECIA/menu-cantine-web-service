@@ -27,7 +27,7 @@ import fr.recia.menucantine.adoria.beans.*;
 import lombok.Data;
 
 @Data
-public class Semaine {
+public final class Semaine {
 	@JsonIgnore 
 	static public DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
 

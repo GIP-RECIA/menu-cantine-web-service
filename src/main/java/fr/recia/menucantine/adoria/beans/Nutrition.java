@@ -20,7 +20,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class Nutrition implements Serializable, Cloneable {
+public final class Nutrition implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = -696270684351252698L;
 

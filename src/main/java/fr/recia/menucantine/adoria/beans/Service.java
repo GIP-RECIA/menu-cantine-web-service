@@ -27,7 +27,7 @@ import lombok.Data;
 
 
 @Data
-public class Service implements Serializable, Cloneable {
+public final class Service implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 2763451889039709686L;
 	

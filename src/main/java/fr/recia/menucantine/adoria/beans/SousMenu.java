@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class SousMenu implements Serializable, Cloneable {
+public final class SousMenu implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 6998445821377161534L;
 

@@ -22,7 +22,7 @@ import java.util.Hashtable;
  * int sous-menu => int nbPlats
  * @author legay
  */
-public class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
+public final class NbPlatParSsMenu extends Hashtable<Integer, Integer>{
 
 	private static final long serialVersionUID = 2971745506304642901L;
 	private int maxKey = 0;

@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public class GemRcn {
+public final class GemRcn {
 
 	private static final Logger log = LoggerFactory.getLogger(GemRcn.class);
 

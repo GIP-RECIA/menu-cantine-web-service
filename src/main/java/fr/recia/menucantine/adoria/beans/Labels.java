@@ -32,7 +32,7 @@ import lombok.Data;
 
 @Data
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public class Labels implements Serializable, Cloneable {
+public final class Labels implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 4037048636409313674L;
 	private static final Pattern PV = Pattern.compile("\\s*;\\s*");
