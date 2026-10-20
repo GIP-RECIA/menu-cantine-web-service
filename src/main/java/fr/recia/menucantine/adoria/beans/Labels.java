@@ -1,12 +1,13 @@
 /**
  * Copyright (C) 2024 GIP-RECIA https://www.recia.fr/
- * @Author (C) 2024 GIP-RECIA
  *
+ * @Author (C) 2024 GIP-RECIA
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *                 http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,64 +35,64 @@ import lombok.Data;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public final class Labels implements Serializable, Cloneable {
 
-	private static final long serialVersionUID = 4037048636409313674L;
-	private static final Pattern PV = Pattern.compile("\\s*;\\s*");
-	private static final Logger log = LoggerFactory.getLogger(Labels.class);
-	private static final Map<String, Labels> labelByName = new HashMap<>();
-	private static final Map<Integer, Labels> labelById = new HashMap<>();
-	
-	int ordre;
-	String nom;
-	String logo;
-	
-	public static void loadFile (String fileName)  {
-		try (Scanner scannerFile = new Scanner(ResourceUtils.getFile(fileName))) {
-			log.info("load labels nomenclature file {}",  fileName );
-			
-			scannerFile.nextLine();
+    private static final long serialVersionUID = 4037048636409313674L;
+    private static final Pattern PV = Pattern.compile("\\s*;\\s*");
+    private static final Logger log = LoggerFactory.getLogger(Labels.class);
+    private static final Map<String, Labels> labelByName = new HashMap<>();
+    private static final Map<Integer, Labels> labelById = new HashMap<>();
 
-			while (scannerFile.hasNextLine()) {
-				try (Scanner scannerLine = new Scanner(scannerFile.nextLine())){
-					scannerLine.useDelimiter(PV);
-					if (scannerLine.hasNext()) {
-						Labels label = new Labels();
-						label.ordre = scannerLine.nextInt();
-						label.nom = scannerLine.next();
-						label.logo =  scannerLine.next();
-						labelByName.put(label.nom , label);
-						labelById.put(label.ordre, label);
-					}
-				}
-			}
-		} catch (FileNotFoundException e) {
-			log.error("loadFile Labels filename=" + fileName, e);
-		}
-		
-	}
+    int ordre;
+    String nom;
+    String logo;
 
-	static public Labels getLabel(String name) {
-		Labels l = labelByName.get(name);
-		if (l == null) {
-			log.warn("Label inexistant {}", name);
-			l = new Labels();
-			l.nom = name;
-			l.ordre = labelByName.size() + 1;
-			labelByName.put(name, l);
-		}
-		return l;
-	}
+    public static void loadFile(String fileName) {
+        try (Scanner scannerFile = new Scanner(ResourceUtils.getFile(fileName))) {
+            log.info("load labels nomenclature file {}", fileName);
 
-	static public Labels getLabelFromId(int id){
-		Labels l = labelById.get(id);
-		if (l == null) {
-			log.warn("Label inexistant {}", id);
-		}
-		return l;
-	}
+            scannerFile.nextLine();
 
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
-	
+            while (scannerFile.hasNextLine()) {
+                try (Scanner scannerLine = new Scanner(scannerFile.nextLine())) {
+                    scannerLine.useDelimiter(PV);
+                    if (scannerLine.hasNext()) {
+                        Labels label = new Labels();
+                        label.ordre = scannerLine.nextInt();
+                        label.nom = scannerLine.next();
+                        label.logo = scannerLine.next();
+                        labelByName.put(label.nom, label);
+                        labelById.put(label.ordre, label);
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            log.error("loadFile Labels filename=" + fileName, e);
+        }
+
+    }
+
+    static public Labels getLabel(String name) {
+        Labels l = labelByName.get(name);
+        if (l == null) {
+            log.warn("Label inexistant {}", name);
+            l = new Labels();
+            l.nom = name;
+            l.ordre = labelByName.size() + 1;
+            labelByName.put(name, l);
+        }
+        return l;
+    }
+
+    static public Labels getLabelFromId(int id) {
+        Labels l = labelById.get(id);
+        if (l == null) {
+            log.warn("Label inexistant {}", id);
+        }
+        return l;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
 }

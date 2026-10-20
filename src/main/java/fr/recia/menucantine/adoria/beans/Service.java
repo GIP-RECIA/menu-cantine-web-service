@@ -1,12 +1,13 @@
 /**
  * Copyright (C) 2024 GIP-RECIA https://www.recia.fr/
- * @Author (C) 2024 GIP-RECIA
  *
+ * @Author (C) 2024 GIP-RECIA
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *                 http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,80 +30,81 @@ import lombok.Data;
 @Data
 public final class Service implements Serializable, Cloneable {
 
-	private static final long serialVersionUID = 2763451889039709686L;
-	
-	String name;
-	String serviceName;
-	
-	@JsonInclude(Include.NON_NULL)
-	List<Plat> recipes;
-	
-	@JsonInclude(Include.NON_NULL)
-	List<SousMenu> menu;
+    private static final long serialVersionUID = 2763451889039709686L;
 
-	Integer rank;
-	
-	@JsonInclude(Include.NON_NULL)
-	Boolean typeVide;
+    String name;
+    String serviceName;
 
-	@JsonIgnore
-	NbPlatParSsMenu rankCompte = new NbPlatParSsMenu();
+    @JsonInclude(Include.NON_NULL)
+    List<Plat> recipes;
 
-	public Service(){}
+    @JsonInclude(Include.NON_NULL)
+    List<SousMenu> menu;
 
-	public Service(String name, int rank, Boolean typeVide){
-		this.name = name;
-		this.rank = rank;
-		this.typeVide = typeVide;
-	}
+    Integer rank;
 
-	/**
-	 * Créé un nouveau sous-menu
-	 * @param rank Un entier donnant l'ordre du sous-menu parmi les sous-menus
-	 * @param typeVide Un booléen pour indiquer si le sous-menu est vide ou non
-	 * @return Le sous-menu créé
-	 */
-	public SousMenu makeSousMenu(Integer rank, Boolean typeVide){
-		SousMenu sm =  new SousMenu(new ArrayList<>(), rank);
-		sm.typeVide = typeVide;
-		sm.nbPlats = 0;
-		return sm;
-	}
+    @JsonInclude(Include.NON_NULL)
+    Boolean typeVide;
 
-	/**
-	 * Regroupe les plats par sous menu triés et supprime les plats vide
-	 * @return Le nombre de plats par sous-menu
-	 */
-	public NbPlatParSsMenu clean(){
-		NbPlatParSsMenu nbPlatParSsMenu = new NbPlatParSsMenu();
-		for (SousMenu sousMenu : menu) {
-			int nbPlats = sousMenu.getChoix().size();
-			sousMenu.setNbPlats(nbPlats);
-			nbPlatParSsMenu.put(sousMenu.getRank(), nbPlats);
-		}
-		return nbPlatParSsMenu;
-	}
+    @JsonIgnore
+    NbPlatParSsMenu rankCompte = new NbPlatParSsMenu();
 
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		Service clone = (Service) super.clone();
-		if (menu != null) {
-			clone.menu = new ArrayList<SousMenu>(menu.size());
-			for (SousMenu sousMenu : menu) {
-				clone.menu.add((SousMenu) sousMenu.clone());
-			}
-		}
-		if (rankCompte != null) {
-			clone.rankCompte = (NbPlatParSsMenu) rankCompte.clone();
-		}
-		if (recipes != null) {
-			clone.recipes = new ArrayList<Plat>(recipes.size());
-			for (Plat p : recipes) {
-				clone.recipes.add((Plat) p.clone());
-			}
-		}
-		return clone;
-	}
-	
-	
+    public Service() {
+    }
+
+    public Service(String name, int rank, Boolean typeVide) {
+        this.name = name;
+        this.rank = rank;
+        this.typeVide = typeVide;
+    }
+
+    /**
+     * Créé un nouveau sous-menu
+     * @param rank Un entier donnant l'ordre du sous-menu parmi les sous-menus
+     * @param typeVide Un booléen pour indiquer si le sous-menu est vide ou non
+     * @return Le sous-menu créé
+     */
+    public SousMenu makeSousMenu(Integer rank, Boolean typeVide) {
+        SousMenu sm = new SousMenu(new ArrayList<>(), rank);
+        sm.typeVide = typeVide;
+        sm.nbPlats = 0;
+        return sm;
+    }
+
+    /**
+     * Regroupe les plats par sous menu triés et supprime les plats vide
+     * @return Le nombre de plats par sous-menu
+     */
+    public NbPlatParSsMenu clean() {
+        NbPlatParSsMenu nbPlatParSsMenu = new NbPlatParSsMenu();
+        for (SousMenu sousMenu : menu) {
+            int nbPlats = sousMenu.getChoix().size();
+            sousMenu.setNbPlats(nbPlats);
+            nbPlatParSsMenu.put(sousMenu.getRank(), nbPlats);
+        }
+        return nbPlatParSsMenu;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Service clone = (Service) super.clone();
+        if (menu != null) {
+            clone.menu = new ArrayList<SousMenu>(menu.size());
+            for (SousMenu sousMenu : menu) {
+                clone.menu.add((SousMenu) sousMenu.clone());
+            }
+        }
+        if (rankCompte != null) {
+            clone.rankCompte = (NbPlatParSsMenu) rankCompte.clone();
+        }
+        if (recipes != null) {
+            clone.recipes = new ArrayList<Plat>(recipes.size());
+            for (Plat p : recipes) {
+                clone.recipes.add((Plat) p.clone());
+            }
+        }
+        return clone;
+    }
+
+
 }

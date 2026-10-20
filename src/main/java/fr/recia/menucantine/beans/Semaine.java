@@ -1,12 +1,13 @@
 /**
  * Copyright (C) 2024 GIP-RECIA https://www.recia.fr/
- * @Author (C) 2024 GIP-RECIA
  *
+ * @Author (C) 2024 GIP-RECIA
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *                 http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,190 +29,190 @@ import lombok.Data;
 
 @Data
 public final class Semaine {
-	@JsonIgnore 
-	static public DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
+    @JsonIgnore
+    static public DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
 
-	Integer nbJours;
-	String debut;
-	String fin;
-	Requete requete;
-	List<GemRcn> allGemRcn = GemRcn.getList();
-	
-	@JsonFormat(pattern = "dd/MM/YYYY")
-	LocalDate previousWeek;
-	
-	@JsonFormat(pattern = "dd/MM/YYYY")
-	LocalDate nextWeek;
-	
-	List<Journee> jours;
-	NbPlatParSsMenuParService nbPlatMaxParService;
+    Integer nbJours;
+    String debut;
+    String fin;
+    Requete requete;
+    List<GemRcn> allGemRcn = GemRcn.getList();
 
-	public Semaine(){
-		super();
-	}
-	
-	private LocalDate dateJour(Integer jour) {
-		return jours.get(jour).getDate();
-	}
-	
-	private String formatDate(Integer jour){
-		return dateJour(jour).format(formatter);
-	}
+    @JsonFormat(pattern = "dd/MM/YYYY")
+    LocalDate previousWeek;
 
-	/**
-	 * Le nettoyage consiste à nettoyer chaque jour et à supprimer les jours vide.
-	 * Supprime les services qui sont vides pour tous les jours de la semaine
-	 */
-	public void clean() {
+    @JsonFormat(pattern = "dd/MM/YYYY")
+    LocalDate nextWeek;
 
-		// Détecte si un même type de service est vide ou pas toute la semaine
-		Map<String, Boolean> servicesVides = new HashMap<>();
-		for(Journee journee: this.jours){
-			for(Service service: journee.getDestinations()){
-				if(!servicesVides.containsKey(service.getName())){
-					servicesVides.put(service.getName(), service.getTypeVide());
-				}
-				else{
-					servicesVides.put(service.getName(), servicesVides.get(service.getName()) && service.getTypeVide());
-				}
-			}
-		}
+    List<Journee> jours;
+    NbPlatParSsMenuParService nbPlatMaxParService;
 
-		// Supprime les services qui sont vides seulement si ils sont vides pour tous les jours
-		for(String nomService : servicesVides.keySet()){
-			if(servicesVides.get(nomService)){
-				for(Journee journee : this.jours){
-					for (Iterator<Service> iterator = journee.getDestinations().iterator(); iterator.hasNext(); ) {
-						Service service = (Service) iterator.next();
-						if (service.getName().equals(nomService)) {
-							iterator.remove();
-						}
-					}
-				}
-			}
-		}
+    public Semaine() {
+        super();
+    }
 
-		// Enlever les jours vide et nettoyer les jours avec du contenu
-		for (Iterator<Journee> iterator = jours.iterator(); iterator.hasNext();) {
-			Journee journee = (Journee) iterator.next();
-			if (journee != null) {
-				if (journee.isVide()) {
-					iterator.remove();
-				} else {
-					journee.clean();
-				}
-			}
-		}
+    private LocalDate dateJour(Integer jour) {
+        return jours.get(jour).getDate();
+    }
 
-		//Mettre à jour le nombre de jours une fois les jours vides enlevés
-		this.nbJours = jours.size();
-	}
+    private String formatDate(Integer jour) {
+        return dateJour(jour).format(formatter);
+    }
 
-	/**
-	 * Lance la complétion des sous-menus de chaque journée avec des plats vides
-	 */
-	public void complete(){
-		initNbPlatMaxParService();
-		if (this.getJours() != null) {
-			for(Journee journee : this.getJours()) {
-				if (!journee.isVide()){
-					completeSsMenu(journee);
-				}
-			};
-		}
-	}
+    /**
+     * Le nettoyage consiste à nettoyer chaque jour et à supprimer les jours vide.
+     * Supprime les services qui sont vides pour tous les jours de la semaine
+     */
+    public void clean() {
 
-	/**
-	 * Calcule le nombre maximum de plats par sous-menu par service
-	 */
-	private void initNbPlatMaxParService(){
-		if (this.getJours() != null) {
-			nbPlatMaxParService = new NbPlatParSsMenuParService();
-			for (Journee journee : this.getJours()) {
-				nbPlatMaxParService.calculMax(journee.getServiceChoixNbPlats());
-			}
-		}
-	}
+        // Détecte si un même type de service est vide ou pas toute la semaine
+        Map<String, Boolean> servicesVides = new HashMap<>();
+        for (Journee journee : this.jours) {
+            for (Service service : journee.getDestinations()) {
+                if (!servicesVides.containsKey(service.getName())) {
+                    servicesVides.put(service.getName(), service.getTypeVide());
+                } else {
+                    servicesVides.put(service.getName(), servicesVides.get(service.getName()) && service.getTypeVide());
+                }
+            }
+        }
 
-	/**
-	 * Ajoute des plats vides jusqu'au nombre voulu pour compléter les sous-menus
-	 * @param ssMenu Le sous-menu auquel on veut ajouter un plat
-	 * @param max Le nombre de plats que doit contenir le sous-menu au final
-	 */
-	private void ajoutPlatVide(SousMenu ssMenu, Integer max){
-		List<Plat> plats = ssMenu.getChoix();
-		int nbPlats = plats.size();
+        // Supprime les services qui sont vides seulement si ils sont vides pour tous les jours
+        for (String nomService : servicesVides.keySet()) {
+            if (servicesVides.get(nomService)) {
+                for (Journee journee : this.jours) {
+                    for (Iterator<Service> iterator = journee.getDestinations().iterator(); iterator.hasNext(); ) {
+                        Service service = (Service) iterator.next();
+                        if (service.getName().equals(nomService)) {
+                            iterator.remove();
+                        }
+                    }
+                }
+            }
+        }
 
-		if (nbPlats == 0) {
-			ssMenu.setTypeVide(true);
-		}
+        // Enlever les jours vide et nettoyer les jours avec du contenu
+        for (Iterator<Journee> iterator = jours.iterator(); iterator.hasNext(); ) {
+            Journee journee = (Journee) iterator.next();
+            if (journee != null) {
+                if (journee.isVide()) {
+                    iterator.remove();
+                } else {
+                    journee.clean();
+                }
+            }
+        }
 
-		for (int i= nbPlats;  i < max; i++ ) {
-			ssMenu.addChoix(Plat.platVide());
-		}
-	}
+        //Mettre à jour le nombre de jours une fois les jours vides enlevés
+        this.nbJours = jours.size();
+    }
 
-	/**
-	 * Complète les services avec des sous-menus vides pour l'alignement
-	 * @param service Le service concerné
-	 */
-	private void completeSsMenu(Service service) {
-		String serviceName = service.getName();
+    /**
+     * Lance la complétion des sous-menus de chaque journée avec des plats vides
+     */
+    public void complete() {
+        initNbPlatMaxParService();
+        if (this.getJours() != null) {
+            for (Journee journee : this.getJours()) {
+                if (!journee.isVide()) {
+                    completeSsMenu(journee);
+                }
+            }
+            ;
+        }
+    }
 
-		List<SousMenu> menuComplet = new ArrayList<>();
-		NbPlatParSsMenu nbPlatMax = nbPlatMaxParService.get(serviceName);
+    /**
+     * Calcule le nombre maximum de plats par sous-menu par service
+     */
+    private void initNbPlatMaxParService() {
+        if (this.getJours() != null) {
+            nbPlatMaxParService = new NbPlatParSsMenuParService();
+            for (Journee journee : this.getJours()) {
+                nbPlatMaxParService.calculMax(journee.getServiceChoixNbPlats());
+            }
+        }
+    }
 
-		int nbSsMenu = nbPlatMax.getMaxKey();
+    /**
+     * Ajoute des plats vides jusqu'au nombre voulu pour compléter les sous-menus
+     * @param ssMenu Le sous-menu auquel on veut ajouter un plat
+     * @param max Le nombre de plats que doit contenir le sous-menu au final
+     */
+    private void ajoutPlatVide(SousMenu ssMenu, Integer max) {
+        List<Plat> plats = ssMenu.getChoix();
+        int nbPlats = plats.size();
 
-		Iterator<SousMenu> iterator = null;
-		List<SousMenu> menuIncomplet = service.getMenu();
-		if (menuIncomplet != null) {
-			iterator = service.getMenu().iterator();
-		}
+        if (nbPlats == 0) {
+            ssMenu.setTypeVide(true);
+        }
 
-		SousMenu ssMenu = null;
-		Integer rankSsMenu;
+        for (int i = nbPlats; i < max; i++) {
+            ssMenu.addChoix(Plat.platVide());
+        }
+    }
 
-		if (iterator != null && iterator.hasNext()) {
-			ssMenu = iterator.next();
-			rankSsMenu = ssMenu.getRank();
-		} else {
-			rankSsMenu = -1;
-		}
+    /**
+     * Complète les services avec des sous-menus vides pour l'alignement
+     * @param service Le service concerné
+     */
+    private void completeSsMenu(Service service) {
+        String serviceName = service.getName();
 
-		// A cause du front les plats vides ne fonctionne pas sur le premier sous-menu donc il faut en ajouter un vide
-		for (int rank = 0; rank <= nbSsMenu; rank++){
-			int nbMax = nbPlatMax.get(rank);
-			SousMenu newSousMenu;
+        List<SousMenu> menuComplet = new ArrayList<>();
+        NbPlatParSsMenu nbPlatMax = nbPlatMaxParService.get(serviceName);
 
-			if (rankSsMenu == rank) {
-				newSousMenu = ssMenu;
+        int nbSsMenu = nbPlatMax.getMaxKey();
 
-				if (iterator != null && iterator.hasNext()) {
-					ssMenu = iterator.next();
-					rankSsMenu = ssMenu.getRank();
-				} else {
-					rankSsMenu = -1;
-				}
-			} else {
-				// pas de sous-menu pour ce rank on le creer
-				newSousMenu = service.makeSousMenu(rank, false);
-			}
+        Iterator<SousMenu> iterator = null;
+        List<SousMenu> menuIncomplet = service.getMenu();
+        if (menuIncomplet != null) {
+            iterator = service.getMenu().iterator();
+        }
 
-			ajoutPlatVide(newSousMenu, nbMax);
-			menuComplet.add(newSousMenu);
-		}
-		service.setMenu(menuComplet);
-	}
+        SousMenu ssMenu = null;
+        Integer rankSsMenu;
 
-	/**
-	 * Lance la complétion des sous-menus de chaque service d'une journée
-	 * @param journee La journée dont on va compléter les sous-menus
-	 */
-	private void completeSsMenu(Journee journee){
-		for (Service service : journee.getDestinations()) {
-			completeSsMenu(service);
-		}
-	}
+        if (iterator != null && iterator.hasNext()) {
+            ssMenu = iterator.next();
+            rankSsMenu = ssMenu.getRank();
+        } else {
+            rankSsMenu = -1;
+        }
+
+        // A cause du front les plats vides ne fonctionne pas sur le premier sous-menu donc il faut en ajouter un vide
+        for (int rank = 0; rank <= nbSsMenu; rank++) {
+            int nbMax = nbPlatMax.get(rank);
+            SousMenu newSousMenu;
+
+            if (rankSsMenu == rank) {
+                newSousMenu = ssMenu;
+
+                if (iterator != null && iterator.hasNext()) {
+                    ssMenu = iterator.next();
+                    rankSsMenu = ssMenu.getRank();
+                } else {
+                    rankSsMenu = -1;
+                }
+            } else {
+                // pas de sous-menu pour ce rank on le creer
+                newSousMenu = service.makeSousMenu(rank, false);
+            }
+
+            ajoutPlatVide(newSousMenu, nbMax);
+            menuComplet.add(newSousMenu);
+        }
+        service.setMenu(menuComplet);
+    }
+
+    /**
+     * Lance la complétion des sous-menus de chaque service d'une journée
+     * @param journee La journée dont on va compléter les sous-menus
+     */
+    private void completeSsMenu(Journee journee) {
+        for (Service service : journee.getDestinations()) {
+            completeSsMenu(service);
+        }
+    }
 
 }
