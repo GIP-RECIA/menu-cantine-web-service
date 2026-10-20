@@ -30,7 +30,7 @@ import fr.recia.menucantine.beans.Semaine;
 @RestController
 @RequestMapping(path = "/api")
 @RequiredArgsConstructor
-public class MenuCantineController {
+public final class MenuCantineController {
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineController.class);	
 			  
 	private final MenuCantineServices services;

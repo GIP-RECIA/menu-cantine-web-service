@@ -28,7 +28,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PlatDTO implements Serializable {
+public final class PlatDTO implements Serializable {
 
     private static final long serialVersionUID = 655293L;
 

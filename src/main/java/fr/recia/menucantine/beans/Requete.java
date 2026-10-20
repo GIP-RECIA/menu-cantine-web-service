@@ -23,7 +23,7 @@ import java.io.Serializable;
  * Objet utilisé pour formaliser les requêtes entre le portail et l'appli
  */
 @Data
-public class Requete implements Serializable {
+public final class Requete implements Serializable {
     Integer semaine;
     Integer annee;
     Integer jour;

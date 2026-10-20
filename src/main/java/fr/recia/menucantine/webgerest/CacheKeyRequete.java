@@ -20,7 +20,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class CacheKeyRequete implements Serializable {
+public final class CacheKeyRequete implements Serializable {
 
     private String uai;
     private String datemenu;

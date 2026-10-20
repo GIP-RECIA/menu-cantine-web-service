@@ -25,7 +25,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ServiceDTO implements Serializable {
+public final class ServiceDTO implements Serializable {
 
     private static final long serialVersionUID = 580335L;
 

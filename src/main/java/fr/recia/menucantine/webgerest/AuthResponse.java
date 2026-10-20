@@ -18,7 +18,7 @@ package fr.recia.menucantine.webgerest;
 import lombok.Data;
 
 @Data
-public class AuthResponse {
+public final class AuthResponse {
 
     private String message;
     private String token;

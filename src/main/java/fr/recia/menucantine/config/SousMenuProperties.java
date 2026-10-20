@@ -20,7 +20,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SousMenuProperties {
+public final class SousMenuProperties {
 
     private String nom;
     private int numero;

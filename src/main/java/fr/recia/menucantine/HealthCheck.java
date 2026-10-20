@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-public class HealthCheck {
+public final class HealthCheck {
 	
 	private static final Logger log = LoggerFactory.getLogger(HealthCheck.class);	
 	

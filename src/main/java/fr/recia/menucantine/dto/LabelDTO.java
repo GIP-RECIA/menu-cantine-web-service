@@ -24,7 +24,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LabelDTO implements Serializable {
+public final class LabelDTO implements Serializable {
 
     private static final long serialVersionUID = 968452L;
 

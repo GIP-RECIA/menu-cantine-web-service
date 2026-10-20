@@ -20,7 +20,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class ResponseExceptionData {
+public final class ResponseExceptionData {
 
     private String messageErreur;
 

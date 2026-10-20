@@ -18,7 +18,7 @@ package fr.recia.menucantine.webgerest;
 import lombok.Data;
 
 @Data
-public class DynamicURLResponse {
+public final class DynamicURLResponse {
 
     private String contenu;
     private int error;

@@ -27,7 +27,7 @@ import java.lang.management.ManagementFactory;
 
 @Service
 @Profile("!unit")
-public class EhCacheJmxConfigurer {
+public final class EhCacheJmxConfigurer {
 
     private final MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();;
 

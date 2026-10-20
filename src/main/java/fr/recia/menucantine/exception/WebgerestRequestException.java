@@ -15,7 +15,7 @@
  */
 package fr.recia.menucantine.exception;
 
-public class WebgerestRequestException extends CustomMenuCantineException {
+public final class WebgerestRequestException extends CustomMenuCantineException {
 
     public WebgerestRequestException(String errorMessage) {
         super(errorMessage, "Les menus du restaurant scolaire ne sont pas disponibles actuellement.");

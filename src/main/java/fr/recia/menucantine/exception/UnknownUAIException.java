@@ -15,7 +15,7 @@
  */
 package fr.recia.menucantine.exception;
 
-public class UnknownUAIException extends CustomMenuCantineException {
+public final class UnknownUAIException extends CustomMenuCantineException {
     public UnknownUAIException(String errorMessage) {
         super(errorMessage, "Les menus du restaurant scolaire de cet établissement ne sont pas connus.");
     }

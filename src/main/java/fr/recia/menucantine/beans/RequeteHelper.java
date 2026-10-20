@@ -24,7 +24,7 @@ import java.util.Locale;
  * Permet de normaliser les requetes et de calculer les dates
  * @author legay
  */
-public class RequeteHelper {
+public final class RequeteHelper {
 	final static public WeekFields WEEK_FIELDS = WeekFields.ISO;
 	final static public DateTimeFormatter dateFormatterSlashes = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	final static public DateTimeFormatter dateFormatterNoSlashes = DateTimeFormatter.ofPattern("yyyyMMdd");

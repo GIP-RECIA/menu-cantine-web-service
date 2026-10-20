@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
-public class JourneeDTO {
+public final class JourneeDTO {
 
     private Map<String,ServiceDTO> mapTypeServiceToService;
     private LocalDate date;
