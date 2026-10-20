@@ -17,12 +17,14 @@ package fr.recia.menucantine.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ServiceDTO implements Serializable {
 
     private static final long serialVersionUID = 580335L;
@@ -31,7 +33,5 @@ public class ServiceDTO implements Serializable {
     private int error;
     private int nbObjet;
     private List<PlatDTO> contenu;
-
-    public ServiceDTO(){}
 
 }
