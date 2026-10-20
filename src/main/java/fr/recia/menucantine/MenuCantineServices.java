@@ -120,12 +120,9 @@ public class MenuCantineServices {
                 log.debug("Requête avec les paramètres uai={}, date={}, service={}", uai, menuDayString, numService);
                 ServiceDTO serviceDTO = apiClient.makeAuthenticatedApiCallGetMenu(uai, menuDayString, numService);
                 // Si on a une erreur ca ne sert a rien d'ajouter le service à la journée
-                if (serviceDTO.getError() == 0) {
-                    journeeDTO.addService(mapperConfig.serviceKeyFromValue(numService), serviceDTO);
-                } else {
+                if (serviceDTO.getError() != 0) {
                     log.error("Erreur sur le retour de la requête avec les paramètres uai={}, date={}, service={}." +
                             "\nMessage retourné : {}", uai, menuDayString, numService, serviceDTO.getMessage());
-
                     if (serviceDTO.getMessage() == null) {
                         throw new WebgerestRequestException(UNEXPECTED_ERROR);
                     } else {
@@ -136,7 +133,7 @@ public class MenuCantineServices {
                         }
                     }
                 }
-
+                journeeDTO.addService(mapperConfig.serviceKeyFromValue(numService), serviceDTO);
             }
             journeeDTOList.add(journeeDTO);
         }
