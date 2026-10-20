@@ -24,6 +24,7 @@ import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.LabelDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
+import fr.recia.menucantine.enums.Allergen;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -247,47 +248,10 @@ public class MapperWebGerest implements IMapper {
 
     public List<String> buildAllergens(PlatDTO platDTO) {
         List<String> allergensList = new ArrayList<>();
-        if(platDTO.isAllerg_anhydride()){
-            allergensList.add("Anhydride");
-        }
-        if(platDTO.isAllerg_arachide()){
-            allergensList.add("Arachide");
-        }
-        if(platDTO.isAllerg_celeri()){
-            allergensList.add("Céleri");
-        }
-        if(platDTO.isAllerg_crustace()){
-            allergensList.add("Crustacé");
-        }
-        if(platDTO.isAllerg_fruit_coque()){
-            allergensList.add("Fruit à coque");
-        }
-        if(platDTO.isAllerg_gluten()){
-            allergensList.add("Gluten");
-        }
-        if(platDTO.isAllerg_lait()){
-            allergensList.add("Lait");
-        }
-        if(platDTO.isAllerg_lupin()){
-            allergensList.add("Lupin");
-        }
-        if(platDTO.isAllerg_mollusque()){
-            allergensList.add("Mollusque");
-        }
-        if(platDTO.isAllerg_moutarde()){
-            allergensList.add("Moutarde");
-        }
-        if(platDTO.isAllerg_oeuf()){
-            allergensList.add("Oeuf");
-        }
-        if(platDTO.isAllerg_poisson()){
-            allergensList.add("Poisson");
-        }
-        if(platDTO.isAllerg_sesame()){
-            allergensList.add("Sésame");
-        }
-        if(platDTO.isAllerg_soja()){
-            allergensList.add("Soja");
+        for (Allergen allergen : Allergen.values()){
+            if (allergen.isPresentOn(platDTO)){
+                allergensList.add(allergen.getDisplayName());
+            }
         }
         if(allergensList.isEmpty()){
             return null;
