@@ -69,7 +69,33 @@ public final class MockAPIClient implements IAPIClient {
     }
 
     private static PlatDTO createPlat(String nom, String type) {
-        return PlatDTO.builder().nom(nom).type(type).build();
+        PlatDTO.PlatDTOBuilder plat = PlatDTO.builder().nom(nom).type(type);
+        // Quelques allergènes/labels réalistes codés en dur, juste pour vérifier que les enums
+        // Allergen et LabelsNourriture fonctionnent bien de bout en bout avec le mock.
+        switch (nom) {
+            case "Omelette":
+                plat.allerg_oeuf(true).vegetarien(true);
+                break;
+            case "Poisson pané":
+                plat.allerg_poisson(true).allerg_gluten(true);
+                break;
+            case "Pâtes":
+                plat.allerg_gluten(true);
+                break;
+            case "Yaourt nature":
+            case "Fromage blanc":
+            case "Camembert":
+            case "Emmental":
+                plat.allerg_lait(true);
+                break;
+            case "Carottes râpées":
+            case "Salade verte":
+                plat.bio(true).vegetarien(true);
+                break;
+            default:
+                break;
+        }
+        return plat.build();
     }
 
     @Override
