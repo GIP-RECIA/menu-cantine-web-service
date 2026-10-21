@@ -15,9 +15,9 @@
  */
 package fr.recia.menucantine.config;
 
+import lombok.RequiredArgsConstructor;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.management.ManagementService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -27,12 +27,11 @@ import java.lang.management.ManagementFactory;
 
 @Service
 @Profile("!unit")
+@RequiredArgsConstructor
 public final class EhCacheJmxConfigurer {
 
-    private final MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();;
-
-    @Autowired
-    private CacheManager cacheManager;
+    private final MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+    private final CacheManager cacheManager;
 
     @Bean(initMethod = "init", destroyMethod = "dispose")
     public ManagementService ehCacheManagementService() {
