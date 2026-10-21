@@ -15,14 +15,90 @@
 #
 
 adoria:
-  gemrcn-csv: classpath:GemRcn.csv
   labels-csv: classpath:labels.csv
+
+server:
+  port: 8081
+  servlet:
+    context-path: /menuCantine
+
+app:
+  soffit:
+    signatureKey: "Changeme"
 
 api:
   initial-query-url: https://api.webgerest.fr/url
   auth-endpoint: /auth
   menu-endpoint: /menus
+  client_id: RECIA
+  client_secret: 479oTfù=]213mDD85
 
-spring:
-  cache:
-    type: ehcache
+menucantine:
+  demo: true
+
+uais:
+  regroupements:
+    "0450822X": "0180000X"
+    "0370771M": "0370038R"
+    "0450786K": "0450782F"
+    "0360718K": "0360002G"
+    "0280957N": "0280015P"
+    "0180026F": "0180024D"
+    "0180042Y": "0180007K"
+    "0410860M": "0410001D"
+    "0410036S": "0410017W"
+    "0370878D": "0370794M"
+    "0180924G": "0180847Y"
+
+mapper:
+  services:
+    '[Petit déjeuner]': 1
+    '[Déjeuner]': 2
+    '[Goûter]': 3
+    '[Dîner]': 4
+  sousmenus:
+    entree:
+      nom: "Entrée"
+      numero: 1
+    plat:
+      nom: "Plat"
+      numero: 2
+    accompagnement:
+      nom: "Accompagnement"
+      numero: 3
+    laitage:
+      nom: "Laitage"
+      numero: 4
+    dessert:
+      nom: "Dessert"
+      numero: 5
+    autre:
+      nom: "Autre"
+      numero: 6
+
+logging:
+  level:
+    web: info
+    web.servlet.DispatcherServlet: info
+    fr:
+      recia:
+        menucantine: debug
+
+security:
+  cors:
+    enabled: true
+    allowedOrigins:
+      - "193.51.228.5"
+    allowedHeaders:
+      - "Origin"
+      - "Accept"
+      - "Authorization"
+      - "X-Requested-With"
+      - "Content-Type"
+      - "Access-Control-Request-Method"
+      - "Access-Control-Request-Headers"
+    allowedMethods:
+      - GET
+      - HEAD
+      - POST
+      - OPTIONS
