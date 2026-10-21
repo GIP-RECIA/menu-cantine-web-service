@@ -35,7 +35,6 @@ public final class Semaine {
     String debut;
     String fin;
     Requete requete;
-    List<GemRcn> allGemRcn = GemRcn.getList();
 
     @JsonFormat(pattern = "dd/MM/YYYY")
     LocalDate previousWeek;

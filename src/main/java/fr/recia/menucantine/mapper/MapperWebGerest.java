@@ -54,7 +54,6 @@ public class MapperWebGerest implements IMapper {
         semaine.setFin(RequeteHelper.localeDateToStringWithSpaces(vendredi));
         semaine.setPreviousWeek(lundi.minusDays(3));
         semaine.setNextWeek(lundi.plusDays(7));
-        semaine.setAllGemRcn(new ArrayList<>()); // pas de gemrcn dans cette API
         List<Journee> journeeList = new ArrayList<>();
         for(JourneeDTO journeeDTO: journeeDTOList){
             journeeList.add(this.buildJournee(journeeDTO));
@@ -187,7 +186,6 @@ public class MapperWebGerest implements IMapper {
         }
         plat.setLabels(new ArrayList<>());
         plat.setLabelsInfo(buildLabels(platDTO));
-        plat.setGemrcn(buildGemrcn(platDTO));
         plat.setNutritions(buildNutritions(platDTO));
         plat.setFamilyRank(platDTO.getOrdre());
         plat.setSubFamily("");
@@ -199,9 +197,6 @@ public class MapperWebGerest implements IMapper {
         return null;
     }
 
-    public List<String> buildGemrcn(PlatDTO platDTO) {
-        return null;
-    }
 
     public List<Labels> buildLabels(PlatDTO platDTO) {
         List<Labels> labelsList = new ArrayList<>();

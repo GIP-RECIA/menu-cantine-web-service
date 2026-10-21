@@ -34,8 +34,6 @@ public final class Plat implements Serializable, Cloneable {
     String subFamily;
     Boolean typeVide = false;
 
-    List<String> gemrcn;
-
     @JsonInclude(Include.NON_NULL)
     List<String> allergens;
 
@@ -75,17 +73,12 @@ public final class Plat implements Serializable, Cloneable {
     /**
      * Nettoyage d'un plat :
      * - Annule les liste des allergens vide.
-     * - Remplace les gemrcn par leurs code.
      * - Remplace les labels par leurs info.
      * - Supprime les info de nutrition null.
-     * N'est pas utilisé pour l'instant car on n'a pas de gemrcn ni d'infos nutrition
      */
     void clean() {
         if (allergens != null && allergens.isEmpty()) {
             allergens = null;
-        }
-        if (gemrcn != null && gemrcn.size() > 0) {
-            gemrcn.replaceAll(codeS -> String.valueOf(GemRcn.getGemRcn(codeS).getCodeI()));
         }
         if (labels != null) {
             int s = labels.size();
@@ -120,9 +113,6 @@ public final class Plat implements Serializable, Cloneable {
         Plat clone = (Plat) super.clone();
         if (allergens != null) {
             clone.allergens = new ArrayList<String>(allergens);
-        }
-        if (gemrcn != null) {
-            clone.gemrcn = new ArrayList<String>(gemrcn);
         }
         if (labels != null) {
             clone.labels = new ArrayList<String>(labels);

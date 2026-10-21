@@ -54,8 +54,6 @@ public class MenuCantineServices {
     private final IMapper mapperWebGerest;
     private final MapperConfig mapperConfig;
     private final UAIConfig uaiConfig;
-    @Value("${adoria.gemrcn-csv}")
-    String gemrcnFilename;
 
     @Value("${adoria.labels-csv}")
     String labelsFilename;

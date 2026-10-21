@@ -15,7 +15,6 @@
 #
 
 adoria:
-  gemrcn-csv: classpath:GemRcn.csv
   labels-csv: classpath:labels.csv
 
 spring:

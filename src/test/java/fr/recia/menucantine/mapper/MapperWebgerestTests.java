@@ -91,7 +91,6 @@ public class MapperWebgerestTests {
 		assertEquals(old.getFamily(), mapperConfig.getSousMenuFinalName("entree"), "Le type du plat n'est pas le bon");
 		assertTrue(old.getLabels().isEmpty(), "La liste labels doit être vide");
         assertEquals(2, old.getLabelsInfo().size(), "La liste labelsInfo doit contenir les deux labels");
-		assertNull(old.getGemrcn(), "La liste gemrcn doit être null");
 		assertEquals("Plat test 1", old.getName(), "Le nom du plat n'est pas le bon nom ");
 		assertEquals(1, old.getFamilyRank(), 0, "Le familyrank doit valoir 1");
 		assertNull(old.getNutritions(), "La liste nutritions doit être null");
@@ -200,7 +199,6 @@ public class MapperWebgerestTests {
 		assertEquals("4 décembre 23", semaine.getDebut(), "Le début de la semaine est le 4 décembre 23");
 		assertEquals("8 décembre 23", semaine.getFin(), "Le début de la semaine est le 8 décembre 23");
 		assertNotNull(semaine.getRequete(), "La requête ne doit pas être nulle");
-		assertEquals(0, semaine.getAllGemRcn().size(), 0, "La liste des allGemRcn doit être vide");
 		assertEquals(LocalDate.of(2023, 12, 1), semaine.getPreviousWeek(), "La semaine précédente doit être 2023-12-01");
 		assertEquals(LocalDate.of(2023, 12, 11), semaine.getNextWeek(), "La semaine suivante doit être 2023-12-11");
 		assertEquals(2, semaine.getJours().size(), 0, "La liste des jours de la semaine doit contenir deux jours");

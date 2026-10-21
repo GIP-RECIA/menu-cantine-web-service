@@ -81,12 +81,6 @@ public interface IMapper {
      */
     List<Nutrition> buildNutritions(PlatDTO platDTO);
 
-    /**
-     * Construit la liste des données gemrcn d'un plat
-     * @param platDTO le plat dont on veut récupérer les données gemrcn
-     * @return La liste des données gemrcn du plat, null s'il n'y en a pas
-     */
-    List<String> buildGemrcn(PlatDTO platDTO);
 
     /**
      * Construit la liste des lables d'un plat
