@@ -18,15 +18,14 @@ package fr.recia.menucantine.webgerest;
 import fr.recia.menucantine.dto.ServiceDTO;
 import fr.recia.menucantine.exception.UnknownUAIException;
 import fr.recia.menucantine.exception.WebgerestRequestException;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -34,12 +33,11 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @Profile("!mock")
-@Data
 @RequiredArgsConstructor
 public class APIClient implements IAPIClient {
 
@@ -62,8 +60,11 @@ public class APIClient implements IAPIClient {
     @Value("${api.client_id}")
     private String client_id;
 
-    private Map<String, String> dynamicURL = new HashMap<>(); // Associe un UAI a une URL
-    private Map<String, String> authToken = new HashMap<>(); // Associe une URL à un token utilisé pour les requêtes
+    private static final String CACHE_ERREUR = "erreur";
+    private static final String CACHE_TOKEN = "token";
+
+    private final Map<String, String> dynamicURL = new ConcurrentHashMap<>(); // Associe un UAI a une URL
+    private final Map<String, String> authToken = new ConcurrentHashMap<>(); // Associe une URL à un token utilisé pour les requêtes
 
     /**
      * Requête pour récupérer l'URL à utiliser pour les toutes les autres requêtes. Pas besoin de token pour celle-ci.
@@ -143,7 +144,7 @@ public class APIClient implements IAPIClient {
 
         // Au préalable, on regarde si la requête n'est pas dans le cache d'erreur
         ServiceDTO serviceDTO = null;
-        Element element = cacheManager.getCache("erreur").get(cacheKeyRequete);
+        Element element = cacheManager.getCache(CACHE_ERREUR).get(cacheKeyRequete);
         if (element != null) {
             serviceDTO = (ServiceDTO) element.getObjectValue();
             log.debug("Récupération de la réponse de la requête depuis le cache erreur");
@@ -188,7 +189,7 @@ public class APIClient implements IAPIClient {
         }
 
         // Si pour l'URL on a un token invalide on sort directement
-        if (cacheManager.getCache("token").get(url) != null) {
+        if (cacheManager.getCache(CACHE_TOKEN).get(url) != null) {
             log.debug("Requête pour retrouver le token stockée dans le cache erreur.");
             throw new WebgerestRequestException("Erreur lors de l'authentification. Token invalide encore en cache.");
         }
@@ -200,7 +201,7 @@ public class APIClient implements IAPIClient {
         try {
             serviceDTO = makeAuthenticatedApiCallGetMenuInternal(url, uai, datemenu, service);
         } catch (WebClientResponseException webClientResponseException) {
-            log.debug("Erreur dans la requête : code erreur " + webClientResponseException.getStatusCode().value());
+            log.debug("Erreur dans la requête : code erreur {}", webClientResponseException.getStatusCode().value());
             // Si erreur 401 on récupère un nouveau token et on réessaye une fois
             if (webClientResponseException.getStatusCode().value() == 401) {
                 log.debug("Récupération d'un nouveau token");
@@ -208,7 +209,7 @@ public class APIClient implements IAPIClient {
                 // Si on a une erreur sur l'authentification on retourne directement et on passe le token en cache erreur
                 if (authResponse.getError() == 1) {
                     log.debug("Mise en cache erreur de la requête pour récupérer le token. Authentification échouée.");
-                    cacheManager.getCache("token").put(new Element(url, "erreur"));
+                    cacheManager.getCache(CACHE_TOKEN).put(new Element(url, CACHE_ERREUR));
                     throw new WebgerestRequestException("Erreur lors de l'authentification. Message retourné : "
                             + authResponse.getMessage());
                 }
@@ -220,15 +221,15 @@ public class APIClient implements IAPIClient {
                 } catch (WebClientResponseException webClientInternalResponseException) {
                     log.debug("Nouvelle erreur, stockage de la requête dans le cache erreur");
                     // On passe volontairement un service non null au cache pour indiquer qu'on a un service en erreur associé à cette requête
-                    cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, new ServiceDTO(null, 1, 0, null)));
+                    cacheManager.getCache(CACHE_ERREUR).put(new Element(cacheKeyRequete, new ServiceDTO(null, 1, 0, null)));
                     throw new WebgerestRequestException("Erreur innatendue lors de la requête "
-                            + webClientInternalResponseException.getRequest().getURI() + "\nCode erreur retourné : "
+                            + requestUri(webClientInternalResponseException) + "\nCode erreur retourné : "
                             + webClientInternalResponseException.getStatusCode().value());
                 }
             } else {
-                cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, new ServiceDTO(null, 1, 0, null)));
+                cacheManager.getCache(CACHE_ERREUR).put(new Element(cacheKeyRequete, new ServiceDTO(null, 1, 0, null)));
                 throw new WebgerestRequestException("Erreur innatendue lors de la requête "
-                        + webClientResponseException.getRequest().getURI() + "\nCode erreur retourné : "
+                        + requestUri(webClientResponseException) + "\nCode erreur retourné : "
                         + webClientResponseException.getStatusCode().value());
             }
         }
@@ -246,11 +247,15 @@ public class APIClient implements IAPIClient {
         }
         // Une requête qui n'est pas en erreur mais retourne une erreur doit aussi être placée dans le cache erreur
         else {
-            cacheManager.getCache("erreur").put(new Element(cacheKeyRequete, serviceDTO));
+            cacheManager.getCache(CACHE_ERREUR).put(new Element(cacheKeyRequete, serviceDTO));
         }
 
         log.debug("Retour de la réponse récupérée depuis l'API");
         return serviceDTO;
+    }
+    private String requestUri(WebClientResponseException exception) {
+        HttpRequest request = exception.getRequest();
+        return request != null ? request.getURI().toString() : "URI inconnue";
     }
 }
 
