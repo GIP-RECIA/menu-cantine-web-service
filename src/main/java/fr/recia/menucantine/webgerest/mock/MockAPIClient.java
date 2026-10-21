@@ -17,6 +17,8 @@ package fr.recia.menucantine.webgerest.mock;
 
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
+import fr.recia.menucantine.exception.UnknownUAIException;
+import fr.recia.menucantine.exception.WebgerestRequestException;
 import fr.recia.menucantine.webgerest.IAPIClient;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -30,7 +32,12 @@ import java.util.*;
 @Component
 @Profile("mock")
 public final class MockAPIClient implements IAPIClient {
-
+    private static final String TYPE_ENTREE = "entree";
+    private static final String TYPE_PLAT = "plat";
+    private static final String TYPE_ACCOMPAGNEMENT = "accompagnement";
+    private static final String TYPE_LAITAGE = "laitage";
+    private static final String TYPE_DESSERT = "dessert";
+    private static final String TYPE_AUTRE = "autre";
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     // Services sans école le mercredi après-midi : pas de goûter (3) ni de dîner (4)
@@ -53,19 +60,19 @@ public final class MockAPIClient implements IAPIClient {
     private static final Map<Integer, List<String>> TYPES_PAR_SERVICE = new HashMap<>();
 
     static {
-        PLATS_PAR_TYPE.put("entree", ENTREES);
-        PLATS_PAR_TYPE.put("plat", PLATS);
-        PLATS_PAR_TYPE.put("accompagnement", ACCOMPAGNEMENTS);
-        PLATS_PAR_TYPE.put("laitage", LAITAGES);
-        PLATS_PAR_TYPE.put("dessert", DESSERTS);
-        PLATS_PAR_TYPE.put("autre", AUTRES);
+        PLATS_PAR_TYPE.put(TYPE_ENTREE, ENTREES);
+        PLATS_PAR_TYPE.put(TYPE_PLAT, PLATS);
+        PLATS_PAR_TYPE.put(TYPE_ACCOMPAGNEMENT, ACCOMPAGNEMENTS);
+        PLATS_PAR_TYPE.put(TYPE_LAITAGE, LAITAGES);
+        PLATS_PAR_TYPE.put(TYPE_DESSERT, DESSERTS);
+        PLATS_PAR_TYPE.put(TYPE_AUTRE, AUTRES);
     }
 
     static {
-        TYPES_PAR_SERVICE.put(1, Arrays.asList("laitage", "autre"));                                      // petit déjeuner
-        TYPES_PAR_SERVICE.put(2, Arrays.asList("entree", "plat", "accompagnement", "laitage", "dessert")); // déjeuner
-        TYPES_PAR_SERVICE.put(3, Arrays.asList("laitage", "dessert"));                                     // goûter
-        TYPES_PAR_SERVICE.put(4, Arrays.asList("entree", "plat", "laitage", "dessert"));                   // dîner
+        TYPES_PAR_SERVICE.put(1, Arrays.asList(TYPE_LAITAGE, TYPE_AUTRE));                                      // petit déjeuner
+        TYPES_PAR_SERVICE.put(2, Arrays.asList(TYPE_ENTREE, TYPE_PLAT, TYPE_ACCOMPAGNEMENT, TYPE_LAITAGE, TYPE_DESSERT)); // déjeuner
+        TYPES_PAR_SERVICE.put(3, Arrays.asList(TYPE_LAITAGE, TYPE_DESSERT));                                     // goûter
+        TYPES_PAR_SERVICE.put(4, Arrays.asList(TYPE_ENTREE, TYPE_PLAT, TYPE_LAITAGE, TYPE_DESSERT));                   // dîner
     }
 
     private static PlatDTO createPlat(String nom, String type) {
@@ -82,14 +89,10 @@ public final class MockAPIClient implements IAPIClient {
             case "Pâtes":
                 plat.allerg_gluten(true);
                 break;
-            case "Yaourt nature":
-            case "Fromage blanc":
-            case "Camembert":
-            case "Emmental":
+            case "Yaourt nature", "Fromage blanc", "Camembert", "Emmental":
                 plat.allerg_lait(true);
                 break;
-            case "Carottes râpées":
-            case "Salade verte":
+            case "Carottes râpées","Salade verte":
                 plat.bio(true).vegetarien(true);
                 break;
             default:
@@ -99,11 +102,25 @@ public final class MockAPIClient implements IAPIClient {
     }
 
     @Override
-    public ServiceDTO makeAuthenticatedApiCallGetMenu(String uai, String datemenu, int service) {
+    public ServiceDTO makeAuthenticatedApiCallGetMenu(String uai, String datemenu, int service) throws UnknownUAIException, WebgerestRequestException {
+
+        switch (uai) {
+            case "ERROR_UNKNOWN_UAI":
+                throw new UnknownUAIException("mock: UAI inconnu");
+            case "ERROR_WEBGEREST":
+                throw new WebgerestRequestException("mock: erreur webgerest");
+            case "ERROR_UNEXPECTED":
+                throw new IllegalStateException("mock: erreur inattendue");
+            case "ERROR_BLOCKED":
+                return new ServiceDTO("L'etablissement a bloqué l'echange de donnees.", 1, 0, null);
+            default:
+                break;
+        }
+
         ServiceDTO serviceDto = new ServiceDTO();
 
         LocalDate dateRequete = LocalDate.parse(datemenu, DATE_FORMAT);
-        boolean pasDeServiceCeJour = dateRequete.getDayOfWeek() == DayOfWeek.WEDNESDAY
+        boolean pasDeServiceCeJour = dateRequete.getDayOfWeek().equals(DayOfWeek.WEDNESDAY)
                 && SERVICES_SANS_ECOLE_MERCREDI.contains(service);
 
         List<PlatDTO> menu = new ArrayList<>();

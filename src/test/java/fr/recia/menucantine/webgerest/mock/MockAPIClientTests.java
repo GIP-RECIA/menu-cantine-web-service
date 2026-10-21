@@ -19,6 +19,8 @@ import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
 import fr.recia.menucantine.enums.Allergen;
 import fr.recia.menucantine.enums.LabelsNourriture;
+import fr.recia.menucantine.exception.UnknownUAIException;
+import fr.recia.menucantine.exception.WebgerestRequestException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -31,6 +33,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MockAPIClientTests {
@@ -46,7 +49,7 @@ class MockAPIClientTests {
 
     @ParameterizedTest
     @ValueSource(ints = {3, 4})
-    void menuVideLeMercrediPourGouterEtDiner(int service) {
+    void menuVideLeMercrediPourGouterEtDiner(int service) throws WebgerestRequestException, UnknownUAIException {
         ServiceDTO serviceDTO = mockAPIClient.makeAuthenticatedApiCallGetMenu("UAI", MERCREDI, service);
         assertTrue(serviceDTO.getContenu().isEmpty(),
                 "Le service " + service + " ne doit renvoyer aucun plat le mercredi");
@@ -54,14 +57,14 @@ class MockAPIClientTests {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2})
-    void menuRempliLeMercrediPourPetitDejeunerEtDejeuner(int service) {
+    void menuRempliLeMercrediPourPetitDejeunerEtDejeuner(int service) throws WebgerestRequestException, UnknownUAIException {
         ServiceDTO serviceDTO = mockAPIClient.makeAuthenticatedApiCallGetMenu("UAI", MERCREDI, service);
         assertFalse(serviceDTO.getContenu().isEmpty(),
                 "Le service " + service + " doit renvoyer des plats même le mercredi");
     }
 
     @Test
-    void menuContientLeNombreDePlatsAttenduParService() {
+    void menuContientLeNombreDePlatsAttenduParService() throws WebgerestRequestException, UnknownUAIException {
         assertEquals(2, nbPlats(1), "Petit déjeuner : laitage + autre");
         assertEquals(5, nbPlats(2), "Déjeuner : entrée + plat + accompagnement + laitage + dessert");
         assertEquals(2, nbPlats(3), "Goûter : laitage + dessert");
@@ -69,13 +72,43 @@ class MockAPIClientTests {
     }
 
     @Test
-    void serviceInconnuRenvoieUneListeVide() {
+    void serviceInconnuRenvoieUneListeVide() throws WebgerestRequestException, UnknownUAIException {
         ServiceDTO serviceDTO = mockAPIClient.makeAuthenticatedApiCallGetMenu("UAI", JEUDI, 99);
         assertTrue(serviceDTO.getContenu().isEmpty(), "Un numéro de service inconnu ne doit pas faire planter l'appel");
     }
 
     @Test
-    void menuEstDeterministeAJourEtServiceFixes() {
+    void uaiErrorUnknownUaiDeclencheUnknownUAIException() {
+        assertThrows(UnknownUAIException.class,
+                () -> mockAPIClient.makeAuthenticatedApiCallGetMenu("ERROR_UNKNOWN_UAI", JEUDI, 2),
+                "L'UAI magique ERROR_UNKNOWN_UAI doit déclencher UnknownUAIException");
+    }
+
+    @Test
+    void uaiErrorWebgerestDeclencheWebgerestRequestException() {
+        assertThrows(WebgerestRequestException.class,
+                () -> mockAPIClient.makeAuthenticatedApiCallGetMenu("ERROR_WEBGEREST", JEUDI, 2),
+                "L'UAI magique ERROR_WEBGEREST doit déclencher WebgerestRequestException");
+    }
+
+    @Test
+    void uaiErrorUnexpectedDeclencheUneRuntimeException() {
+        assertThrows(IllegalStateException.class,
+                () -> mockAPIClient.makeAuthenticatedApiCallGetMenu("ERROR_UNEXPECTED", JEUDI, 2),
+                "L'UAI magique ERROR_UNEXPECTED doit déclencher une erreur inattendue (RuntimeException)");
+    }
+
+    @Test
+    void uaiErrorBlockedRenvoieUneReponseEchangeBloque() throws WebgerestRequestException, UnknownUAIException {
+        ServiceDTO serviceDTO = mockAPIClient.makeAuthenticatedApiCallGetMenu("ERROR_BLOCKED", JEUDI, 2);
+        assertEquals(1, serviceDTO.getError(), "L'UAI magique ERROR_BLOCKED doit renvoyer une réponse en erreur");
+        assertEquals("L'etablissement a bloqué l'echange de donnees.", serviceDTO.getMessage(),
+                "Le message doit correspondre exactement à celui attendu par MenuCantineServices "
+                        + "pour reconnaître un échange de données bloqué");
+    }
+
+    @Test
+    void menuEstDeterministeAJourEtServiceFixes() throws WebgerestRequestException, UnknownUAIException {
         List<String> premierAppel = noms(mockAPIClient.makeAuthenticatedApiCallGetMenu("UAI", JEUDI, 2));
         List<String> secondAppel = noms(mockAPIClient.makeAuthenticatedApiCallGetMenu("UAI", JEUDI, 2));
         assertEquals(premierAppel, secondAppel,
@@ -83,7 +116,7 @@ class MockAPIClientTests {
     }
 
     @Test
-    void lesAllergenesEtLabelsCodesEnDurCorrespondentAuNomDuPlat() {
+    void lesAllergenesEtLabelsCodesEnDurCorrespondentAuNomDuPlat() throws WebgerestRequestException, UnknownUAIException {
         // Le service 2 (déjeuner) n'est jamais vide et couvre les types entree/plat/laitage/dessert ;
         // sur 5 jours consécutifs, on est sûr de voir passer tous les plats possibles de ces listes
         // (la plus longue liste utilisée par createPlat fait 5 entrées).
@@ -131,7 +164,7 @@ class MockAPIClientTests {
         }
     }
 
-    private int nbPlats(int service) {
+    private int nbPlats(int service) throws WebgerestRequestException, UnknownUAIException {
         return mockAPIClient.makeAuthenticatedApiCallGetMenu("UAI", JEUDI, service).getContenu().size();
     }
 
