@@ -74,13 +74,6 @@ public interface IMapper {
      */
     Plat buildPlat(PlatDTO platDTO);
 
-    /**
-     * Construit la liste des données de nutrition d'un plat
-     * @param platDTO le plat dont on veut récupérer les données de nutrution
-     * @return La liste des données de nutrition du plat, null s'il n'y en a pas
-     */
-    List<Nutrition> buildNutritions(PlatDTO platDTO);
-
 
     /**
      * Construit la liste des lables d'un plat

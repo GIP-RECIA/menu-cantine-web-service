@@ -186,15 +186,10 @@ public class MapperWebGerest implements IMapper {
         }
         plat.setLabels(new ArrayList<>());
         plat.setLabelsInfo(buildLabels(platDTO));
-        plat.setNutritions(buildNutritions(platDTO));
         plat.setFamilyRank(platDTO.getOrdre());
         plat.setSubFamily("");
         plat.setTypeVide(false);
         return plat;
-    }
-
-    public List<Nutrition> buildNutritions(PlatDTO platDTO) {
-        return null;
     }
 
 

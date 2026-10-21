@@ -93,7 +93,6 @@ public class MapperWebgerestTests {
         assertEquals(2, old.getLabelsInfo().size(), "La liste labelsInfo doit contenir les deux labels");
 		assertEquals("Plat test 1", old.getName(), "Le nom du plat n'est pas le bon nom ");
 		assertEquals(1, old.getFamilyRank(), 0, "Le familyrank doit valoir 1");
-		assertNull(old.getNutritions(), "La liste nutritions doit être null");
 		assertEquals("", old.getSubFamily(), "La subfamily doit être la châine vide");
 		assertEquals(false, old.getTypeVide(), "Le plat ne doit pas être de type vide ");
 	}

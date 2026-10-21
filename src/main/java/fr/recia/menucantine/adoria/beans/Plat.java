@@ -38,9 +38,6 @@ public final class Plat implements Serializable, Cloneable {
     List<String> allergens;
 
     @JsonInclude(Include.NON_NULL)
-    List<Nutrition> nutritions;
-
-    @JsonInclude(Include.NON_NULL)
     List<String> labels;
 
     @JsonInclude(Include.NON_NULL)
@@ -74,7 +71,6 @@ public final class Plat implements Serializable, Cloneable {
      * Nettoyage d'un plat :
      * - Annule les liste des allergens vide.
      * - Remplace les labels par leurs info.
-     * - Supprime les info de nutrition null.
      */
     void clean() {
         if (allergens != null && allergens.isEmpty()) {
@@ -95,17 +91,6 @@ public final class Plat implements Serializable, Cloneable {
             labels = null;
         }
 
-        if (nutritions != null) {
-            for (Iterator<Nutrition> iterator = nutritions.iterator(); iterator.hasNext(); ) {
-                Nutrition nut = (Nutrition) iterator.next();
-                if (nut != null && nut.value == null) {
-                    iterator.remove();
-                }
-            }
-            if (nutritions.isEmpty()) {
-                nutritions = null;
-            }
-        }
     }
 
     @Override
@@ -123,12 +108,6 @@ public final class Plat implements Serializable, Cloneable {
                 clone.labelsInfo.add((Labels) labels.clone());
             }
 
-        }
-        if (nutritions != null) {
-            clone.nutritions = new ArrayList<Nutrition>(nutritions.size());
-            for (Nutrition n : nutritions) {
-                clone.nutritions.add((Nutrition) n.clone());
-            }
         }
         return clone;
     }
