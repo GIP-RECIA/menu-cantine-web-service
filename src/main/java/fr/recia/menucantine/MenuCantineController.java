@@ -15,17 +15,19 @@
  */
 package fr.recia.menucantine;
 
-import fr.recia.menucantine.exception.*;
+import fr.recia.menucantine.beans.Requete;
+import fr.recia.menucantine.beans.Semaine;
+import fr.recia.menucantine.exception.CustomMenuCantineException;
+import fr.recia.menucantine.exception.ResponseExceptionData;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import fr.recia.menucantine.beans.Requete;
-import fr.recia.menucantine.beans.Semaine;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api")
@@ -34,27 +36,6 @@ public final class MenuCantineController {
 	private static final Logger log = LoggerFactory.getLogger(MenuCantineController.class);	
 			  
 	private final MenuCantineServices services;
-	
-	@GetMapping(
-			path="/demomenu",
-			produces = "application/json"
-		)
-	public ResponseEntity<Object> getDemo(@RequestParam String uai, @RequestParam(required = false) String dateJour, @RequestParam(required = false) Integer semaine) {
-		log.trace("Requête sur la path /demomenu");
-		Requete requete = new Requete(uai, dateJour, semaine);
-		try {
-			Semaine menuSemaine = services.newFindSemaine(requete);
-			return new ResponseEntity<Object>(menuSemaine, HttpStatus.OK);
-		}catch (CustomMenuCantineException exception){
-			log.error(exception.getMessage());
-			return new ResponseEntity<>(new ResponseExceptionData(exception.getDisplayMessage()), HttpStatus.NOT_FOUND);
-		}catch (Exception other){
-			log.error("Une erreur innatendue s'est produite : {}. UAI : {}, Date : {}", other.getMessage(), uai, dateJour, other);
-			return new ResponseEntity<>(new ResponseExceptionData("Une erreur est survenue. Les menus de la cantine sont indisponibles pour le moment"),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
 
 	@GetMapping(
 			path="/menu",
