@@ -15,13 +15,14 @@
  */
 package fr.recia.menucantine.exception;
 
+import fr.recia.menucantine.enums.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @AllArgsConstructor
 @Data
 public final class ResponseExceptionData {
-
+    private ErrorCode errorCode;
     private String messageErreur;
 
 }

@@ -15,10 +15,12 @@
  */
 package fr.recia.menucantine.exception;
 
+import fr.recia.menucantine.enums.ErrorCode;
+
 public final class WebgerestRequestException extends CustomMenuCantineException {
 
     public WebgerestRequestException(String errorMessage) {
-        super(errorMessage, "Les menus du restaurant scolaire ne sont pas disponibles actuellement.");
+        super(errorMessage, "Les menus du restaurant scolaire ne sont pas disponibles actuellement.", ErrorCode.WEBGEREST_ERROR);
     }
 
 }

@@ -15,16 +15,19 @@
  */
 package fr.recia.menucantine.exception;
 
+import fr.recia.menucantine.enums.ErrorCode;
 import lombok.Getter;
 
 @Getter
 public class CustomMenuCantineException extends Exception{
 
     private final String displayMessage;
+    private final ErrorCode errorCode;
 
-    public CustomMenuCantineException(String errorMessage, String displayMessage){
+    public CustomMenuCantineException(String errorMessage, String displayMessage, ErrorCode errorCode){
         super(errorMessage);
         this.displayMessage = displayMessage;
+        this.errorCode = errorCode;
     }
 
 }

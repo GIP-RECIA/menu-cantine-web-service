@@ -17,8 +17,7 @@ package fr.recia.menucantine;
 
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
-import fr.recia.menucantine.exception.CustomMenuCantineException;
-import fr.recia.menucantine.exception.ResponseExceptionData;
+import fr.recia.menucantine.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,19 +40,11 @@ public final class MenuCantineController {
 			path="/menu",
 			produces = "application/json"
 	)
-	public ResponseEntity<Object> getMenu(@RequestParam String uai, @RequestParam(required = false) String dateJour, @RequestParam(required = false) Integer semaine) {
+	public ResponseEntity<Semaine> getMenu(@RequestParam String uai, @RequestParam(required = false) String dateJour, @RequestParam(required = false) Integer semaine)
+			throws UnknownUAIException, WebgerestRequestException, NoDataExchangeException {
 		log.trace("Requête sur la path /menu");
 		Requete requete = new Requete(uai, dateJour, semaine);
-		try {
-			Semaine menuSemaine = services.newFindSemaine(requete);
-			return new ResponseEntity<Object>(menuSemaine, HttpStatus.OK);
-		}catch (CustomMenuCantineException exception){
-			log.error(exception.getMessage());
-			return new ResponseEntity<>(new ResponseExceptionData(exception.getDisplayMessage()), HttpStatus.NOT_FOUND);
-		}catch (Exception other){
-			log.error("Une erreur innatendue s'est produite : {}. UAI : {}, Date : {}", other.getMessage(), uai, dateJour, other);
-			return new ResponseEntity<>(new ResponseExceptionData("Une erreur est survenue. Les menus de la cantine sont indisponibles pour le moment"),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		Semaine menuSemaine = services.newFindSemaine(requete);
+		return new ResponseEntity<>(menuSemaine, HttpStatus.OK);
 	}
 }
