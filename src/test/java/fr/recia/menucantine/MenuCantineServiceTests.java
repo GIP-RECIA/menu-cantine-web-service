@@ -22,7 +22,7 @@ import fr.recia.menucantine.config.UAIConfig;
 import fr.recia.menucantine.dto.ServiceDTO;
 import fr.recia.menucantine.exception.CustomMenuCantineException;
 import fr.recia.menucantine.mapper.MapperWebGerest;
-import fr.recia.menucantine.webgerest.APIClient;
+import fr.recia.menucantine.webgerest.impl.APIClient;
 import net.sf.ehcache.CacheManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ActiveProfiles({"unit"})
-public class MenuCantineServiceTests {
+class MenuCantineServiceTests {
 
     @Mock
     private APIClient apiClient;
@@ -71,12 +71,12 @@ public class MenuCantineServiceTests {
     private ArgumentCaptor<Integer> serviceCaptor;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testNewFindSemaine() {
+    void testNewFindSemaine() {
 
         // Paramètres d'appels
         String dateJour = "11/12/2023";
