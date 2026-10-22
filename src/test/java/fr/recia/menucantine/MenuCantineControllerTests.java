@@ -18,7 +18,7 @@ package fr.recia.menucantine;
 import fr.recia.menucantine.beans.Requete;
 import fr.recia.menucantine.beans.Semaine;
 import fr.recia.menucantine.exception.UnknownUAIException;
-import net.sf.ehcache.CacheManager;
+import javax.cache.CacheManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc ;

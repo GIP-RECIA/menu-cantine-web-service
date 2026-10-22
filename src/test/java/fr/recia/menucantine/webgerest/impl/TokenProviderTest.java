@@ -16,9 +16,8 @@
 package fr.recia.menucantine.webgerest.impl;
 
 import fr.recia.menucantine.exception.WebgerestRequestException;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.Element;
+import javax.cache.Cache;
+import javax.cache.CacheManager;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
@@ -36,7 +35,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -49,7 +47,7 @@ class TokenProviderTest {
     private CacheManager cacheManager;
 
     @Mock
-    private Cache tokenCache;
+    private Cache<String, String> tokenCache;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -58,7 +56,7 @@ class TokenProviderTest {
         server = new MockWebServer();
         server.start();
 
-        when(cacheManager.getCache("token")).thenReturn(tokenCache);
+        when(cacheManager.<String, String>getCache("token")).thenReturn(tokenCache);
 
         tokenProvider = new TokenProvider(WebClient.builder().build(), cacheManager);
         ReflectionTestUtils.setField(tokenProvider, "authEndpoint", "/auth");
@@ -97,7 +95,7 @@ class TokenProviderTest {
         String url = server.url("/").toString();
 
         assertThrows(WebgerestRequestException.class, () -> tokenProvider.refreshToken(url));
-        verify(tokenCache).put(any(Element.class));
+        verify(tokenCache).put(url, "erreur");
         assertNull(tokenProvider.getToken(url), "Aucun token ne doit être retenu en cas d'échec");
     }
 
@@ -109,7 +107,7 @@ class TokenProviderTest {
         String url = server.url("/").toString();
 
         assertThrows(WebgerestRequestException.class, () -> tokenProvider.refreshToken(url));
-        verify(tokenCache).put(any(Element.class));
+        verify(tokenCache).put(url, "erreur");
     }
 
     @Test
@@ -119,7 +117,7 @@ class TokenProviderTest {
         when(tokenCache.get(url)).thenReturn(null);
         assertFalse(tokenProvider.isBlacklisted(url));
 
-        when(tokenCache.get(url)).thenReturn(new Element(url, "erreur"));
+        when(tokenCache.get(url)).thenReturn("erreur");
         assertTrue(tokenProvider.isBlacklisted(url));
     }
 }

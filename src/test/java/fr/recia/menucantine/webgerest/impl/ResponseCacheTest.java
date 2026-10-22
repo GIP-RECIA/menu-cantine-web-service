@@ -17,13 +17,13 @@ package fr.recia.menucantine.webgerest.impl;
 
 import fr.recia.menucantine.dto.ServiceDTO;
 import fr.recia.menucantine.webgerest.CacheKeyRequete;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import javax.cache.Cache;
+import javax.cache.CacheManager;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -38,22 +38,22 @@ class ResponseCacheTest {
     private CacheManager cacheManager;
 
     @Mock
-    private Cache erreurCache;
+    private Cache<CacheKeyRequete, ServiceDTO> erreurCache;
 
     @Mock
-    private Cache permanentCache;
+    private Cache<CacheKeyRequete, ServiceDTO> permanentCache;
 
     @Mock
-    private Cache requetesCache;
+    private Cache<CacheKeyRequete, ServiceDTO> requetesCache;
 
     private ResponseCache responseCache;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        when(cacheManager.getCache("erreur")).thenReturn(erreurCache);
-        when(cacheManager.getCache("permanent")).thenReturn(permanentCache);
-        when(cacheManager.getCache("requetes")).thenReturn(requetesCache);
+        when(cacheManager.<CacheKeyRequete, ServiceDTO>getCache("erreur")).thenReturn(erreurCache);
+        when(cacheManager.<CacheKeyRequete, ServiceDTO>getCache("permanent")).thenReturn(permanentCache);
+        when(cacheManager.<CacheKeyRequete, ServiceDTO>getCache("requetes")).thenReturn(requetesCache);
         responseCache = new ResponseCache(cacheManager);
     }
 
@@ -66,7 +66,7 @@ class ResponseCacheTest {
     @Test
     void findErrorRenvoieLaValeurMiseEnCache() {
         ServiceDTO value = new ServiceDTO("erreur", 1, 0, null);
-        when(erreurCache.get(KEY)).thenReturn(new Element(KEY, value));
+        when(erreurCache.get(KEY)).thenReturn(value);
 
         assertSame(value, responseCache.findError(KEY));
     }
@@ -75,8 +75,8 @@ class ResponseCacheTest {
     void findPermanentEtFindPendingInterrogentChacunLeurPropreRegion() {
         ServiceDTO permanentValue = new ServiceDTO("ok", 0, 1, null);
         ServiceDTO pendingValue = new ServiceDTO("ok", 0, 1, null);
-        when(permanentCache.get(KEY)).thenReturn(new Element(KEY, permanentValue));
-        when(requetesCache.get(KEY)).thenReturn(new Element(KEY, pendingValue));
+        when(permanentCache.get(KEY)).thenReturn(permanentValue);
+        when(requetesCache.get(KEY)).thenReturn(pendingValue);
 
         assertSame(permanentValue, responseCache.findPermanent(KEY));
         assertSame(pendingValue, responseCache.findPending(KEY));
@@ -90,8 +90,8 @@ class ResponseCacheTest {
         responseCache.storePermanent(KEY, value);
         responseCache.storePending(KEY, value);
 
-        verify(erreurCache).put(org.mockito.ArgumentMatchers.any(Element.class));
-        verify(permanentCache).put(org.mockito.ArgumentMatchers.any(Element.class));
-        verify(requetesCache).put(org.mockito.ArgumentMatchers.any(Element.class));
+        verify(erreurCache).put(KEY, value);
+        verify(permanentCache).put(KEY, value);
+        verify(requetesCache).put(KEY, value);
     }
 }

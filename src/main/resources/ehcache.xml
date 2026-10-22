@@ -16,49 +16,58 @@
     limitations under the License.
 
 -->
-<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd"
-         updateCheck="true" monitoring="autodetect" dynamicConfig="true">
-    <!--   <diskStore path="java.io.tmpdir" /> -->
-    <diskStore path="ehcache.disk.store.dir/menu-cantine" />
+<config xmlns='http://www.ehcache.org/v3'>
 
-    <defaultCache eternal="false" maxElementsInMemory="1000" overflowToDisk="false" overflowToOffHeap="false" diskPersistent="false"/>
+    <persistence directory="ehcache.disk.store.dir/menu-cantine"/>
 
     <!-- Les réponses valides de la semaine courante et des semaines suivantes (réactualisées au bout de 6 heures) -->
-    <cache name="requetes"
-           eternal="false"
-           maxEntriesLocalHeap="1000"
-           diskPersistent="true"
-           timeToIdleSeconds="21600"
-           timeToLiveSeconds="21600"
-           memoryStoreEvictionPolicy="LFU">
+    <cache alias="requetes">
+        <key-type>java.lang.Object</key-type>
+        <value-type>java.lang.Object</value-type>
+        <expiry>
+            <ttl unit="seconds">21600</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">1000</heap>
+            <disk unit="MB" persistent="true">100</disk>
+        </resources>
     </cache>
 
-    <!--  Pour les menus des semaines passées ils ne devraient plus changer, on les garde tant qu'il y de la place  -->
-    <cache name="permanent"
-           eternal="true"
-           maxEntriesLocalHeap="1000"
-           diskPersistent="true"
-           maxBytesLocalDisk="100M"
-           memoryStoreEvictionPolicy="FIFO">
+    <!-- Pour les menus des semaines passées, on les garde tant qu'il y a de la place -->
+    <cache alias="permanent">
+        <key-type>java.lang.Object</key-type>
+        <value-type>java.lang.Object</value-type>
+        <expiry>
+            <none/>
+        </expiry>
+        <resources>
+            <heap unit="entries">1000</heap>
+            <disk unit="MB" persistent="true">100</disk>
+        </resources>
     </cache>
 
-    <!--  pour les réponses en erreur, on les garde 30 min -->
-    <cache name="erreur"
-           eternal="false"
-           maxEntriesLocalHeap="1000"
-           diskPersistent="false"
-           timeToIdleSeconds="1800"
-           timeToLiveSeconds="1800"
-           memoryStoreEvictionPolicy="LRU">
+    <!-- Pour les réponses en erreur, on les garde 30 min -->
+    <cache alias="erreur">
+        <key-type>java.lang.Object</key-type>
+        <value-type>java.lang.Object</value-type>
+        <expiry>
+            <ttl unit="seconds">1800</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">1000</heap>
+        </resources>
     </cache>
 
-    <!--  cache spécial sur les erreurs de demande de token renouvelé toutes les 10 minutes -->
-    <cache name="token"
-           eternal="false"
-           maxEntriesLocalHeap="1000"
-           diskPersistent="false"
-           timeToIdleSeconds="600"
-           timeToLiveSeconds="600"
-           memoryStoreEvictionPolicy="LRU">
+    <!-- Cache sur les erreurs de demande de token, renouvelé toutes les 10 minutes -->
+    <cache alias="token">
+        <key-type>java.lang.Object</key-type>
+        <value-type>java.lang.Object</value-type>
+        <expiry>
+            <ttl unit="seconds">600</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">1000</heap>
+        </resources>
     </cache>
-</ehcache>
+
+</config>

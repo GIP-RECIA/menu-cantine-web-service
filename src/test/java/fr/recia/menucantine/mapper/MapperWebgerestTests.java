@@ -26,7 +26,7 @@ import fr.recia.menucantine.dto.JourneeDTO;
 import fr.recia.menucantine.dto.LabelDTO;
 import fr.recia.menucantine.dto.PlatDTO;
 import fr.recia.menucantine.dto.ServiceDTO;
-import net.sf.ehcache.CacheManager;
+import javax.cache.CacheManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

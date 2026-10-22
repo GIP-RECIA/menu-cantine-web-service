@@ -23,7 +23,7 @@ app:
 
 spring:
   cache:
-    type: NONE
+    type: jcache
 
 api:
   client_id: TEST

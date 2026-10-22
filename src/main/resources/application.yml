@@ -15,14 +15,19 @@
 #
 
 adoria:
-  gemrcn-csv: classpath:GemRcn.csv
   labels-csv: classpath:labels.csv
 
+app:
+  soffit:
+    signature-key: TEST
+
+
+spring:
+  cache:
+    type: jcache
+    jcache:
+      config: classpath:ehcache.xml
 api:
   initial-query-url: https://api.webgerest.fr/url
   auth-endpoint: /auth
   menu-endpoint: /menus
-
-spring:
-  cache:
-    type: ehcache

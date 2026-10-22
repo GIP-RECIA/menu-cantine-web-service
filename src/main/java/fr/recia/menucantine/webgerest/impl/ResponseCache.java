@@ -18,9 +18,8 @@ package fr.recia.menucantine.webgerest.impl;
 import fr.recia.menucantine.dto.ServiceDTO;
 import fr.recia.menucantine.webgerest.CacheKeyRequete;
 import lombok.RequiredArgsConstructor;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
 import org.springframework.stereotype.Component;
+import javax.cache.CacheManager;
 
 @Component
 @RequiredArgsConstructor
@@ -45,19 +44,18 @@ public class ResponseCache {
     }
 
     public void storeError(CacheKeyRequete key, ServiceDTO value) {
-        cacheManager.getCache(CACHE_ERREUR).put(new Element(key, value));
+        cacheManager.getCache(CACHE_ERREUR).put(key, value);
     }
 
     public void storePermanent(CacheKeyRequete key, ServiceDTO value) {
-        cacheManager.getCache(CACHE_PERMANENT).put(new Element(key, value));
+        cacheManager.getCache(CACHE_PERMANENT).put(key, value);
     }
 
     public void storePending(CacheKeyRequete key, ServiceDTO value) {
-        cacheManager.getCache(CACHE_REQUETES).put(new Element(key, value));
+        cacheManager.getCache(CACHE_REQUETES).put(key, value);
     }
 
     private ServiceDTO get(String cacheName, CacheKeyRequete key) {
-        Element element = cacheManager.getCache(cacheName).get(key);
-        return element != null ? (ServiceDTO) element.getObjectValue() : null;
+        return (ServiceDTO) cacheManager.getCache(cacheName).get(key);
     }
 }

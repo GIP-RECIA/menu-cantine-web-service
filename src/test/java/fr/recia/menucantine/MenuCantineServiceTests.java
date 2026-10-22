@@ -23,7 +23,7 @@ import fr.recia.menucantine.dto.ServiceDTO;
 import fr.recia.menucantine.exception.CustomMenuCantineException;
 import fr.recia.menucantine.mapper.MapperWebGerest;
 import fr.recia.menucantine.webgerest.impl.APIClient;
-import net.sf.ehcache.CacheManager;
+import javax.cache.CacheManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;

@@ -19,14 +19,13 @@ import fr.recia.menucantine.adoria.beans.NbPlatParSsMenu;
 import fr.recia.menucantine.adoria.beans.Plat;
 import fr.recia.menucantine.adoria.beans.Service;
 import fr.recia.menucantine.adoria.beans.SousMenu;
-import net.sf.ehcache.CacheManager;
+import javax.cache.CacheManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 

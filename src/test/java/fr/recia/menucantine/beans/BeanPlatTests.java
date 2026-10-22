@@ -16,7 +16,7 @@
 package fr.recia.menucantine.beans;
 
 import fr.recia.menucantine.adoria.beans.Plat;
-import net.sf.ehcache.CacheManager;
+import javax.cache.CacheManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;

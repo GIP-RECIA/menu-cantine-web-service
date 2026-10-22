@@ -19,12 +19,10 @@ import fr.recia.menucantine.exception.WebgerestRequestException;
 import fr.recia.menucantine.webgerest.AuthResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-
+import javax.cache.CacheManager;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -66,12 +64,12 @@ public class TokenProvider {
                 .block();
         if (authResponse == null) {
             log.debug("Réponse vide lors de l'authentification.");
-            cacheManager.getCache(CACHE_TOKEN).put(new Element(url, CACHE_ERREUR));
+            cacheManager.getCache(CACHE_TOKEN).put(url, CACHE_ERREUR);
             throw new WebgerestRequestException("Erreur lors de l'authentification. Réponse vide.");
         }
         if (authResponse.getError() == 1) {
             log.debug("Mise en cache erreur de la requête pour récupérer le token. Authentification échouée.");
-            cacheManager.getCache(CACHE_TOKEN).put(new Element(url, CACHE_ERREUR));
+            cacheManager.getCache(CACHE_TOKEN).put(url, CACHE_ERREUR);
             throw new WebgerestRequestException("Erreur lors de l'authentification. Message retourné : "
                     + authResponse.getMessage());
         }
