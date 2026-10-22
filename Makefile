@@ -1,10 +1,13 @@
-.PHONY: run run-mock run-unit
+.PHONY: test run run-mock run-unit
+
+test:
+	./mvnw test
 
 run:
-	mvn spring-boot:run
+	./mvnw spring-boot:run
 
 run-mock:
-	mvn spring-boot:run -Dspring-boot.run.profiles=mock
+	./mvnw spring-boot:run -Dspring-boot.run.profiles=mock
 
 run-unit:
-	mvn spring-boot:run -Dspring-boot.run.profiles=unit
+	./mvnw spring-boot:run -Dspring-boot.run.profiles=unit

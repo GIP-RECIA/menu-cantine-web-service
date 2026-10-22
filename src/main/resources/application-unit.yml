@@ -17,6 +17,10 @@
 adoria:
   labels-csv: classpath:labels.csv
 
+app:
+  soffit:
+    signature-key: TEST
+
 spring:
   cache:
     type: NONE
