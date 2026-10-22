@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ResponseExceptionData> handleUnexpectedException(RuntimeException ex, HttpServletRequest request) {
         log.error("Une erreur innatendue s'est produite : {}. UAI : {}, Date : {}",
                 ex.getMessage(), request.getParameter("uai"), request.getParameter("dateJour"), ex);
