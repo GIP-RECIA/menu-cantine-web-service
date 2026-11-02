@@ -159,8 +159,8 @@ This project includes:
   spring-security-core under Apache License, Version 2.0
   spring-security-crypto under Apache License, Version 2.0
   spring-security-web under Apache License, Version 2.0
-  spring-ws-core under The Apache License, Version 2.0
-  spring-xml under The Apache License, Version 2.0
+  spring-ws-core under Apache License, Version 2.0
+  spring-xml under Apache License, Version 2.0
   tomcat-embed-core under Apache License, Version 2.0
   tomcat-embed-el under Apache License, Version 2.0
   tomcat-embed-websocket under Apache License, Version 2.0
